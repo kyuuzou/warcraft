@@ -58,6 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# StyleCop
 *StyleCop.Cache
 *StyleCop.Cache.meta
 
