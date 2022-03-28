@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 28a09cb52186cad4a9b55f7bf93af9b8
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - selectionPrefab: {instanceID: 0}
+  - smallFire: {fileID: 2100000, guid: cad9437c9518ea04eb3f530d4d82e361, type: 2}
+  - largeFire: {fileID: 2100000, guid: e20bf5d42fb549e4785573a683a80c0b, type: 2}
+  - collapse: {fileID: 2100000, guid: aacad35ac798478428e763c74b40f69b, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

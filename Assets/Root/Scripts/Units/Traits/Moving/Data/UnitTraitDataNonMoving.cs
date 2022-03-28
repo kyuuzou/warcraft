@@ -1,0 +1,18 @@
+using System.Collections;
+using UnityEngine;
+
+public class UnitTraitDataNonMoving : UnitTraitData {
+
+    public override UnitTraitType Type {
+        get { return UnitTraitType.Moving; }
+    }
+    
+    public override UnitTrait AddTrait (Unit unit) {
+        UnitTraitNonMoving trait = unit.gameObject.AddComponent<UnitTraitNonMoving> ();
+        trait.Initialize (unit, (UnitTraitDataNonMoving) UnitTraitDataNonMoving.Instantiate (this));
+        
+        unit.SetTrait<IUnitTraitMoving> (trait);
+        
+        return trait;
+    }
+}
