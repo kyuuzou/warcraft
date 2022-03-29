@@ -1,49 +1,101 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Threading;
 using UnityEditor;
+using Unity.EditorCoroutines.Editor;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class WarcraftAssetImporter : EditorWindow {
 	
 	private const string FFMpegURL = "https://github.com/Wargus/stratagus/releases/download/2015-30-11/ffmpeg.exe";
-	private const string WindowTitle = "Asset Importer";
-	
+	private const string WindowTitle = "Warcraft Asset Importer";
+
+	private UnityWebRequest currentRequest = null;
+	private EditorCoroutine importingCoroutine = null;
+
     [MenuItem("Window/Warcraft Asset Importer _w", false, (int)'W')]
-    static void Init() {
+    private static void Init() {
 		// because the Inspector class is internal, we need to get it through reflection
 		Type inspectorType = Type.GetType("UnityEditor.InspectorWindow, UnityEditor.dll");
-		Type[] desiredDockNextTo = new Type[]{inspectorType};
+		Type[] desiredDockNextTo = {inspectorType};
 
 		WarcraftAssetImporter importer = EditorWindow.GetWindow<WarcraftAssetImporter>(
-			"Asset Importer", true, desiredDockNextTo
+			WarcraftAssetImporter.WindowTitle, true, desiredDockNextTo
 		);
 		
         importer.Show();
     }
-	
+
+    private void Abort() {
+	    if (this.currentRequest != null) {
+		    this.currentRequest.Abort();
+		    this.currentRequest = null;
+	    }
+
+	    if (this.importingCoroutine != null) {
+		    EditorUtility.ClearProgressBar();
+		    EditorCoroutineUtility.StopCoroutine(this.importingCoroutine);
+		    this.importingCoroutine = null;
+	    }
+    }
+    
+    private IEnumerator Import() {
+	    EditorUtility.DisplayProgressBar(WindowTitle, "Preparing...", 0.0f);
+
+	    string toolsPath = "Tools";
+            
+	    if (! AssetDatabase.IsValidFolder("Assets/" + toolsPath)) {
+		    AssetDatabase.CreateFolder("Assets", toolsPath);
+	    }
+	    
+	    this.currentRequest = new UnityWebRequest(WarcraftAssetImporter.FFMpegURL);
+	    this.currentRequest.downloadHandler = new DownloadHandlerBuffer();
+	    this.currentRequest.SendWebRequest();
+	    
+	    do {
+		    EditorUtility.DisplayProgressBar(
+			    WindowTitle,
+			    "Downloading FFMpeg...",
+			    this.currentRequest.downloadProgress
+			);
+		    
+		    yield return null;
+	    } while (! this.currentRequest.downloadHandler.isDone);
+
+	    if (this.currentRequest.isNetworkError || this.currentRequest.isHttpError) {
+		    Debug.LogError(this.currentRequest.error);
+		    this.Abort();
+		    yield break;
+	    } 
+
+	    string path = Path.Combine(
+		    Application.dataPath,
+		    toolsPath, 
+		    Path.GetFileName(WarcraftAssetImporter.FFMpegURL)
+		);
+	    
+	    File.WriteAllBytes(path, this.currentRequest.downloadHandler.data);
+            
+	    EditorUtility.ClearProgressBar();
+	    AssetDatabase.Refresh();
+	    this.currentRequest = null;
+	    this.importingCoroutine = null;
+	    
+	    this.Repaint();
+    }
+    
     private void OnGUI() {
-        if (GUILayout.Button("Import")) {
-            EditorUtility.DisplayProgressBar(WindowTitle, "Preparing...", 0.0f);
-			
-			string guid = AssetDatabase.CreateFolder("Assets", "Tools");
-			string toolsPath = AssetDatabase.GUIDToAssetPath(guid);
-			
-			WWW www = new WWW(FFMpegURL);
-			
-			do {
-	            EditorUtility.DisplayProgressBar(WindowTitle, "Downloading FFMpeg...", www.progress * 0.5f);
-                Thread.Sleep(200);
-			} while (! www.isDone);
-			
-			if (!string.IsNullOrEmpty(www.error)) {
-				Debug.LogError(www.error);
-			} else {
-				Debug.Log(www.size);
-			}
-			
-            EditorUtility.ClearProgressBar();
-        }
+	    if (this.importingCoroutine == null) {
+		    if (GUILayout.Button("Import")) {
+			    this.importingCoroutine = EditorCoroutineUtility.StartCoroutine(this.Import(), this);
+		    }
+	    } else {
+		    GUILayout.Label("Importing...");
+		    
+		    if (GUILayout.Button("Abort")) {
+			    this.Abort();
+		    }
+	    }
     }
 }

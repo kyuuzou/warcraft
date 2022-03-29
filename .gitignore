@@ -62,5 +62,11 @@ crashlytics-build.properties
 *StyleCop.Cache
 *StyleCop.Cache.meta
 
-# Folder where the Warcraft assets are extracted to
+# Warcraft Asset Importer
 Assets/Warcraft Resources
+Assets/Warcraft Resources.meta
+Assets/Tools
+Assets/Tools.meta
+
+# IntelliJ
+.idea
