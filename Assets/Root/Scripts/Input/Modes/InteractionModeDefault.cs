@@ -27,7 +27,7 @@ public class InteractionModeDefault : InteractionMode {
 
 #if DEBUG
         TileSlot tileSlot = collider.GetComponent<TileSlot>();
-        Debug.Log (tileSlot.Tile.MapPosition, tileSlot.Tile.AtlasIndex);
+        RichDebug.Log (tileSlot.Tile.MapPosition, tileSlot.Tile.AtlasIndex);
 #endif
     }
 
