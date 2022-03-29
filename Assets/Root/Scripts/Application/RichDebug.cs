@@ -1,11 +1,9 @@
-/*
 using System;
-using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
 using UnityEngine;
 
-public static class Debug {
+public static class RichDebug {
     
     public static void DrawLine (Vector3 start, Vector3 end) {
         UnityEngine.Debug.DrawLine (start, end);
@@ -16,15 +14,15 @@ public static class Debug {
     }
     
     public static void Log (params object[] objects) {
-        UnityEngine.Debug.Log (Debug.ParseOutput (objects));
+        UnityEngine.Debug.Log (RichDebug.ParseOutput (objects));
     }
     
     public static void LogError (params object[] objects) {
-        UnityEngine.Debug.LogError (Debug.ParseOutput (objects));
+        UnityEngine.Debug.LogError (RichDebug.ParseOutput (objects));
     }
     
     public static void LogWarning (params object[] objects) {
-        UnityEngine.Debug.LogWarning (Debug.ParseOutput (objects));
+        UnityEngine.Debug.LogWarning (RichDebug.ParseOutput (objects));
     }
     
     private static string ParseOutput (params object[] objects) {
@@ -47,4 +45,3 @@ public static class Debug {
         );
     }
 }
-*/
