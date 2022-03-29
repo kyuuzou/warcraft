@@ -148,7 +148,7 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
     }
     
     public void OnDeathNotification (SpawnableSprite sprite) {
-        Debug.Log ();
+        
     }
     
     public void OnMend () {

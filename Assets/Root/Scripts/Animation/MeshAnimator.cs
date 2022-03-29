@@ -145,7 +145,6 @@ public class MeshAnimator : SceneObject {
     }
 
     public void Stop () {
-        Debug.Log ();
         this.StopAllCoroutines ();
     }
 

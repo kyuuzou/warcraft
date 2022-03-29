@@ -34,7 +34,6 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     }
     
     public void Attack (SpawnableSprite target) {
-        Debug.Log ();
         this.Activate ();
 
         this.SetTarget (target);
