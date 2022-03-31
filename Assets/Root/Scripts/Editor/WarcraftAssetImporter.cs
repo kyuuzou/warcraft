@@ -44,15 +44,12 @@ public class WarcraftAssetImporter : EditorWindow {
 	    }
     }
 
-    private IEnumerator Download(string url) {
+    private IEnumerator Download(string url, int stepNumber, int totalSteps) {
 	    this.currentRequest = new UnityWebRequest(url);
 	    this.currentRequest.downloadHandler = new DownloadHandlerBuffer();
 	    this.currentRequest.SendWebRequest();
 	    
-	    Debug.Log(url);
-	    Debug.Log(Path.GetFileNameWithoutExtension(url));
-
-	    string progressInfo = $"Downloading {Path.GetFileNameWithoutExtension(url)}";
+	    string progressInfo = $"Step {stepNumber}/{totalSteps}: Downloading {Path.GetFileNameWithoutExtension(url)}";
 	    
 	    do {
 		    EditorUtility.DisplayProgressBar(
@@ -82,10 +79,12 @@ public class WarcraftAssetImporter : EditorWindow {
 	    }
 
 	    string[] toolFilenames = {WarcraftAssetImporter.FFMpegFilename, WarcraftAssetImporter.War1toolFilename};
+        int step = 1;
+        int totalSteps = toolFilenames.Length;
 
 	    foreach (string toolFilename in toolFilenames) {
 		    string toolURL = WarcraftAssetImporter.ToolsURL + toolFilename;
-		    yield return EditorCoroutineUtility.StartCoroutine(this.Download(toolURL), this);
+		    yield return EditorCoroutineUtility.StartCoroutine(this.Download(toolURL, step++, totalSteps), this);
 	    }
 
 	    EditorUtility.ClearProgressBar();
