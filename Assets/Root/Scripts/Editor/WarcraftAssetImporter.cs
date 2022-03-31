@@ -8,8 +8,12 @@ using UnityEngine.Networking;
 
 public class WarcraftAssetImporter : EditorWindow {
 	
-	private const string FFMpegURL = "https://github.com/Wargus/stratagus/releases/download/2015-30-11/ffmpeg.exe";
+	private const string ToolsPath = "Tools";
 	private const string WindowTitle = "Warcraft Asset Importer";
+
+	private const string ToolsURL = "https://github.com/kyuuzou/warcraft/releases/download/war1tool_v3.2.1/";
+	private const string FFMpegFilename = "ffmpeg.exe";
+	private const string War1toolFilename = "war1tool.exe";
 
 	private UnityWebRequest currentRequest = null;
 	private EditorCoroutine importingCoroutine = null;
@@ -39,26 +43,23 @@ public class WarcraftAssetImporter : EditorWindow {
 		    this.importingCoroutine = null;
 	    }
     }
-    
-    private IEnumerator Import() {
-	    EditorUtility.DisplayProgressBar(WindowTitle, "Preparing...", 0.0f);
 
-	    string toolsPath = "Tools";
-            
-	    if (! AssetDatabase.IsValidFolder("Assets/" + toolsPath)) {
-		    AssetDatabase.CreateFolder("Assets", toolsPath);
-	    }
-	    
-	    this.currentRequest = new UnityWebRequest(WarcraftAssetImporter.FFMpegURL);
+    private IEnumerator Download(string url) {
+	    this.currentRequest = new UnityWebRequest(url);
 	    this.currentRequest.downloadHandler = new DownloadHandlerBuffer();
 	    this.currentRequest.SendWebRequest();
 	    
+	    Debug.Log(url);
+	    Debug.Log(Path.GetFileNameWithoutExtension(url));
+
+	    string progressInfo = $"Downloading {Path.GetFileNameWithoutExtension(url)}";
+	    
 	    do {
 		    EditorUtility.DisplayProgressBar(
-			    WindowTitle,
-			    "Downloading FFMpeg...",
+			    WarcraftAssetImporter.WindowTitle, 
+			    progressInfo,
 			    this.currentRequest.downloadProgress
-			);
+		    );
 		    
 		    yield return null;
 	    } while (! this.currentRequest.downloadHandler.isDone);
@@ -69,14 +70,24 @@ public class WarcraftAssetImporter : EditorWindow {
 		    yield break;
 	    } 
 
-	    string path = Path.Combine(
-		    Application.dataPath,
-		    toolsPath, 
-		    Path.GetFileName(WarcraftAssetImporter.FFMpegURL)
-		);
-	    
+	    string path = Path.Combine(Application.dataPath, WarcraftAssetImporter.ToolsPath, Path.GetFileName(url));
 	    File.WriteAllBytes(path, this.currentRequest.downloadHandler.data);
+    }
+    
+    private IEnumerator Import() {
+	    EditorUtility.DisplayProgressBar(WindowTitle, "Preparing...", 0.0f);
             
+	    if (! AssetDatabase.IsValidFolder($"Assets/{WarcraftAssetImporter.ToolsPath}")) {
+		    AssetDatabase.CreateFolder("Assets", WarcraftAssetImporter.ToolsPath);
+	    }
+
+	    string[] toolFilenames = {WarcraftAssetImporter.FFMpegFilename, WarcraftAssetImporter.War1toolFilename};
+
+	    foreach (string toolFilename in toolFilenames) {
+		    string toolURL = WarcraftAssetImporter.ToolsURL + toolFilename;
+		    yield return EditorCoroutineUtility.StartCoroutine(this.Download(toolURL), this);
+	    }
+
 	    EditorUtility.ClearProgressBar();
 	    AssetDatabase.Refresh();
 	    this.currentRequest = null;
