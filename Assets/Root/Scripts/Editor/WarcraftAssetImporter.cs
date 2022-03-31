@@ -18,6 +18,9 @@ public class WarcraftAssetImporter : EditorWindow {
 	private UnityWebRequest currentRequest = null;
 	private EditorCoroutine importingCoroutine = null;
 
+    [SerializeField]
+    private string dataWarPath = string.Empty;
+
     [MenuItem("Window/Warcraft Asset Importer _w", false, (int)'W')]
     private static void Init() {
 		// because the Inspector class is internal, we need to get it through reflection
@@ -45,47 +48,51 @@ public class WarcraftAssetImporter : EditorWindow {
     }
 
     private IEnumerator Download(string url, int stepNumber, int totalSteps) {
-	    this.currentRequest = new UnityWebRequest(url);
-	    this.currentRequest.downloadHandler = new DownloadHandlerBuffer();
-	    this.currentRequest.SendWebRequest();
-	    
-	    string progressInfo = $"Step {stepNumber}/{totalSteps}: Downloading {Path.GetFileNameWithoutExtension(url)}";
-	    
-	    do {
-		    EditorUtility.DisplayProgressBar(
-			    WarcraftAssetImporter.WindowTitle, 
-			    progressInfo,
-			    this.currentRequest.downloadProgress
-		    );
-		    
-		    yield return null;
-	    } while (! this.currentRequest.downloadHandler.isDone);
+        this.currentRequest = new UnityWebRequest(url);
+        this.currentRequest.downloadHandler = new DownloadHandlerBuffer();
+        this.currentRequest.SendWebRequest();
 
-	    if (this.currentRequest.isNetworkError || this.currentRequest.isHttpError) {
-		    Debug.LogError(this.currentRequest.error);
-		    this.Abort();
-		    yield break;
-	    } 
+        string progressInfo = $"Step {stepNumber}/{totalSteps}: Downloading {Path.GetFileNameWithoutExtension(url)}";
 
-	    string path = Path.Combine(Application.dataPath, WarcraftAssetImporter.ToolsPath, Path.GetFileName(url));
-	    File.WriteAllBytes(path, this.currentRequest.downloadHandler.data);
+        do {
+            EditorUtility.DisplayProgressBar(
+                WarcraftAssetImporter.WindowTitle,
+                progressInfo,
+                this.currentRequest.downloadProgress
+            );
+
+            yield return null;
+        } while (!this.currentRequest.downloadHandler.isDone);
+
+        if (this.currentRequest.isNetworkError || this.currentRequest.isHttpError) {
+            Debug.LogError(this.currentRequest.error);
+            this.Abort();
+            yield break;
+        }
+
+        string path = Path.Combine(Application.dataPath, WarcraftAssetImporter.ToolsPath, Path.GetFileName(url));
+        File.WriteAllBytes(path, this.currentRequest.downloadHandler.data);
     }
-    
-    private IEnumerator Import() {
-	    EditorUtility.DisplayProgressBar(WindowTitle, "Preparing...", 0.0f);
-            
-	    if (! AssetDatabase.IsValidFolder($"Assets/{WarcraftAssetImporter.ToolsPath}")) {
-		    AssetDatabase.CreateFolder("Assets", WarcraftAssetImporter.ToolsPath);
-	    }
 
-	    string[] toolFilenames = {WarcraftAssetImporter.FFMpegFilename, WarcraftAssetImporter.War1toolFilename};
+    private IEnumerator DownloadTools() {
+        if (!AssetDatabase.IsValidFolder($"Assets/{WarcraftAssetImporter.ToolsPath}")) {
+            AssetDatabase.CreateFolder("Assets", WarcraftAssetImporter.ToolsPath);
+        }
+
+        string[] toolFilenames = { WarcraftAssetImporter.FFMpegFilename, WarcraftAssetImporter.War1toolFilename };
         int step = 1;
         int totalSteps = toolFilenames.Length;
 
-	    foreach (string toolFilename in toolFilenames) {
-		    string toolURL = WarcraftAssetImporter.ToolsURL + toolFilename;
-		    yield return EditorCoroutineUtility.StartCoroutine(this.Download(toolURL, step++, totalSteps), this);
-	    }
+        foreach (string toolFilename in toolFilenames) {
+            string toolURL = WarcraftAssetImporter.ToolsURL + toolFilename;
+            yield return EditorCoroutineUtility.StartCoroutine(this.Download(toolURL, step++, totalSteps), this);
+        }
+    }
+
+    private IEnumerator Import() {
+	    EditorUtility.DisplayProgressBar(WindowTitle, "Preparing...", 0.0f);
+
+        yield return this.DownloadTools();
 
 	    EditorUtility.ClearProgressBar();
 	    AssetDatabase.Refresh();
@@ -94,18 +101,63 @@ public class WarcraftAssetImporter : EditorWindow {
 	    
 	    this.Repaint();
     }
-    
+
     private void OnGUI() {
-	    if (this.importingCoroutine == null) {
-		    if (GUILayout.Button("Import")) {
-			    this.importingCoroutine = EditorCoroutineUtility.StartCoroutine(this.Import(), this);
-		    }
-	    } else {
-		    GUILayout.Label("Importing...");
-		    
-		    if (GUILayout.Button("Abort")) {
-			    this.Abort();
-		    }
-	    }
+        this.RenderStatus();
+        this.RenderImporter();
+    }
+
+    private void RenderImporter() {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Importer:", EditorStyles.boldLabel);
+
+        if (this.importingCoroutine == null) {
+            GUILayout.BeginHorizontal();
+            EditorGUILayout.TextField("Path to DATA.WAR:", this.dataWarPath);
+
+            if (GUILayout.Button("...", GUILayout.ExpandWidth(false))) {
+                this.dataWarPath = EditorUtility.OpenFilePanelWithFilters(
+                    "Select Warcraft: Orcs and Humans' DATA.WAR file",
+                    ".",
+                    new string[] { "WAR files", "WAR" }
+                );
+            }
+
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("Import assets")) {
+                this.importingCoroutine = EditorCoroutineUtility.StartCoroutine(this.Import(), this);
+            }
+        } else {
+            GUILayout.Label("Importing...");
+
+            if (GUILayout.Button("Abort")) {
+                this.Abort();
+            }
+        }
+    }
+
+    private void RenderStatus() {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Status:", EditorStyles.boldLabel);
+
+        string[] toolFilenames = { WarcraftAssetImporter.FFMpegFilename, WarcraftAssetImporter.War1toolFilename };
+
+        foreach (string toolFilename in toolFilenames) {
+            string toolPath = $"Assets/Tools/{toolFilename}";
+            bool ready = string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(toolPath));
+            string icon = ready ? "redLight" : "greenLight";
+
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label(
+                EditorGUIUtility.IconContent(icon),
+                GUILayout.MaxHeight(EditorGUIUtility.singleLineHeight),
+                GUILayout.ExpandWidth(false)
+            );
+
+            GUILayout.Label(toolFilename);
+            GUILayout.EndHorizontal();
+        }
     }
 }
