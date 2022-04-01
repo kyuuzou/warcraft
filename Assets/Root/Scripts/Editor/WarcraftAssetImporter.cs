@@ -45,6 +45,8 @@ public class WarcraftAssetImporter : EditorWindow {
 		    EditorCoroutineUtility.StopCoroutine(this.importingCoroutine);
 		    this.importingCoroutine = null;
 	    }
+
+        AssetDatabase.Refresh();
     }
 
     private IEnumerator Download(string url, int stepNumber, int totalSteps) {
