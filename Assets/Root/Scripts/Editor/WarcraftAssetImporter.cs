@@ -48,6 +48,13 @@ public class WarcraftAssetImporter : EditorWindow {
     }
 
     private IEnumerator Download(string url, int stepNumber, int totalSteps) {
+        string path = Path.Combine(Application.dataPath, WarcraftAssetImporter.ToolPath, Path.GetFileName(url)); this.currentRequest = new UnityWebRequest(url);
+
+        if (File.Exists(path)) {
+            Debug.Log($"File exists! Skipping {Path.GetFileName(url)}");
+            yield break;
+        }
+
         this.currentRequest = new UnityWebRequest(url);
         this.currentRequest.downloadHandler = new DownloadHandlerBuffer();
         this.currentRequest.SendWebRequest();
