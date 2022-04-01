@@ -65,8 +65,8 @@ crashlytics-build.properties
 # Warcraft Asset Importer
 Assets/Warcraft Resources
 Assets/Warcraft Resources.meta
-Assets/Tools
-Assets/Tools.meta
+Assets/Tools/ffmpeg*
+Assets/Tools/war1tool*
 
 # IntelliJ
 .idea
