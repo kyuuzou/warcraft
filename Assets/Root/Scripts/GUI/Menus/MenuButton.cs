@@ -32,7 +32,7 @@ public class MenuButton : MonoBehaviour {
         
 		Vector3 position = this.guiCamera.WorldToScreenPoint (this.transform.position);
         position.x /= Screen.width;
-        position.y = position.y / Screen.height - 0.007f;
+        position.y = position.y / Screen.height;
         guiText.transform.position = position;
     }
 
