@@ -63,8 +63,9 @@ crashlytics-build.properties
 *StyleCop.Cache.meta
 
 # Warcraft Asset Importer
-Assets/Warcraft Resources
-Assets/Warcraft Resources.meta
+Assets/Warcraft Resources/**/*.*
+!Assets/Warcraft Resources/**/*meta
+
 Assets/Tools/ffmpeg*
 Assets/Tools/war1tool*
 Reference Material*
