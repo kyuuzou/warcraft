@@ -117,9 +117,7 @@ public class WarcraftAssetImporter : EditorWindow {
         script = script.Replace("{DATA_WAR_PATH}", this.dataWarPath);
         script = script.Replace("{TOOL_PATH}", toolPath);
 
-        string command = $"-NoExit {script}";
-
-        Process process = Process.Start("powershell.exe", command);
+        Process process = Process.Start("powershell.exe", script);
         process.WaitForExit();
         process.Close();
     }
