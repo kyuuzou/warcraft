@@ -20,10 +20,51 @@
     $input.Close()
 }
 
+Function CopyFolder{
+    Param(  
+        [Parameter(Mandatory=$true)]  
+        [string]$sourcePath,  
+        [Parameter(Mandatory=$true)]  
+        [string]$destinationPath  
+    )  
+
+    $files = Get-ChildItem -Path $sourcePath -Recurse -Filter "*.*"  
+  
+    foreach($file in $files){  
+        $sourcePathFile = $file.FullName  
+        $destinationPathFile = $file.FullName.Replace($sourcePath,  $destinationPath)  
+  
+        $exists = Test-Path $destinationPathFile  
+  
+        if(!$exists) {  
+            $dir = Split-Path -parent $destinationPathFile  
+            if (!(Test-Path($dir))) { New-Item -ItemType directory -Path $dir }  
+            Copy-Item -Path $sourcePathFile -Destination $destinationPathFile -Recurse -Force  
+        } else {  
+            $isFile = Test-Path -Path $destinationPathFile -PathType Leaf  
+         
+            if($isFile) {  
+                $different = Compare-Object -ReferenceObject $(Get-Content $sourcePathFile) -DifferenceObject $(Get-Content $destinationPathFile)  
+                if(Compare-Object -ReferenceObject $(Get-Content $sourcePathFile) -DifferenceObject $(Get-Content $destinationPathFile)){  
+                $dir = Split-Path -parent $destinationPathFile  
+                if (!(Test-Path($dir))) { New-Item -ItemType directory -Path $dir }  
+  
+                    Copy-Item -Path $sourcePathFile -Destination $destinationPathFile -Recurse -Force  
+                }  
+            }  
+        }  
+    }  
+}
+
 $a = New-Object -ComObject Scripting.FileSystemObject;
 $file = $a.GetFile('{DATA_WAR_PATH}')
 $folder = $a.GetParentFolderName($file.ShortPath)
 cd {TOOL_PATH}
+
+if (Test-Path data.wc1) {
+    Remove-Item data.wc1 -Recurse
+}
+
 ./war1tool.exe -v -m $folder
 
 Get-ChildItem -Path .\ -Filter *.gz -Recurse -File -Name| ForEach-Object {
@@ -39,9 +80,7 @@ Get-ChildItem *.smp -Recurse | Rename-Item -NewName { $_.name -Replace '\.smp$',
 Get-ChildItem *.sms -Recurse | Rename-Item -NewName { $_.name -Replace '\.sms$','.sms.txt' }
 
 $path = '..\Warcraft Resources'
+Get-ChildItem -Path $path -Recurse -File | Where {($_.Extension -ne '.meta')} | Remove-Item
 
-if (Test-Path $path) {
-	Remove-Item $path -Recurse
-}
-
-Move-Item -Path data.wc1 -Destination $path
+CopyFolder data.wc1 $path
+Remove-Item data.wc1 -Recurse
