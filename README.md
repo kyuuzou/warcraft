@@ -25,7 +25,11 @@ A clone of Blizzard's classic Warcraft: Orcs and Humans from 1994, made in Unity
 
 ## Why it Exists
 
-*[placeholder]*
+Sometime in 2012, I decided to create a pixel-perfect version of Warcraft: Orcs & Humans, both as a passion project and as a learning experience.
+
+At some point in 2015, I neglected the project and ended up losing it.
+
+In 2022 I finally got my hands on an few backups of the project, and got to work trying to restore it. This project is the result of that recovery process, and the ongoing upgrade from the original version in Unity 4.0.12f1.
 
 ## Getting Started
 ```
