@@ -43,11 +43,14 @@ public class CreatePlane : ScriptableWizard
     static void CreateWizard()
     {
         cam = Camera.current;
+        
         // Hack because camera.current doesn't return editor camera if scene view doesn't have focus
-        if (!cam)
+        if (!cam) {
             cam = lastUsedCam;
-        else
+        } else {
             lastUsedCam = cam;
+        }
+
         ScriptableWizard.DisplayWizard("Create Plane", typeof(CreatePlane));
     }
  
@@ -69,16 +72,18 @@ public class CreatePlane : ScriptableWizard
     void OnWizardCreate()
     {
         GameObject plane = new GameObject();
- 
-        if (!string.IsNullOrEmpty(optionalName))
+
+        if (!string.IsNullOrEmpty(optionalName)) {
             plane.name = optionalName;
-        else
+        } else {
             plane.name = "Plane";
- 
-        if (!createAtOrigin && cam)
-            plane.transform.position = cam.transform.position + cam.transform.forward*5.0f;
-        else
+        }
+
+        if (!createAtOrigin && cam) {
+            plane.transform.position = cam.transform.position + cam.transform.forward * 5.0f;
+        } else {
             plane.transform.position = Vector3.zero;
+        }
  
         Vector2 anchorOffset;
         string anchorId;
@@ -206,9 +211,10 @@ public class CreatePlane : ScriptableWizard
  
         meshFilter.sharedMesh = m;
         m.RecalculateBounds();
- 
-        if (addCollider)
+
+        if (addCollider) {
             plane.AddComponent(typeof(BoxCollider));
+        }
  
         Selection.activeObject = plane;
     }
