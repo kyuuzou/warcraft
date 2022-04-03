@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -15,34 +15,40 @@ public class InspectorDictionaryEditor : Editor {
         
         switch (currentEvent.type) {
             case EventType.DragUpdated:
+                if (!dropArea.Contains(currentEvent.mousePosition)) {
+                    return;
+                }
+
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                break;
+
             case EventType.DragPerform:
                 if (! dropArea.Contains (currentEvent.mousePosition)) {
                     return;
                 }
                 
                 DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
-                
-                if (currentEvent.type == EventType.DragPerform) {
-                    DragAndDrop.AcceptDrag ();
+                DragAndDrop.AcceptDrag ();
                     
-                    SerializedProperty entries = this.serializedObject.FindProperty ("entries");
+                SerializedProperty entries = this.serializedObject.FindProperty ("entries");
                     
-                    int newEntriesCount = DragAndDrop.objectReferences.Length;
+                int newEntriesCount = DragAndDrop.objectReferences.Length;
 
-                    entries.arraySize += newEntriesCount;
+                entries.arraySize += newEntriesCount;
 
-                    for (int i = 0; i < newEntriesCount; i ++) {
-                        SerializedProperty element = entries.GetArrayElementAtIndex (
-                            entries.arraySize - newEntriesCount + i
-                        );
+                for (int i = 0; i < newEntriesCount; i ++) {
+                    SerializedProperty element = entries.GetArrayElementAtIndex (
+                        entries.arraySize - newEntriesCount + i
+                    );
 
-                        element.objectReferenceValue = DragAndDrop.objectReferences[i];
-                    }
-
-                    this.serializedObject.ApplyModifiedProperties ();
+                    element.objectReferenceValue = DragAndDrop.objectReferences[i];
                 }
 
+                this.serializedObject.ApplyModifiedProperties ();
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {currentEvent.type}");
         }
     }
 

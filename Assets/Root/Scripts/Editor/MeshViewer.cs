@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -364,6 +365,8 @@ public class MeshViewer : EditorWindow {
                 return 4;
             case MeshTopology.Triangles:
                 return 3;
+            default:
+                throw new NotSupportedException($"Received unexpected value: {topo}");
         }
         return 1;
     }

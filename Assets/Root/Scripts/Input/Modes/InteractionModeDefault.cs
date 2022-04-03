@@ -1,5 +1,4 @@
-// #define DEBUG
-
+using System;
 using UnityEngine;
 
 public class InteractionModeDefault : InteractionMode {
@@ -85,6 +84,9 @@ public class InteractionModeDefault : InteractionMode {
             case "Unit":
                 this.ClickUnit(collider);
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {collider.tag}");
         }
 
         return hit;

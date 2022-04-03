@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InteractionModeAttacking : InteractionMode {
@@ -65,6 +66,9 @@ public class InteractionModeAttacking : InteractionMode {
             case "Unit":
                 this.ClickUnit(collider);
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {collider.tag}");
         }
 
         return hit;

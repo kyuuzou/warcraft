@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InteractionModeHarvest : InteractionMode {
@@ -60,6 +61,9 @@ public class InteractionModeHarvest : InteractionMode {
             case "Ground":
                 this.ClickGround(collider);
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {collider.tag}");
         }
 
         return hit;

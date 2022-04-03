@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -68,6 +69,9 @@ public class DecorationData : SpawnableSpriteData {
             case MapType.Swamp:
                 texture = this.swampTexture;
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {type}");
         }
 
         return texture;

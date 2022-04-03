@@ -49,6 +49,9 @@ public partial class Building : SpawnableSprite {
                 case AnimationType.ConstructionStage2:
                     animation.OverrideTexture = this.Data.GetTexture (mapType, true);
                     break;
+
+                default:
+                    throw new NotSupportedException($"Received unexpected value: {animation}");
             }
         }
     }

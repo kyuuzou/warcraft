@@ -401,6 +401,9 @@ public partial class Unit : SpawnableSprite {
                     case AnimationType.Mending:
                         this.GetTrait<IUnitTraitMender> ().MendAfterCooldown ();
                         break;
+
+                    default:
+                        throw new NotSupportedException($"Received unexpected value: {animationType}");
                 }
 
                 break;
@@ -408,6 +411,9 @@ public partial class Unit : SpawnableSprite {
             case AnimationTriggerType.OnMending:
                 this.OnMend ();
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {triggerType}");
         }
     }
     

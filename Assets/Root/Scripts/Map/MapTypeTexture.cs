@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
 [System.Serializable]
 public class MapTypeTexture {
@@ -28,6 +28,9 @@ public class MapTypeTexture {
             case MapType.Swamp:
                 texture = this.swampTexture;
                 break;
+
+            default:
+                throw new NotSupportedException($"Received unexpected value: {mapType}");
         }
 
         return texture;        
