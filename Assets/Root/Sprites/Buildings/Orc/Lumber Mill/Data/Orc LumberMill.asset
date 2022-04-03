@@ -38,8 +38,8 @@ MonoBehaviour:
   minableTrait: {fileID: 0}
   researcherTrait: {fileID: 11400000, guid: d4a1e0fd6a521fa4e9a3423d20eb12ab, type: 2}
   trainerTrait: {fileID: 0}
-  forestTexture: {fileID: 2800000, guid: e5481a2bb54d7cc49b6e6df809a8f911, type: 3}
-  forestInConstruction: {fileID: 2800000, guid: e71cbb603f851ac4c95c5521f003c7e3,
+  forestTexture: {fileID: 2800000, guid: 7580f931da2f707419bed3e60f77b85f, type: 3}
+  forestInConstruction: {fileID: 2800000, guid: 75df64f4d908ae94bb9ebc83ab1d1d1b,
     type: 3}
-  swampTexture: {fileID: 2800000, guid: bbb97a1d5f7c1a54fb39a80de10544fe, type: 3}
-  swampInConstruction: {fileID: 2800000, guid: a7be8d6b36422744ba6886d9258a410d, type: 3}
+  swampTexture: {fileID: 2800000, guid: 375a583f7b9ab93418d60048185cd246, type: 3}
+  swampInConstruction: {fileID: 2800000, guid: 26b90da5e821bdc44ac7457535b53725, type: 3}

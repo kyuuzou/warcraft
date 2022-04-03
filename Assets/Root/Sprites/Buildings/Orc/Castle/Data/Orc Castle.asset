@@ -35,7 +35,7 @@ MonoBehaviour:
   minableTrait: {fileID: 0}
   researcherTrait: {fileID: 0}
   trainerTrait: {fileID: 0}
-  forestTexture: {fileID: 2800000, guid: 75297792e6275d54f95f2a0288fcad85, type: 3}
+  forestTexture: {fileID: 2800000, guid: 9f0d5531ecc193d49898d31ad969e9e3, type: 3}
   forestInConstruction: {fileID: 0}
-  swampTexture: {fileID: 2800000, guid: 280d84f99ba03e7498a4d6a60a65e005, type: 3}
+  swampTexture: {fileID: 2800000, guid: 92cea4d2eff073d4dbc8d45bc3749279, type: 3}
   swampInConstruction: {fileID: 0}
