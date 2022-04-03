@@ -61,7 +61,7 @@ public class SpawnFactory : MonoBehaviour {
     private Dictionary<ItemIdentifier, Item> itemByIdentifier;
     private Dictionary<Type, TraitData> traitByType;
 
-    private static int spawnCount = 0;
+    private int spawnCount = 0;
 
     private void Awake () {
         this.map = ServiceLocator.Instance.Map;
@@ -243,9 +243,9 @@ public class SpawnFactory : MonoBehaviour {
             Quaternion.identity
         ) as Building;
 
-        SpawnFactory.spawnCount ++;
+        this.spawnCount ++;
         building.transform.parent = this.buildingParent;
-        building.name = string.Format ("{0} {1}", buildingType.ToString (), SpawnFactory.spawnCount);
+        building.name = string.Format ("{0} {1}", buildingType.ToString (), this.spawnCount);
 
         building.SetBuildingType (buildingType);
         building.Faction = faction;
@@ -281,9 +281,9 @@ public class SpawnFactory : MonoBehaviour {
             type == DecorationType.Unknown ? this.spriteDecorationPrefab : this.meshDecorationPrefab
         ) as Decoration;
         
-        SpawnFactory.spawnCount ++;
+        this.spawnCount ++;
         decoration.transform.parent = this.decorationParent;
-        decoration.name = string.Format ("{0} {1}", type.ToString (), SpawnFactory.spawnCount);
+        decoration.name = string.Format ("{0} {1}", type.ToString (), this.spawnCount);
         
         decoration.SetDecorationType (type);
         decoration.Faction = faction;
@@ -331,9 +331,9 @@ public class SpawnFactory : MonoBehaviour {
     public Unit SpawnUnit (UnitType unitType, Faction faction) {
         Unit unit = GameObject.Instantiate (this.unitPrefab) as Unit;
 
-        SpawnFactory.spawnCount ++;
+        this.spawnCount ++;
         unit.transform.parent = this.unitParent;
-        unit.name = string.Format ("{0} {1}", unitType.ToString (), SpawnFactory.spawnCount);
+        unit.name = string.Format ("{0} {1}", unitType.ToString (), this.spawnCount);
 
         unit.Faction = faction;
         unit.SetUnitType (unitType);
