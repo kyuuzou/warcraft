@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class InputHandler : MonoBehaviour {
 
@@ -16,35 +15,37 @@ public class InputHandler : MonoBehaviour {
     private InteractionMode[] modes;
     private InteractionMode currentMode;
 
-    private void Awake () {
-        if (InputHandler.Instance != null && InputHandler.Instance != this)
-            MonoBehaviour.Destroy (this.gameObject);
-        
+    private void Awake() {
+        if (InputHandler.Instance != null && InputHandler.Instance != this) {
+            MonoBehaviour.Destroy(this.gameObject);
+        }
+
         InputHandler.Instance = this;
 
         this.modes = new InteractionMode[4];
-        this.modes[(int) InteractionModeType.Attacking] = new InteractionModeAttacking ();
-        this.modes[(int) InteractionModeType.Building]  = new InteractionModeBuilding ();
-        this.modes[(int) InteractionModeType.Harvest]   = new InteractionModeHarvest ();
-        this.modes[(int) InteractionModeType.Regular]   = new InteractionModeDefault ();
+        this.modes[(int)InteractionModeType.Attacking] = new InteractionModeAttacking();
+        this.modes[(int)InteractionModeType.Building] = new InteractionModeBuilding();
+        this.modes[(int)InteractionModeType.Harvest] = new InteractionModeHarvest();
+        this.modes[(int)InteractionModeType.Regular] = new InteractionModeDefault();
 
-        this.currentMode = this.modes[(int) InteractionModeType.Regular];
+        this.currentMode = this.modes[(int)InteractionModeType.Regular];
 
         InputHandler.Enabled = true;
     }
 
-    public void SetMode (InteractionModeType type, InteractionModeArgs args = null) {
-        this.currentMode.DisableMode ();
-        this.currentMode = this.modes[(int) type];
-        this.currentMode.EnableMode (args);
+    public void SetMode(InteractionModeType type, InteractionModeArgs args = null) {
+        this.currentMode.DisableMode();
+        this.currentMode = this.modes[(int)type];
+        this.currentMode.EnableMode(args);
     }
 
-    private void Start () {
-        foreach (InteractionMode mode in this.modes)
-            mode.Start ();
+    private void Start() {
+        foreach (InteractionMode mode in this.modes) {
+            mode.Start();
+        }
     }
-    
-    private void Update () {
-        this.currentMode.Update ();
+
+    private void Update() {
+        this.currentMode.Update();
     }
 }

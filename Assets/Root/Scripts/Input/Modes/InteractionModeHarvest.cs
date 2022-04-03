@@ -1,28 +1,27 @@
 using UnityEngine;
-using System.Collections;
 
 public class InteractionModeHarvest : InteractionMode {
-    
+
     private Unit harvester;
-    
-    public InteractionModeHarvest () : base () {
-        
+
+    public InteractionModeHarvest() : base() {
+
     }
-    
-    private void ClickBuilding (Collider2D collider) {
-        Building building = collider.GetComponent<Building> ();
-        
+
+    private void ClickBuilding(Collider2D collider) {
+        Building building = collider.GetComponent<Building>();
+
         if (building.Type == BuildingType.GoldMine) {
-            this.harvester.Mine (building);
-            this.harvester.PressCancel ();
-            
-            InputHandler.Instance.SetMode (InteractionModeType.Regular);
+            this.harvester.Mine(building);
+            this.harvester.PressCancel();
+
+            InputHandler.Instance.SetMode(InteractionModeType.Regular);
         }
     }
-    
-    private void ClickGround (Collider2D collider) {
-        TileSlot slot = collider.GetComponent<TileSlot> ();
-        
+
+    private void ClickGround(Collider2D collider) {
+        TileSlot slot = collider.GetComponent<TileSlot>();
+
         if (slot.Tile.Type == TileType.Tree) {
             /*
             this.harvester.GetTrait<UnitTraitHarvester>(). (slot.Tile);
@@ -31,36 +30,38 @@ public class InteractionModeHarvest : InteractionMode {
             InputHandler.Instance.SetMode (InteractionModeType.Regular);*/
         }
     }
-    
-    public override void DisableMode () {
-        
+
+    public override void DisableMode() {
+
     }
-    
-    public override void EnableMode (InteractionModeArgs args = null) {
-        if (args == null)
+
+    public override void EnableMode(InteractionModeArgs args = null) {
+        if (args == null) {
             return;
-        
-        InteractionModeHarvestArgs modeArgs = (InteractionModeHarvestArgs) args;
-        this.harvester = modeArgs.GetHarvester ();
+        }
+
+        InteractionModeHarvestArgs modeArgs = (InteractionModeHarvestArgs)args;
+        this.harvester = modeArgs.GetHarvester();
     }
-    
-    protected override RaycastHit2D HandleClick () {
-        RaycastHit2D hit = base.HandleClick ();
+
+    protected override RaycastHit2D HandleClick() {
+        RaycastHit2D hit = base.HandleClick();
         Collider2D collider = hit.collider;
-        
-        if (collider == null)
+
+        if (collider == null) {
             return hit;
-        
+        }
+
         switch (collider.tag) {
             case "Building":
-                this.ClickBuilding (collider);
+                this.ClickBuilding(collider);
                 break;
-            
+
             case "Ground":
-                this.ClickGround (collider);
+                this.ClickGround(collider);
                 break;
         }
-        
+
         return hit;
     }
 }

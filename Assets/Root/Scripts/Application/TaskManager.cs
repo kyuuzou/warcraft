@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class TaskManager : MonoBehaviour {
 
@@ -8,7 +8,7 @@ public class TaskManager : MonoBehaviour {
     public static TaskManager Instance {
         get {
             if (TaskManager.instance == null) {
-                GameObject gameObject = new GameObject ("Task Manager");
+                GameObject gameObject = new GameObject("Task Manager");
                 TaskManager.Instance = gameObject.AddComponent<TaskManager>();
             }
 
@@ -28,34 +28,37 @@ public class Task {
 
     private IEnumerator coroutine;
 
-    public delegate void FinishedHandler ();
+    public delegate void FinishedHandler();
     public event FinishedHandler Finished;
 
-    public Task (IEnumerator coroutine, bool autoStart = true, Task parent = null) {
+    public Task(IEnumerator coroutine, bool autoStart = true, Task parent = null) {
         this.coroutine = coroutine;
-        this.children = new List<Task> ();
+        this.children = new List<Task>();
 
         this.Paused = false;
         this.Running = false;
         this.Aborted = false;
 
-        if (parent != null)
-            parent.AddChild (this);
+        if (parent != null) {
+            parent.AddChild(this);
+        }
 
-        if (autoStart)
-            this.Start ();
+        if (autoStart) {
+            this.Start();
+        }
     }
 
-    public void AddChild (Task task) {
-        this.children.Add (task);
+    public void AddChild(Task task) {
+        this.children.Add(task);
     }
 
-    private void OnFinished () {
-        if (this.Finished != null)
-            this.Finished ();
+    private void OnFinished() {
+        if (this.Finished != null) {
+            this.Finished();
+        }
     }
 
-    private IEnumerator ProcessCoroutine () {
+    private IEnumerator ProcessCoroutine() {
         yield return null;
 
         IEnumerator coroutine = this.coroutine;
@@ -64,31 +67,32 @@ public class Task {
             if (this.Paused) {
                 yield return null;
             } else {
-                if (coroutine != null && coroutine.MoveNext ())
+                if (coroutine != null && coroutine.MoveNext()) {
                     yield return coroutine.Current;
-                else {
+                } else {
                     //Debug.Log ("ProcessRoutine finished");
                     this.Running = false;
                 }
             }
         }
 
-        this.OnFinished ();
+        this.OnFinished();
     }
 
-    public void Start () {
+    public void Start() {
         this.Running = true;
-        TaskManager.Instance.StartCoroutine (this.ProcessCoroutine ());
+        TaskManager.Instance.StartCoroutine(this.ProcessCoroutine());
     }
 
-    public IEnumerator YieldStart () {
+    public IEnumerator YieldStart() {
         this.Running = true;
-        yield return TaskManager.Instance.StartCoroutine (this.ProcessCoroutine ());
+        yield return TaskManager.Instance.StartCoroutine(this.ProcessCoroutine());
     }
 
-    public void Stop () {
-        foreach (Task child in this.children)
-            child.Stop ();
+    public void Stop() {
+        foreach (Task child in this.children) {
+            child.Stop();
+        }
 
         this.Running = false;
         this.Aborted = true;

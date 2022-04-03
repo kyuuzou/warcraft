@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Grid : SceneObject {
-    
+
     [SerializeField]
     private int columns = 15;
     public int Columns {
@@ -30,50 +30,52 @@ public class Grid : SceneObject {
 
     private Rect viewport;
     private IntVector2 position = new IntVector2(-1, -1);
-    
+
     //Distance in pixels from the upper left edge of the grid to the origin of the world coordinates
     private IntVector2 center;
-    
+
     [SerializeField]
     private Transform slot;
-    
+
     private Map map;
     private TileSlot[,] slots;
-    
-    private void Awake () {
+
+    private void Awake() {
         Vector3 position = this.transform.position;
-        
+
         this.center = new IntVector2(
-            Mathf.Abs (position.x),
-            Mathf.Abs (position.y)
+            Mathf.Abs(position.x),
+            Mathf.Abs(position.y)
         );
-        
-        this.viewport = new Rect (position.x - 16.0f, position.y - 16.0f, this.columns * 32.0f, this.rows * 32.0f);
-        
-        Debug.DrawLine (
-            new Vector3 (this.viewport.xMin, this.viewport.yMin),
-            new Vector3 (this.viewport.xMax, this.viewport.yMax),
+
+        this.viewport = new Rect(position.x - 16.0f, position.y - 16.0f, this.columns * 32.0f, this.rows * 32.0f);
+
+        Debug.DrawLine(
+            new Vector3(this.viewport.xMin, this.viewport.yMin),
+            new Vector3(this.viewport.xMax, this.viewport.yMax),
             Color.cyan
         );
     }
-    
-    public IntVector2 GetPosition () {
+
+    public IntVector2 GetPosition() {
         return this.position;
     }
-    
-    public TileSlot GetTileSlot (MapTile tile) {
+
+    public TileSlot GetTileSlot(MapTile tile) {
         IntVector2 tilePosition = tile.MapPosition;
-        
-        if ((tilePosition.X < this.position.X) || (tilePosition.X > this.position.X + this.columns))
+
+        if ((tilePosition.X < this.position.X) || (tilePosition.X > this.position.X + this.columns)) {
             return null;
-        
-        if ((tilePosition.Y < this.position.Y) || (tilePosition.Y > this.position.Y + this.rows))
+        }
+
+        if ((tilePosition.Y < this.position.Y) || (tilePosition.Y > this.position.Y + this.rows)) {
             return null;
-        
+        }
+
         return this.slots[tilePosition.X - this.position.X, tilePosition.Y - this.position.Y];
     }
-    
-    public Rect GetViewport () {
+
+    public Rect GetViewport() {
         return this.viewport;
     }
 
@@ -95,57 +97,61 @@ public class Grid : SceneObject {
         this.SetPosition(this.position);
     }
 
-    public void SetPosition (IntVector2 position) {
-        if (this.position == position)
+    public void SetPosition(IntVector2 position) {
+        if (this.position == position) {
             return;
-        
+        }
+
         this.position = position;
-        
+
         MapTile tile;
-        
+
         for (int row = 0; row < this.map.Rows; row++) {
             for (int column = 0; column < this.map.Columns; column++) {
-                
-                tile = this.map.GetTile (column, row);
-                
+
+                tile = this.map.GetTile(column, row);
+
                 bool visible = false;
-                
-                if ((column >= (int)position.X) && column < (this.columns + (int)position.X))
-                    if ((row >= (int)position.Y) && row < (this.rows + (int)position.Y))
+
+                if ((column >= (int)position.X) && column < (this.columns + (int)position.X)) {
+                    if ((row >= (int)position.Y) && row < (this.rows + (int)position.Y)) {
                         visible = true;
-                    
+                    }
+                }
+
                 //tile.SetVisible (visible);
-                
+
                 tile.RealPosition = new Vector3(
                     (column - position.X) * 32.0f - this.center.X,
                     this.center.Y - ((row - position.Y) * 32.0f),
                     -1.0f
                 );
-                
+
                 if (visible) {
-                    this.slots[column - (int)position.X, row - (int)position.Y].SetTile (tile);
+                    this.slots[column - (int)position.X, row - (int)position.Y].SetTile(tile);
                 }
             }
         }
     }
-    
-    private void Start () {
+
+    private void Start() {
         this.map = ServiceLocator.Instance.Map;
 
         this.slots = new TileSlot[this.columns, this.rows];
-        
-        for (int column = 0; column < this.columns; column ++)
-            for (int row = 0; row < this.rows; row ++) {
-                Transform transform = Transform.Instantiate (this.slot, Vector3.zero, this.slot.rotation) as Transform;
+
+        for (int column = 0; column < this.columns; column++) {
+            for (int row = 0; row < this.rows; row++) {
+                Transform transform = Transform.Instantiate(this.slot, Vector3.zero, this.slot.rotation) as Transform;
                 transform.name = this.slot.name;
-            
+
                 TileSlot slot = transform.GetComponent<TileSlot>();
-                slot.SetPosition (column, row);
-                slot.SetParent (this.transform);
-                slot.Initialize (null);
-                
+                slot.SetPosition(column, row);
+                slot.SetParent(this.transform);
+                slot.Initialize(null);
+
                 this.slots[column, row] = slot;
             }
+        }
     }
 
     private void Update() {

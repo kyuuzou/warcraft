@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Minimap : SceneObject {
 
@@ -54,9 +54,11 @@ public class Minimap : SceneObject {
     }
 
     private void ClearFrontLayer() {
-        for (int row = 0; row < 128; row++)
-            for (int column = 0; column < 128; column++)
+        for (int row = 0; row < 128; row++) {
+            for (int column = 0; column < 128; column++) {
                 this.frontLayerTexture.SetPixel(column, row, Color.clear);
+            }
+        }
     }
 
     private void ColorBuildings() {
@@ -86,17 +88,19 @@ public class Minimap : SceneObject {
     }
 
     private void DrawRectangle(int column, int row, Color color) {
-        for (int x = column - this.horizontalRadius + 1; x < column + this.horizontalRadius; x++)
+        for (int x = column - this.horizontalRadius + 1; x < column + this.horizontalRadius; x++) {
             for (int y = row - this.verticalRadius; y <= row + this.verticalRadius; y += this.verticalRadius * 2 - 2) {
                 this.frontLayerTexture.SetPixel(x, y, color);
                 this.frontLayerTexture.SetPixel(x, y + 1, color);
             }
+        }
 
-        for (int y = row - this.verticalRadius; y < row + this.verticalRadius; y++)
+        for (int y = row - this.verticalRadius; y < row + this.verticalRadius; y++) {
             for (int x = column - this.horizontalRadius; x <= column + this.horizontalRadius; x += this.horizontalRadius * 2 - 2) {
                 this.frontLayerTexture.SetPixel(x, y, color);
                 this.frontLayerTexture.SetPixel(x + 1, y, color);
             }
+        }
     }
 
     private void HandleClick(Vector3 clickPosition) {
@@ -109,25 +113,25 @@ public class Minimap : SceneObject {
     }
 
     private void HandleInput() {
-//        if (InputHandler.Enabled) {
-            if (Input.GetMouseButtonDown(0)) {
-                Vector3 position = Input.mousePosition;
+        //        if (InputHandler.Enabled) {
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 position = Input.mousePosition;
 
-                if (this.invertedViewport.Contains(position)) {
-                    this.isPressing = true;
-                    this.HandleClick(position);
-                }
-
-            } else if (Input.GetMouseButtonUp(0)) {
-                this.isPressing = false;
-
-            } else if (Input.GetMouseButton(0)) {
-                if (this.isPressing) {
-                    //to-do: lock the mouse in the viewport
-                    this.HandleClick(Input.mousePosition);
-                }
+            if (this.invertedViewport.Contains(position)) {
+                this.isPressing = true;
+                this.HandleClick(position);
             }
-       // }
+
+        } else if (Input.GetMouseButtonUp(0)) {
+            this.isPressing = false;
+
+        } else if (Input.GetMouseButton(0)) {
+            if (this.isPressing) {
+                //to-do: lock the mouse in the viewport
+                this.HandleClick(Input.mousePosition);
+            }
+        }
+        // }
     }
 
     public void Initialize(IntVector2 position) {
@@ -138,8 +142,9 @@ public class Minimap : SceneObject {
         coordinate = Mathf.Max(maximum, coordinate);
         coordinate = Mathf.Min(minimum, coordinate);
 
-        if (coordinate % 2 == 0)
+        if (coordinate % 2 == 0) {
             coordinate--;
+        }
     }
 
     public void RemoveBuilding(Building building) {
@@ -176,9 +181,9 @@ public class Minimap : SceneObject {
         this.backLayerTexture.Apply();
         this.backLayerMaterial.mainTexture = this.backLayerTexture;
 
-        if (this.position != new IntVector2(0, 0))
+        if (this.position != new IntVector2(0, 0)) {
             this.UpdatePosition(this.position);
-        else {
+        } else {
             this.frontLayerTexture.Apply();
             this.frontLayerMaterial.mainTexture = this.frontLayerTexture;
         }
