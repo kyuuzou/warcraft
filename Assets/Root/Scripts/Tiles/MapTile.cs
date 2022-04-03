@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class MapTile : ITarget {
 
-    public static Color UndiscoveredColor = new Color (0.2f, 0.2f, 0.2f, 1.0f);
+    public static readonly Color UndiscoveredColor = new Color (0.2f, 0.2f, 0.2f, 1.0f);
 
     public TileType Type { get; private set; }
     public TileData Data { get; private set; }
