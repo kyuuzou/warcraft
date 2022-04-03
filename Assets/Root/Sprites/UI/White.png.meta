@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 23bf2614236c68e41893b48c96745adb
+guid: ec2f1ccc67776b446a56c1188dc99b1c
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: box_0
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -32,7 +31,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -41,14 +40,14 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 0.5
+  spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -105,31 +104,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: box_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 83
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 3, z: 3, w: 3}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc9610ed9d570b749a23f46f6f8a2d9b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1e07a907b46a2d84b934d259baec7974
+    spriteID: 84ef9c5c52de19b4cafd311cdcd247ae
     vertices: []
     indices: 
     edges: []
