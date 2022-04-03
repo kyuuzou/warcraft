@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 10
   m_EditorClassIdentifier: 
   factions: []
-  mapLayout: {fileID: 4900000, guid: 566b490ffb59975439da88d8bd5f3197, type: 3}
-  mapObjectives: {fileID: 4900000, guid: 177b7059c168eb64bb3f72085593a2cc, type: 3}
-  mapPresentation: {fileID: 4900000, guid: 61f14b138756efe4fa146e0a7bc8fb04, type: 3}
+  mapLayout: {fileID: 4900000, guid: dfe2e35dc73fe824d86b346449d59980, type: 3}
+  mapObjectives: {fileID: 4900000, guid: 5c659e1b4e5c41443aeef390a6ec8be8, type: 3}
+  mapPresentation: {fileID: 4900000, guid: 9078fb794626de043a4fcaecdea8c465, type: 3}
   mapType: 2
   players: []
   requirements: []

@@ -16,9 +16,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1fc17205372cc91449103ce68e4f6671, type: 2}
   - {fileID: 11400000, guid: 10d8a7f22f181c043b97cbe6dfaab5ac, type: 2}
   - {fileID: 11400000, guid: 9dcdbb0e1db8bb14c9b89385e0a5a06e, type: 2}
-  mapLayout: {fileID: 4900000, guid: 03120d012a1004d49ab70ada0d0b9bf5, type: 3}
-  mapObjectives: {fileID: 4900000, guid: 30c3baffad099774398897173481df0c, type: 3}
-  mapPresentation: {fileID: 4900000, guid: 83c0144e462a56847bfea0bd09a3b438, type: 3}
+  mapLayout: {fileID: 4900000, guid: 71f1d5eb24e3c834c944844f7fb6e2e1, type: 3}
+  mapObjectives: {fileID: 4900000, guid: 9d5796546ddf8b144afc0faf64c2b9ea, type: 3}
+  mapPresentation: {fileID: 4900000, guid: 94dcff8b261b1a141ab522eaa31fbffb, type: 3}
   mapType: 3
   players:
   - {fileID: 11400000, guid: 2eda7cea8f44b5b4fabe6913deea02c3, type: 2}
