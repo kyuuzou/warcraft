@@ -169,9 +169,9 @@ MonoBehaviour:
   - cd games\warcraft
   - war
   letterKey:
-  - {fileID: 8300000, guid: 99eb2ec71fd348b45b44ed52cb96e72e, type: 3}
-  - {fileID: 8300000, guid: db8ceb9c4be56eb4e9efa41ae3ed6a5a, type: 3}
-  enterKey: {fileID: 8300000, guid: b21229fe763d2884e81a790c94f58d1f, type: 3}
+  - {fileID: 8300000, guid: c92d5a400cfe6a4428bc47382949c346, type: 3}
+  - {fileID: 8300000, guid: db9524b498110194a87481652e9a21ae, type: 3}
+  enterKey: {fileID: 8300000, guid: 2e72e8e518e1caf47a8bdef7b6a59dcb, type: 3}
   characterWidth: 0.272
   logo: {fileID: 701770800}
 --- !u!82 &22490418
