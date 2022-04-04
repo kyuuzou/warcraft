@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   material: {fileID: 2100000, guid: b5a14827bcdb86b4d80aeb44af9b6186, type: 2}
-  overrideTexture: {fileID: 2800000, guid: 1e0c97b3106aa7c4bb9cc12cfed1d116, type: 3}
+  overrideTexture: {fileID: 0}
   mesh: {fileID: 4300000, guid: 1afd27df8ea80694bb8e0d1452367bc2, type: 2}
   tileSize: {x: 32, y: 64}
   offset: {x: 0, y: 0}

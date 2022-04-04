@@ -15,8 +15,8 @@ MonoBehaviour:
   animations:
   - {fileID: 11400000, guid: 00180d4c73db4144197053536bcffdc6, type: 2}
   tileSize:
-    x: 3
-    y: 3
+    x: 1
+    y: 1
   armourPoints: 0
   hitPoints: 25500
   manaPoints: 0
