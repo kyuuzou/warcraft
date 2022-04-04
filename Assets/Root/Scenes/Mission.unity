@@ -1566,7 +1566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &609454451
 Transform:
   m_ObjectHideFlags: 0
@@ -2715,6 +2715,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 936634652}
     m_Modifications:
+    - target: {fileID: 11400004, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
+      propertyPath: portraitTexture.dungeonTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 4709cc557b30907479a19036f0757985, type: 3}
+    - target: {fileID: 11400004, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
+      propertyPath: portraitTexture.forestTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: ed9ed8b8efbfe714ba9b12807639ea85, type: 3}
+    - target: {fileID: 11400004, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
+      propertyPath: portraitTexture.swampTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 4616a64b76459434ab9d231f7defe196, type: 3}
     - target: {fileID: 400002, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2747,18 +2759,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
-      propertyPath: portraitTexture.dungeonTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: 4709cc557b30907479a19036f0757985, type: 3}
-    - target: {fileID: 11400004, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
-      propertyPath: portraitTexture.forestTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: ed9ed8b8efbfe714ba9b12807639ea85, type: 3}
-    - target: {fileID: 11400004, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
-      propertyPath: portraitTexture.swampTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: 4616a64b76459434ab9d231f7defe196, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
 --- !u!4 &1283266896 stripped
@@ -2793,7 +2793,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301452133}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4221,6 +4221,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
+      propertyPath: goldText
+      value: 
+      objectReference: {fileID: 1825356288}
+    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
+      propertyPath: lumberText
+      value: 
+      objectReference: {fileID: 99183570}
+    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
+      propertyPath: currentCampaignType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
+      propertyPath: currentLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 479722, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4252,22 +4268,6 @@ PrefabInstance:
     - target: {fileID: 479722, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
-      propertyPath: goldText
-      value: 
-      objectReference: {fileID: 1825356288}
-    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
-      propertyPath: lumberText
-      value: 
-      objectReference: {fileID: 99183570}
-    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
-      propertyPath: currentCampaignType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11465368, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
-      propertyPath: currentLevel
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573f1021aceb43348801bcc7047ca6c0, type: 3}
