@@ -85,6 +85,10 @@ public class InteractionModeDefault : InteractionMode {
                 this.ClickUnit(collider);
                 break;
 
+            case "Untagged":
+                // Ignore click
+                break;
+
             default:
                 throw new NotSupportedException($"Received unexpected value: {collider.tag}");
         }
