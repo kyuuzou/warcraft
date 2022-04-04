@@ -35,7 +35,7 @@ public class MeshAnimation : CustomScriptableObject {
     }
 
     [SerializeField]
-    private Vector2 tileSize;
+    private Vector2 atlasSize;
 
     [SerializeField]
     private Vector2 offset;
@@ -52,9 +52,9 @@ public class MeshAnimation : CustomScriptableObject {
     private Vector2 relativeTileSize;
     private Vector2 relativeOffset;
     private Vector2 relativeMargin;
+    private Vector2 tileSize;
 
     private Vector2[] originalUV;
-    private Vector2 atlasSize;
 
     private int lastTriggeredFrameIndex;
 
@@ -206,10 +206,10 @@ public class MeshAnimation : CustomScriptableObject {
         if (this.texture == null) {
             Debug.LogError (string.Format ("No texture found for {0} on {1}", this.owner.name, this.Type));
         }
-        
+
         this.relativeTileSize = new Vector2 (
-            this.tileSize.x / this.texture.width,
-            this.tileSize.y / this.texture.height
+            (this.texture.width / this.atlasSize.x) / this.texture.width,
+            (this.texture.height / this.atlasSize.y) / this.texture.height
         );
         
         this.relativeOffset = new Vector2 (
@@ -220,11 +220,6 @@ public class MeshAnimation : CustomScriptableObject {
         this.relativeMargin = new Vector2 (
             (this.margin.x / this.texture.width) / this.relativeTileSize.x,
             (this.margin.y / this.texture.height) / this.relativeTileSize.y
-        );
-        
-        this.atlasSize = new Vector2 (
-            this.texture.width / (this.tileSize.x + this.margin.x),
-            this.texture.height / (this.tileSize.y + this.margin.y)
         );
     }
 
@@ -237,6 +232,11 @@ public class MeshAnimation : CustomScriptableObject {
     }
 
     private void UpdateUV () {
+        if (this.atlasSize == Vector2.zero) {
+            Debug.LogError($"Atlas size not set at {this.owner?.transform.parent?.name}:{this}");
+            return;
+        }
+
         Vector2[] uvs = new Vector2[this.originalUV.Length];
         int i = 0;
 
