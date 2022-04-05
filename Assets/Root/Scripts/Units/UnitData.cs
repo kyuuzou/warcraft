@@ -25,12 +25,6 @@ public class UnitData : SpawnableSpriteData {
         get { return this.selectionSize; }
     }
 
-    [SerializeField]
-    private bool wanderWhileIdle = true;
-    public bool WanderWhileIdle {
-        get { return this.wanderWhileIdle; }
-    }
-
     [Header ("Unit Sound")]
     
     [SerializeField]

@@ -21,7 +21,6 @@ public partial class Unit : SpawnableSprite {
     public bool OffensiveMoving { get; set; }
 
     private StatusBar statusBar;
-    private IEnumerator wanderEnumerator = null;
 
     public override SpawnableSpriteType SpriteType {
         get { return (SpawnableSpriteType) this.Type; }
@@ -458,20 +457,6 @@ public partial class Unit : SpawnableSprite {
 
     }
 
-    public override void Play (AnimationType type, bool inverted = false) {
-        base.Play (type, inverted);
-
-        if (this.Data.WanderWhileIdle) {
-            if (type == AnimationType.Idle && this.wanderEnumerator == null) {
-                this.wanderEnumerator = this.WanderCoroutine ();
-                this.StartCoroutine (this.wanderEnumerator);
-            } else if (type != AnimationType.Idle && this.wanderEnumerator != null) {
-                this.StopCoroutine (this.wanderEnumerator);
-                this.wanderEnumerator = null;
-            }
-        }
-    }
-
     public override void RefreshPosition () {
         this.GetTrait<IUnitTraitMoving> ().RefreshPosition ();
     }
@@ -596,13 +581,5 @@ public partial class Unit : SpawnableSprite {
 
     public void Stop () {
         this.GetTrait<IUnitTraitMoving> ().Deactivate ();
-    }
-    private IEnumerator WanderCoroutine () {
-        do {
-            float seconds = Random.Range (2.0f, 10.0f);
-            yield return new WaitForSeconds (seconds);
-
-            this.SetRandomDirection ();
-        } while (true);
     }
 }
