@@ -31,12 +31,6 @@ public class Settings : Singleton<Settings> {
     }
 
     [SerializeField]
-    private bool isometric = false;
-    public bool Isometric {
-        get { return this.isometric; }
-    }
-
-    [SerializeField]
     private bool skipIntro = false;
     public bool SkipIntro {
         get { return this.skipIntro; }

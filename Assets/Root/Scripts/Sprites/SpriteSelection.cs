@@ -57,10 +57,6 @@ public class SpriteSelection : MonoBehaviour {
         if (material != null) {
             this.overrideMaterial = Material.Instantiate<Material> (material);
         }
-
-        if (Settings.Instance.Isometric) {
-            this.locked = true;
-        }
     }
 
     public bool IsVisible () {

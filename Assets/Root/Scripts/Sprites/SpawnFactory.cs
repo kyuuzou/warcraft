@@ -221,12 +221,10 @@ public class SpawnFactory : MonoBehaviour {
             return this.SpawnUnit (unitType, faction, position);
         }
 
-        if (! Settings.Instance.Isometric) {
-            BuildingType buildingType = this.GetBuildingType (type);
+        BuildingType buildingType = this.GetBuildingType (type);
                 
-            if (buildingType != BuildingType.None) {
-                return this.SpawnBuilding (buildingType, faction, position);
-            }
+        if (buildingType != BuildingType.None) {
+            return this.SpawnBuilding (buildingType, faction, position);
         }
 
         return null;
