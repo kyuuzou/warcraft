@@ -46,7 +46,7 @@ public class UnitTraitDataAttacker : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitAttacker trait = unit.gameObject.AddComponent<UnitTraitAttacker> ();
-        trait.Initialize (unit, (UnitTraitDataAttacker) UnitTraitDataAttacker.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataAttacker.Instantiate (this));
         
         unit.SetTrait<IUnitTraitAttacker> (trait);
 

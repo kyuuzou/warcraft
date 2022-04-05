@@ -24,8 +24,8 @@ public class Radar : SceneObject {
         Transform parent = collider.transform.parent;
 
         Unit targetUnit = parent.GetComponent<Unit>();
-        IntVector2 position = this.Unit.Tile.MapPosition;
-        IntVector2 targetPosition;
+        Vector2Int position = this.Unit.Tile.MapPosition;
+        Vector2Int targetPosition;
 
         if (targetUnit == null) {
             Building targetBuilding = parent.GetComponent<Building>();

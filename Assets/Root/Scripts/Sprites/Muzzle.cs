@@ -14,8 +14,8 @@ public class Muzzle {
     }
 
     [SerializeField]
-    private IntVector2 position;
-    public IntVector2 Position {
+    private Vector2Int position;
+    public Vector2Int Position {
         get { return this.position; }
     }
 }

@@ -9,7 +9,7 @@ public class UnitTraitDataNonSpellcaster : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonSpellcaster trait = unit.gameObject.AddComponent<UnitTraitNonSpellcaster> ();
-        trait.Initialize (unit, (UnitTraitDataNonSpellcaster) UnitTraitDataNonSpellcaster.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonSpellcaster.Instantiate (this));
         
         unit.SetTrait<IUnitTraitSpellcaster> (trait);
 

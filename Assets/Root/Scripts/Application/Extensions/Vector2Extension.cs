@@ -44,18 +44,6 @@ public static class Vector2Extension {
         return Mathf.Abs(a.x - b.x) <= 1 && Mathf.Abs(a.y - b.y) <= 1;
     }
 
-    public static bool IsWithinBounds(this Vector2 a, Rect bounds) {
-        if (!a.x.IsWithinRange(bounds.xMin, bounds.xMax)) {
-            return false;
-        }
-
-        if (!a.y.IsWithinRange(bounds.yMin, bounds.yMax)) {
-            return false;
-        }
-
-        return true;
-    }
-
     public static Vector2 Multiply(this Vector2 a, Vector2 b) {
         return new Vector2(a.x * b.x, a.y * b.y);
     }

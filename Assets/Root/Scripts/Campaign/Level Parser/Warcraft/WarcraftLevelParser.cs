@@ -177,7 +177,7 @@ public class WarcraftLevelParser : ILevelParser {
             this.spawnFactory.SpawnDecoration (
                 tileType,
                 this.gameController.GetFaction (FactionIdentifier.Neutral),
-                new IntVector2 (x, y)
+                new Vector2Int (x, y)
             );
         }
 
@@ -206,7 +206,7 @@ public class WarcraftLevelParser : ILevelParser {
 
                 string type = parameters[0].Replace ("\"", string.Empty);
                 int factionIndex = int.Parse (parameters[1]);
-                IntVector2 position = new IntVector2 (
+                Vector2Int position = new Vector2Int (
                     int.Parse (parameters[2].Replace ("{", string.Empty)),
                     int.Parse (parameters[3].Replace ("}", string.Empty))
                 );

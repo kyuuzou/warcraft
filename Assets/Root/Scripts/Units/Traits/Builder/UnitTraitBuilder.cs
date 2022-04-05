@@ -67,7 +67,7 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         //bool build = true;
 
         if (data.Rooted) {
-            IntVector2 position = this.Unit.Faction.GetRootedPosition (type);
+            Vector2Int position = this.Unit.Faction.GetRootedPosition (type);
 
             if (position != null) {
                 //build = false;

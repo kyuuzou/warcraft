@@ -9,7 +9,7 @@ public class BuildingTraitDataNonMinable : BuildingTraitData {
 
     public override BuildingTrait AddTrait (Building building) {
         BuildingTraitNonMinable trait = building.gameObject.AddComponent<BuildingTraitNonMinable> ();
-        trait.Initialize (building, (BuildingTraitDataNonMinable) BuildingTraitDataNonMinable.Instantiate (this));
+        trait.Initialize (building, BuildingTraitDataNonMinable.Instantiate (this));
         
         building.SetTrait<IBuildingTraitMinable> (trait);
         

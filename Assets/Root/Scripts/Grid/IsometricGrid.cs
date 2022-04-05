@@ -34,7 +34,7 @@ public class IsometricGrid : SceneObject {
     private MainCamera mainCamera;
     private Map map;
     private Minimap minimap;
-    private IntVector2 position = new IntVector2 (0, 0);
+    private Vector2Int position = new Vector2Int (0, 0);
     private IsometricTileSlot[,] slots;
     private Rect viewport;
     
@@ -85,22 +85,22 @@ public class IsometricGrid : SceneObject {
         return closestTile;
     }
 
-    public IntVector2 GetPosition () {
+    public Vector2Int GetPosition () {
         return this.position;
     }
     
     public IsometricTileSlot GetTileSlot (MapTile tile) {
-        IntVector2 tilePosition = tile.MapPosition;
+        Vector2Int tilePosition = tile.MapPosition;
         
-        if ((tilePosition.X < this.position.X) || (tilePosition.X > this.position.X + this.columns)) {
+        if ((tilePosition.x < this.position.x) || (tilePosition.x > this.position.x + this.columns)) {
             return null;
         }
         
-        if ((tilePosition.Y < this.position.Y) || (tilePosition.Y > this.position.Y + this.rows)) {
+        if ((tilePosition.y < this.position.y) || (tilePosition.y > this.position.y + this.rows)) {
             return null;
         }
         
-        return this.slots[(int) (tilePosition.X - this.position.X), (int) (tilePosition.Y - this.position.Y)];
+        return this.slots[tilePosition.x - this.position.x, tilePosition.y - this.position.y];
     }
     
     public Rect GetViewport () {
@@ -126,7 +126,7 @@ public class IsometricGrid : SceneObject {
             for (int row = 0; row < this.rows; row ++) {
                 Transform transform = Transform.Instantiate (
                     this.slotPrefab, Vector3.zero, this.slotPrefab.rotation
-                ) as Transform;
+                );
 
                 transform.name = this.slotPrefab.name;
                 
@@ -145,10 +145,10 @@ public class IsometricGrid : SceneObject {
         UnitGroup currentGroup = this.gameController.CurrentGroup;
 
         if (currentGroup.Units.Count > 0) {
-            IntVector2 position = currentGroup.Units[0].Tile.MapPosition * 2;
-            this.SetPosition (position * 0.5f);
+            Vector2Int position = currentGroup.Units[0].Tile.MapPosition * 2;
+            this.SetPosition (position.Multiply(0.5f));
         } else {
-            this.SetPosition(new IntVector2(0, 0));
+            this.SetPosition(new Vector2Int(0, 0));
         }
     }
 
@@ -208,10 +208,10 @@ public class IsometricGrid : SceneObject {
     public void Refresh (MapTile tile) {
         /*
         if (tile.Visible) {
-            IntVector2 tilePosition = tile.MapPosition;
+            Vector2Int tilePosition = tile.MapPosition;
             
-            int x = tilePosition.X - this.position.X;
-            int y = tilePosition.Y - this.position.Y;
+            int x = tilePosition.x - this.position.x;
+            int y = tilePosition.y - this.position.y;
 
             TileSlot slot = this.slots [x, y];
             slot.SetTile (tile);
@@ -228,9 +228,9 @@ public class IsometricGrid : SceneObject {
         this.Refresh ();
     }
     
-    public void SetPosition (IntVector2 position, bool forceRefresh = false) {
-        position.X -= Mathf.FloorToInt (this.Columns * 0.5f);
-        position.Y -= Mathf.FloorToInt (this.Rows * 0.5f);
+    public void SetPosition (Vector2Int position, bool forceRefresh = false) {
+        position.x -= Mathf.FloorToInt (this.Columns * 0.5f);
+        position.y -= Mathf.FloorToInt (this.Rows * 0.5f);
 
         if (this.position == position && ! forceRefresh) {
             return;
@@ -248,8 +248,8 @@ public class IsometricGrid : SceneObject {
                 
                 bool visible = false;
                 
-                if ((column >= (int) position.X) && column < (this.columns + (int) position.X)) {
-                    if ((row >= (int) position.Y) && row < (this.rows + (int) position.Y)) {
+                if ((column >= position.x) && column < (this.columns + position.x)) {
+                    if ((row >= position.y) && row < (this.rows + position.y)) {
                         visible = true;
                     }
                 }
@@ -257,8 +257,8 @@ public class IsometricGrid : SceneObject {
                 tile.Visible = visible;
 
                 Vector3 realPosition = new Vector3 (
-                    (column - position.X) * half.x - (row - position.Y) * half.x,
-                    (row - position.Y) * half.y + (column - position.X) * half.y + this.transform.localPosition.y,
+                    (column - position.x) * half.x - (row - position.y) * half.x,
+                    (row - position.y) * half.y + (column - position.x) * half.y + this.transform.localPosition.y,
                     -1.0f
                 );
 

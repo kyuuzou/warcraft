@@ -25,7 +25,7 @@ public class MenuButton : MonoBehaviour {
     }
 
     private void InitializeCaption () {
-        GUIText guiText = GUIText.Instantiate (this.guiTextPrefab) as GUIText;
+        GUIText guiText = GUIText.Instantiate (this.guiTextPrefab);
         guiText.name = "Caption";
         guiText.text = this.caption;
         guiText.transform.parent = this.transform;

@@ -9,7 +9,7 @@ public class UnitTraitDataNonInteractive : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonInteractive trait = unit.gameObject.AddComponent<UnitTraitNonInteractive> ();
-        trait.Initialize (unit, (UnitTraitDataNonInteractive) UnitTraitDataNonInteractive.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonInteractive.Instantiate (this));
         
         unit.SetTrait<IUnitTraitInteractive> (trait);
 

@@ -17,7 +17,7 @@ public class UnitTraitDataSpellcaster : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitSpellcaster trait = unit.gameObject.AddComponent<UnitTraitSpellcaster> ();
-        trait.Initialize (unit, (UnitTraitDataSpellcaster) UnitTraitDataSpellcaster.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataSpellcaster.Instantiate (this));
         
         unit.SetTrait<IUnitTraitSpellcaster> (trait);
 

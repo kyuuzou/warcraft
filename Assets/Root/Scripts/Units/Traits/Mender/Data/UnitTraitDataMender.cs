@@ -33,7 +33,7 @@ public class UnitTraitDataMender : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitMender trait = unit.gameObject.AddComponent<UnitTraitMender> ();
-        trait.Initialize (unit, (UnitTraitDataMender) UnitTraitDataMender.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataMender.Instantiate (this));
         
         unit.SetTrait<IUnitTraitMender> (trait);
 

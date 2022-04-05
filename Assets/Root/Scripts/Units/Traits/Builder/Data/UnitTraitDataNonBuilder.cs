@@ -9,7 +9,7 @@ public class UnitTraitDataNonBuilder : UnitTraitData {
     
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonBuilder trait = unit.gameObject.AddComponent<UnitTraitNonBuilder> ();
-        trait.Initialize (unit, (UnitTraitDataNonBuilder) UnitTraitDataNonBuilder.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonBuilder.Instantiate (this));
         
         unit.SetTrait<IUnitTraitBuilder> (trait);
         

@@ -50,25 +50,25 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
         return this.FindDirection (origin.MapPosition, destination.MapPosition, allowDiagonals);
     }
 
-    public Direction FindDirection (IntVector2 origin, IntVector2 destination, bool allowDiagonals = true) {
-        IntVector2 offset = destination - origin;
+    public Direction FindDirection (Vector2Int origin, Vector2Int destination, bool allowDiagonals = true) {
+        Vector2Int offset = destination - origin;
         //offset.y *= -1.0f;
 
-        IntVector2 absOffset = new IntVector2 (
-            Mathf.Abs (offset.X),
-            Mathf.Abs (offset.Y)
+        Vector2Int absOffset = new Vector2Int (
+            Mathf.Abs (offset.x),
+            Mathf.Abs (offset.y)
         );
 
-        if (absOffset.X > 1 || absOffset.Y > 1) {
-            if (absOffset.X > absOffset.Y) {
-                offset.X /= absOffset.X;
-                offset.Y = 0;
-            } else if (absOffset.X < absOffset.Y) {
-                offset.X = 0;
-                offset.Y /= absOffset.Y;
+        if (absOffset.x > 1 || absOffset.y > 1) {
+            if (absOffset.x > absOffset.y) {
+                offset.x /= absOffset.x;
+                offset.y = 0;
+            } else if (absOffset.x < absOffset.y) {
+                offset.x = 0;
+                offset.y /= absOffset.y;
             } else {
-                offset.X /= absOffset.X;
-                offset.Y /= absOffset.Y;
+                offset.x /= absOffset.x;
+                offset.y /= absOffset.y;
             }
         }
 

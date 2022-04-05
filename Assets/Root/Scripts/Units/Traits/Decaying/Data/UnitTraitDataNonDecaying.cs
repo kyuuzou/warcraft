@@ -9,7 +9,7 @@ public class UnitTraitDataNonDecaying : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonDecaying trait = unit.gameObject.AddComponent<UnitTraitNonDecaying> ();
-        trait.Initialize (unit, (UnitTraitDataNonDecaying) UnitTraitDataNonDecaying.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonDecaying.Instantiate (this));
         
         unit.SetTrait<IUnitTraitDecaying> (trait);
 

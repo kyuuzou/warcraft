@@ -9,7 +9,7 @@ public class BuildingTraitDataNonTrainer : BuildingTraitData {
 
     public override BuildingTrait AddTrait (Building building) {
         BuildingTraitNonTrainer trait = building.gameObject.AddComponent<BuildingTraitNonTrainer> ();
-        trait.Initialize (building, (BuildingTraitDataNonTrainer) BuildingTraitDataNonTrainer.Instantiate (this));
+        trait.Initialize (building, BuildingTraitDataNonTrainer.Instantiate (this));
         
         building.SetTrait<IBuildingTraitTrainer> (trait);
         

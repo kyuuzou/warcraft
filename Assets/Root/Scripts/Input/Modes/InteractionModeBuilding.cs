@@ -8,7 +8,7 @@ public class InteractionModeBuilding : InteractionMode {
 
     private Building building;
     private Transform buildingTransform;
-    private IntVector2 buildingSize;
+    private Vector2Int buildingSize;
     private Vector3 offset;
 
     private Unit builder;
@@ -82,12 +82,12 @@ public class InteractionModeBuilding : InteractionMode {
                 MapTile tile = slot.Tile;
                 bool invalid = false;
 
-                IntVector2 position = tile.MapPosition;
-                int column = position.X;
-                int row = position.Y;
+                Vector2Int position = tile.MapPosition;
+                int column = position.x;
+                int row = position.y;
 
-                for (int y = column; y < this.buildingSize.Y + column; y++) {
-                    for (int x = row; x < this.buildingSize.X + row; x++) {
+                for (int y = column; y < this.buildingSize.y + column; y++) {
+                    for (int x = row; x < this.buildingSize.x + row; x++) {
                         MapTile neighbour = this.map.GetTile(y, x);
 
                         if (neighbour.GetInhabitant<Building>() || neighbour.GetInhabitant<Unit>() || !neighbour.IsTraversable(MovementType.Land)) {

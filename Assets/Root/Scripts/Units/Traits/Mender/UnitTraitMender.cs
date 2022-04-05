@@ -75,7 +75,7 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
     protected bool IsTargetInRange () {
         MapTile tile = this.Unit.GetRealTile ();
 
-        IntVector2 destination = this.map.FindClosestBoundary (tile, this.target);
+        Vector2Int destination = this.map.FindClosestBoundary (tile, this.target);
 
         int distance = tile.MapPosition.EstimateDistance (destination);
 

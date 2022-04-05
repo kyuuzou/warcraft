@@ -8,7 +8,7 @@ public class PathfindingNode {
     public float Score              { get; set; }
     public PathfindingNode Parent   { get; private set; }
     
-    public IntVector2 Position      { get; private set; }
+    public Vector2Int Position      { get; private set; }
     public MapTile[] Neighbours     { get; private set; }
 
     private MapTile tile;

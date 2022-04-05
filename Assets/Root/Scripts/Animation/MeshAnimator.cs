@@ -138,7 +138,7 @@ public class MeshAnimator : SceneObject {
                 continue;
             }
 
-            MeshAnimation animation = (MeshAnimation)MeshAnimation.Instantiate(animationObject);
+            MeshAnimation animation = MeshAnimation.Instantiate(animationObject);
             this.animationByType[animation.Type] = animation;
             animation.Initialize(this);
         }

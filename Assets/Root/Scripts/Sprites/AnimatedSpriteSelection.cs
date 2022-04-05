@@ -70,7 +70,7 @@ public class AnimatedSpriteSelection : SceneObject {
 
         this.outerSelection = SpriteSelection.Instantiate<SpriteSelection> (this.selectionPrefab);
         this.outerSelection.InitializeSelection (
-            unit.Transform, unit.Data.SelectionSize + new IntVector2(1, 1) * 0.1f, this.colorMaterial
+            unit.Transform, unit.Data.SelectionSize, this.colorMaterial
         );
         this.outerSelection.transform.SetZ ((int) DepthLayer.Projectiles);
     }

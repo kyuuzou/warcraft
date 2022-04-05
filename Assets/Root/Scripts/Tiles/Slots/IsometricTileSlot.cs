@@ -123,7 +123,7 @@ public class IsometricTileSlot : SceneObject {
         this.layers[0].MeshRenderer.enabled = true;
         this.layers[0].SetTile (this.Tile);
 
-        float index = this.Tile.MapPosition.X + this.Tile.MapPosition.Y;
+        float index = this.Tile.MapPosition.x + this.Tile.MapPosition.y;
 
         float y = this.layers[0].MeshRenderer.bounds.size.y * 0.5f;
         y = y - this.grid.DefaultSlotPadding.y - this.grid.DefaultSlotSize.y * 0.5f;

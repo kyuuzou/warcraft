@@ -9,7 +9,7 @@ public class UnitTraitDataNonAttacker : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonAttacker trait = unit.gameObject.AddComponent<UnitTraitNonAttacker> ();
-        trait.Initialize (unit, (UnitTraitDataNonAttacker) UnitTraitDataNonAttacker.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonAttacker.Instantiate (this));
         
         unit.SetTrait<IUnitTraitAttacker> (trait);
 

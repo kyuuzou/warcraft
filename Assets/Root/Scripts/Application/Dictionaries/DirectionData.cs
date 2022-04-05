@@ -14,8 +14,8 @@ public class DirectionData : ScriptableObject, IInspectorDictionaryEntry<Directi
     }
 
     [SerializeField]
-    private IntVector2 offset;
-    public IntVector2 Offset {
+    private Vector2Int offset;
+    public Vector2Int Offset {
         get { return this.offset; }
     }
 
@@ -34,7 +34,7 @@ public class DirectionData : ScriptableObject, IInspectorDictionaryEntry<Directi
         get { return this.spriteOffset; }
     }
 
-    public IntVector2 OppositeOffset {
-        get { return this.Offset * -1.0f; }
+    public Vector2Int OppositeOffset {
+        get { return this.Offset * -1; }
     }
 }

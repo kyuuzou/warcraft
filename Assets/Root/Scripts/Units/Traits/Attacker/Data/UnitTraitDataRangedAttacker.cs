@@ -16,7 +16,7 @@ public class UnitTraitDataRangedAttacker : UnitTraitDataAttacker {
     
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitRangedAttacker trait = unit.gameObject.AddComponent<UnitTraitRangedAttacker> ();
-        trait.Initialize (unit, (UnitTraitDataRangedAttacker) UnitTraitDataRangedAttacker.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataRangedAttacker.Instantiate (this));
 
         unit.SetTrait<IUnitTraitAttacker> (trait);
         

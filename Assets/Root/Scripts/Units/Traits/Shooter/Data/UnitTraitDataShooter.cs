@@ -16,7 +16,7 @@ public class UnitTraitDataShooter : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitShooter trait = unit.gameObject.AddComponent<UnitTraitShooter> ();
-        trait.Initialize (unit, (UnitTraitDataShooter) UnitTraitDataShooter.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataShooter.Instantiate (this));
         
         unit.SetTrait<IUnitTraitShooter> (trait);
 

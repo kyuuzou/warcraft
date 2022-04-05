@@ -54,8 +54,8 @@ public class Level : CustomScriptableObject {
     }
 
     [SerializeField]
-    private Vector2 startPosition;
-    public IntVector2 StartPosition {
-        get { return new IntVector2(this.startPosition); }
+    private Vector2Int startPosition;
+    public Vector2Int StartPosition {
+        get { return this.startPosition; }
     }
 }

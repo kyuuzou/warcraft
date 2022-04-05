@@ -53,9 +53,9 @@ public class Map : SceneObject {
     }
 
     public void AddTile (MapTile tile) {
-        IntVector2 position = tile.MapPosition;
+        Vector2Int position = tile.MapPosition;
         
-        this.tiles[position.X, position.Y] = tile;
+        this.tiles[position.x, position.y] = tile;
     }
 
     public void AddUnit (Unit unit) {
@@ -78,7 +78,7 @@ public class Map : SceneObject {
             Debug.LogError ("Direction dictionary is empty, revert it to prefab.");
         }
 
-        Vector2 neighbour;
+        Vector2Int neighbour = Vector2Int.zero;
 
         for (int column = 0; column < this.Columns; column ++) {
             for (int row = 0; row < this.Rows; row ++) {
@@ -91,13 +91,13 @@ public class Map : SceneObject {
                 }
 
                 for (int i = 0; i < directionData.Count; i++) {
-                    IntVector2 offset = directionData[i].Offset;
+                    Vector2Int offset = directionData[i].Offset;
 
-                    neighbour.x = column + (int) offset.X;
-                    neighbour.y = row + (int) offset.Y;
+                    neighbour.x = column + offset.x;
+                    neighbour.y = row + offset.y;
 
                     if (neighbour.IsWithinBounds (bounds)) {
-                        neighbours[i] = this.tiles [(int) neighbour.x, (int) neighbour.y];
+                        neighbours[i] = this.tiles [neighbour.x, neighbour.y];
                     } else {
                         neighbours[i] = null;
                     }
@@ -141,7 +141,7 @@ public class Map : SceneObject {
 
         for (int x = - (radius - 1); x < radius; x ++) {
             for (int y = - (radius - 1); y < radius; y ++) {
-                MapTile tile = this.GetTile (x + center.MapPosition.X, y + center.MapPosition.Y);
+                MapTile tile = this.GetTile (x + center.MapPosition.x, y + center.MapPosition.y);
 
                 if (tile != null) {
                     Unit unit = tile.GetInhabitant<Unit> ();
@@ -203,18 +203,18 @@ public class Map : SceneObject {
         return false;
     }
 
-    public IntVector2 FindClosestBoundary (MapTile origin, IMovementDestination destination) {
-        IntVector2 originPosition = origin.MapPosition;
-        IntVector2 destinationPosition;
+    public Vector2Int FindClosestBoundary (MapTile origin, IMovementDestination destination) {
+        Vector2Int originPosition = origin.MapPosition;
+        Vector2Int destinationPosition;
 
-        if (destination.TileSize == new IntVector2(1, 1)) {
+        if (destination.TileSize == new Vector2Int(1, 1)) {
             destinationPosition = destination.Pivot.MapPosition;
         } else {
             // Calculate distances to each border tile of the target sprite
-            IntVector2[] borderPositions = destination.GetBoundaries ();
-            RepeatableSortedList<IntVector2> closest = new RepeatableSortedList<IntVector2> ();
+            Vector2Int[] borderPositions = destination.GetBoundaries ();
+            RepeatableSortedList<Vector2Int> closest = new RepeatableSortedList<Vector2Int> ();
             
-            foreach (IntVector2 borderPosition in borderPositions) {
+            foreach (Vector2Int borderPosition in borderPositions) {
                 closest.Add (originPosition.EstimateDistance (borderPosition), borderPosition);
             }
             
@@ -268,7 +268,7 @@ public class Map : SceneObject {
     /// <returns>The closest traversable tile.</returns>
     /// <param name="untraversable">The closest untraversable tile.</param>
     private MapTile FindClosestTraversableTile (
-        Unit unit, IntVector2 origin, IntVector2 destination, IMovementListener movementListener, out MapTile untraversable
+        Unit unit, Vector2Int origin, Vector2Int destination, IMovementListener movementListener, out MapTile untraversable
     ) {
         untraversable = this.GetTile (destination);
 
@@ -335,8 +335,8 @@ public class Map : SceneObject {
         bool overlapTarget,
         IMovementListener movementListener
     ) {
-        IntVector2 destinationPosition = this.FindClosestBoundary (origin, destination);
-        MapTile destinationTile = this.tiles[destinationPosition.X, destinationPosition.Y];
+        Vector2Int destinationPosition = this.FindClosestBoundary (origin, destination);
+        MapTile destinationTile = this.tiles[destinationPosition.x, destinationPosition.y];
 
         if (! this.IsAreaTraversable (destination.Pivot.MapPosition, unit.TileSize, movementListener)) {
         //if (! destinationTile.Data.IsTraversable (movementTrait.MovementType)) {
@@ -427,10 +427,10 @@ public class Map : SceneObject {
 
         int shortest = int.MaxValue;
         Building chosen = null;
-        IntVector2 origin = tile.MapPosition;
+        Vector2Int origin = tile.MapPosition;
 
         foreach (Building building in this.buildingByType[type]) {
-            IntVector2 destination = building.Tile.MapPosition;
+            Vector2Int destination = building.Tile.MapPosition;
             int distance = origin.CalculateManhattanDistance (destination);
             
             if (distance < shortest) {
@@ -478,8 +478,8 @@ public class Map : SceneObject {
         return this.tiles[column, row];
     }
     
-    public MapTile GetTile (IntVector2 position) {
-        return this.GetTile (position.X, position.Y);
+    public MapTile GetTile (Vector2Int position) {
+        return this.GetTile (position.x, position.y);
     }
 
     public List<Unit> GetUnits (UnitType type) {
@@ -498,12 +498,12 @@ public class Map : SceneObject {
         this.spawnFactory = serviceLocator.SpawnFactory;
     }
 
-    public bool IsAreaTraversable (IntVector2 pivot, IntVector2 tileSize, IMovementListener movementListener) {
-        int column = pivot.X;
-        int row = pivot.Y;
+    public bool IsAreaTraversable (Vector2Int pivot, Vector2Int tileSize, IMovementListener movementListener) {
+        int column = pivot.x;
+        int row = pivot.y;
 
-        for (int x = column; x < tileSize.X + column; x ++) {
-            for (int y = row; y < tileSize.Y + row; y ++) {
+        for (int x = column; x < tileSize.x + column; x ++) {
+            for (int y = row; y < tileSize.y + row; y ++) {
                 MapTile tile = this.GetTile (x, y);
 
                 if (tile == null || ! movementListener.IsTileTraversable (tile)) {

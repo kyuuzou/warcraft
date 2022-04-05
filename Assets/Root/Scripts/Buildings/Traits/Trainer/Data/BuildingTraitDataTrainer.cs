@@ -15,7 +15,7 @@ public class BuildingTraitDataTrainer : BuildingTraitData {
 
     public override BuildingTrait AddTrait (Building building) {
         BuildingTraitTrainer trait = building.gameObject.AddComponent<BuildingTraitTrainer> ();
-        trait.Initialize (building, (BuildingTraitDataTrainer) BuildingTraitDataTrainer.Instantiate (this));
+        trait.Initialize (building, BuildingTraitDataTrainer.Instantiate (this));
         
         building.SetTrait<IBuildingTraitTrainer> (trait);
         

@@ -11,7 +11,7 @@ public class Faction {
     private List<Unit> units;
 
     private Dictionary<BuildingType, List<Building>> buildingsByType;
-    private Dictionary<BuildingType, IntVector2> rootedPositionsByType;
+    private Dictionary<BuildingType, Vector2Int> rootedPositionsByType;
     private Dictionary<UnitTraitType, List<Unit>> unitsByRole;
 
     private Dictionary<GameButtonType, Upgrade> upgradeByButtonType;
@@ -109,12 +109,12 @@ public class Faction {
         return type;
     }
 
-    public IntVector2 GetRootedPosition (BuildingType type) {
+    public Vector2Int GetRootedPosition (BuildingType type) {
         if (this.rootedPositionsByType.ContainsKey (type)) {
             return this.rootedPositionsByType[type];
         }
 
-        return null;
+        return Vector2Int.zero;
     }
 
     public List<Unit> GetUnits () {
@@ -143,7 +143,7 @@ public class Faction {
 
     private void InitializeStructures () {
         this.buildings = new List<Building> ();
-        this.rootedPositionsByType = new Dictionary<BuildingType, IntVector2> ();
+        this.rootedPositionsByType = new Dictionary<BuildingType, Vector2Int> ();
         this.units = new List<Unit> ();
 
         this.unitsByRole = new Dictionary<UnitTraitType, List<Unit>> ();

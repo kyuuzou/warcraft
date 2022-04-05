@@ -8,9 +8,9 @@ public interface IMovementDestination {
     /// </summary>
     MapTile Pivot { get; }
 
-    IntVector2 TileSize { get; }
+    Vector2Int TileSize { get; }
 
-    IntVector2[] GetBoundaries ();
+    Vector2Int[] GetBoundaries ();
 
     bool IsAdjacent (IMovementDestination destination);
     

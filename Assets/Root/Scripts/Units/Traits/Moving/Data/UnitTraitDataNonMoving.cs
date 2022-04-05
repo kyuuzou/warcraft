@@ -9,7 +9,7 @@ public class UnitTraitDataNonMoving : UnitTraitData {
     
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonMoving trait = unit.gameObject.AddComponent<UnitTraitNonMoving> ();
-        trait.Initialize (unit, (UnitTraitDataNonMoving) UnitTraitDataNonMoving.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonMoving.Instantiate (this));
         
         unit.SetTrait<IUnitTraitMoving> (trait);
         

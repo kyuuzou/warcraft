@@ -16,7 +16,7 @@ public class UnitTraitDataBuilder : UnitTraitData {
     
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitBuilder trait = unit.gameObject.AddComponent<UnitTraitBuilder> ();
-        trait.Initialize (unit, (UnitTraitDataBuilder) UnitTraitDataBuilder.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataBuilder.Instantiate (this));
         
         unit.SetTrait<IUnitTraitBuilder> (trait);
         

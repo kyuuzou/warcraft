@@ -9,7 +9,7 @@ public class UnitTraitDataNonMiner : UnitTraitData {
     
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonMiner trait = unit.gameObject.AddComponent<UnitTraitNonMiner> ();
-        trait.Initialize (unit, (UnitTraitDataNonMiner) UnitTraitDataNonMiner.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonMiner.Instantiate (this));
         
         unit.SetTrait<IUnitTraitMiner> (trait);
         

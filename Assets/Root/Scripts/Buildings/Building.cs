@@ -142,30 +142,30 @@ public partial class Building : SpawnableSprite {
     public void Discover () {
         // TODO: extract range to an inspector variable
         Vector2 range = new Vector2 (10.0f, 10.0f);
-        IntVector2 tilePadding = this.TileSize - new IntVector2 (1, 1);
-        IntVector2 position = this.Tile.MapPosition;
+        Vector2Int tilePadding = this.TileSize - new Vector2Int (1, 1);
+        Vector2Int position = this.Tile.MapPosition;
         int outlinePadding = 2;
 
-        int column = position.X;
-        int row = position.Y;
+        int column = position.x;
+        int row = position.y;
 
         int columns = (int) range.x;
         int rows = (int) range.y;
 
         for (int x = - columns + 1; x < columns - 1; x ++) {
             for (int y = - rows + 1; y < rows - 1; y ++) {
-                this.Map.Discover (column + x + (int) tilePadding.X, row + y + (int) tilePadding.Y);
+                this.Map.Discover (column + x + tilePadding.x, row + y + tilePadding.y);
             }
         }
 
         for (int y = - rows + 1 + outlinePadding; y < rows - 1 - outlinePadding; y ++) {
-            this.Map.Discover (column - columns + (int) tilePadding.X, row + y + (int) tilePadding.Y);
-            this.Map.Discover (column + columns + (int) tilePadding.X - 1, row + y + (int) tilePadding.Y);
+            this.Map.Discover (column - columns + tilePadding.x, row + y + tilePadding.y);
+            this.Map.Discover (column + columns + tilePadding.x - 1, row + y + tilePadding.y);
         }
 
         for (int x = - columns + 1 + outlinePadding; x < columns - 1 - outlinePadding; x ++) {
-            this.Map.Discover (column + x + (int) tilePadding.X, row - rows + (int) tilePadding.Y);
-            this.Map.Discover (column + x + (int) tilePadding.X, row + rows + (int) tilePadding.Y - 1);
+            this.Map.Discover (column + x + tilePadding.x, row - rows + tilePadding.y);
+            this.Map.Discover (column + x + tilePadding.x, row + rows + tilePadding.y - 1);
         }
     }
 
@@ -174,13 +174,13 @@ public partial class Building : SpawnableSprite {
     }
 
     public IEnumerator EjectUnitCoroutine (Unit unit, bool becomeIdle = true) {
-        IntVector2 position = this.Tile.MapPosition;
-        int column = position.X;
-        int row = position.Y;
+        Vector2Int position = this.Tile.MapPosition;
+        int column = position.x;
+        int row = position.y;
 
-        IntVector2 size = this.TileSize;
-        int columns = size.X;
-        int rows = size.Y;
+        Vector2Int size = this.TileSize;
+        int columns = size.x;
+        int rows = size.y;
 
         MapTile tile = null;
         int depth = 1;
@@ -275,7 +275,7 @@ public partial class Building : SpawnableSprite {
     }
 
     private void InitializeAnimations () {
-        this.collapsingAnimation = Transform.Instantiate (this.collapsingAnimationPrefab) as CustomAnimatedSprite;
+        this.collapsingAnimation = Transform.Instantiate (this.collapsingAnimationPrefab);
         this.collapsingAnimation.transform.parent = this.transform;
         this.collapsingAnimation.transform.localPosition = new Vector3 (0.0f, 32.0f, -1.0f);
         this.collapsingAnimation.name = this.collapsingAnimationPrefab.name;
@@ -384,19 +384,19 @@ public partial class Building : SpawnableSprite {
     }
 
     private void ScorchFloor () {
-        IntVector2 position = this.Tile.MapPosition;
-        int column = (int) position.X;
-        int row = (int) position.Y;
+        Vector2Int position = this.Tile.MapPosition;
+        int column = position.x;
+        int row = position.y;
 
-        for (int x = 0; x < this.TileSize.X; x ++) {
-            for (int y = 0; y < this.TileSize.Y; y ++) {
+        for (int x = 0; x < this.TileSize.x; x ++) {
+            for (int y = 0; y < this.TileSize.y; y ++) {
                 MapTile tile = this.Map.GetTile (column + x, row + y);
                 tile.SetType (TileType.ScorchedGround);
             }
         }
 
-        for (int x = 0; x < this.TileSize.X; x ++) {
-            for (int y = 0; y < this.TileSize.Y; y ++) {
+        for (int x = 0; x < this.TileSize.x; x ++) {
+            for (int y = 0; y < this.TileSize.y; y ++) {
                 MapTile tile = this.Map.GetTile (column + x, row + y);
                 tile.RefreshNeighbours (TileType.ScorchedGround);
             }

@@ -29,10 +29,10 @@ public class Grid : SceneObject {
     }
 
     private Rect viewport;
-    private IntVector2 position = new IntVector2(-1, -1);
+    private Vector2Int position = new Vector2Int(-1, -1);
 
     //Distance in pixels from the upper left edge of the grid to the origin of the world coordinates
-    private IntVector2 center;
+    private Vector2Int center;
 
     [SerializeField]
     private Transform slot;
@@ -40,12 +40,14 @@ public class Grid : SceneObject {
     private Map map;
     private TileSlot[,] slots;
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
+
         Vector3 position = this.transform.position;
 
-        this.center = new IntVector2(
-            Mathf.Abs(position.x),
-            Mathf.Abs(position.y)
+        this.center = new Vector2Int(
+            (int)Mathf.Abs(position.x),
+            (int)Mathf.Abs(position.y)
         );
 
         this.viewport = new Rect(position.x - 16.0f, position.y - 16.0f, this.columns * 32.0f, this.rows * 32.0f);
@@ -57,22 +59,22 @@ public class Grid : SceneObject {
         );
     }
 
-    public IntVector2 GetPosition() {
+    public Vector2Int GetPosition() {
         return this.position;
     }
 
     public TileSlot GetTileSlot(MapTile tile) {
-        IntVector2 tilePosition = tile.MapPosition;
+        Vector2Int tilePosition = tile.MapPosition;
 
-        if ((tilePosition.X < this.position.X) || (tilePosition.X > this.position.X + this.columns)) {
+        if ((tilePosition.x < this.position.x) || (tilePosition.x > this.position.x + this.columns)) {
             return null;
         }
 
-        if ((tilePosition.Y < this.position.Y) || (tilePosition.Y > this.position.Y + this.rows)) {
+        if ((tilePosition.y < this.position.y) || (tilePosition.y > this.position.y + this.rows)) {
             return null;
         }
 
-        return this.slots[tilePosition.X - this.position.X, tilePosition.Y - this.position.Y];
+        return this.slots[tilePosition.x - this.position.x, tilePosition.y - this.position.y];
     }
 
     public Rect GetViewport() {
@@ -86,10 +88,10 @@ public class Grid : SceneObject {
         UnitGroup currentGroup = this.gameController.CurrentGroup;
 
         if (currentGroup.Units.Count > 0) {
-            IntVector2 position = currentGroup.Units[0].Tile.MapPosition * 2;
+            Vector2Int position = currentGroup.Units[0].Tile.MapPosition * 2;
             this.SetPosition(position * 0.5f);
         } else {
-            this.SetPosition(IntVector2.zero);
+            this.SetPosition(Vector2Int.zero);
         }*/
     }
 
@@ -97,7 +99,7 @@ public class Grid : SceneObject {
         this.SetPosition(this.position);
     }
 
-    public void SetPosition(IntVector2 position) {
+    public void SetPosition(Vector2Int position) {
         if (this.position == position) {
             return;
         }
@@ -113,8 +115,8 @@ public class Grid : SceneObject {
 
                 bool visible = false;
 
-                if ((column >= (int)position.X) && column < (this.columns + (int)position.X)) {
-                    if ((row >= (int)position.Y) && row < (this.rows + (int)position.Y)) {
+                if ((column >= position.x) && column < (this.columns + position.x)) {
+                    if ((row >= position.y) && row < (this.rows + position.y)) {
                         visible = true;
                     }
                 }
@@ -122,13 +124,13 @@ public class Grid : SceneObject {
                 //tile.SetVisible (visible);
 
                 tile.RealPosition = new Vector3(
-                    (column - position.X) * 32.0f - this.center.X,
-                    this.center.Y - ((row - position.Y) * 32.0f),
+                    (column - position.x) * 32.0f - this.center.x,
+                    this.center.y - ((row - position.y) * 32.0f),
                     -1.0f
                 );
 
                 if (visible) {
-                    this.slots[column - (int)position.X, row - (int)position.Y].SetTile(tile);
+                    this.slots[column - position.x, row - position.y].SetTile(tile);
                 }
             }
         }
@@ -141,7 +143,7 @@ public class Grid : SceneObject {
 
         for (int column = 0; column < this.columns; column++) {
             for (int row = 0; row < this.rows; row++) {
-                Transform transform = Transform.Instantiate(this.slot, Vector3.zero, this.slot.rotation) as Transform;
+                Transform transform = Transform.Instantiate(this.slot, Vector3.zero, this.slot.rotation);
                 transform.name = this.slot.name;
 
                 TileSlot slot = transform.GetComponent<TileSlot>();

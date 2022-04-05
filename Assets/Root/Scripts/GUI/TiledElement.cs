@@ -10,7 +10,7 @@ public class TiledElement : MonoBehaviour {
     private int rows = 1;
 
     [SerializeField]
-    public IntVector2 currentTile = new IntVector2(0, 0);
+    public Vector2Int currentTile = new Vector2Int(0, 0);
 
     [SerializeField]
     private bool inverted = false;
@@ -35,14 +35,14 @@ public class TiledElement : MonoBehaviour {
         this.mesh.uv = this.originalUV;
     }
     
-    public void SetCurrentTile (IntVector2 currentTile) {
+    public void SetCurrentTile (Vector2Int currentTile) {
         this.currentTile = currentTile;
 
         this.UpdateUV (currentTile);
     }
 
     public void SetCurrentTileX (int index) {
-        this.SetCurrentTile (new IntVector2 (index, 0.0f));
+        this.SetCurrentTile (new Vector2Int (index, 0));
     }
 
     public void SetCurrentTileY (int index) {
@@ -50,7 +50,7 @@ public class TiledElement : MonoBehaviour {
             index -= 1000;
         }
 
-        this.SetCurrentTile (new IntVector2 (0.0f, index));
+        this.SetCurrentTile (new Vector2Int (0, index));
     }
 
     public void SetTexture (Texture texture) {
@@ -65,14 +65,14 @@ public class TiledElement : MonoBehaviour {
         this.UpdateUV (this.currentTile);
     }
 
-    private void UpdateUV (IntVector2 position) {
+    private void UpdateUV (Vector2Int position) {
         Vector2[] uvs = new Vector2 [this.originalUV.Length];
         int i = 0;
 
         while (i < uvs.Length) {
             uvs[i] = new Vector2 (
-                this.originalUV[i].x + position.X,
-                this.originalUV[i].y + position.Y + this.yOffset
+                this.originalUV[i].x + position.x,
+                this.originalUV[i].y + position.y + this.yOffset
             );
 
             i++;

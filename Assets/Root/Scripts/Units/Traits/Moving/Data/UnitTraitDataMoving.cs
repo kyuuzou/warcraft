@@ -27,7 +27,7 @@ public class UnitTraitDataMoving : UnitTraitData {
     
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitMoving trait = unit.gameObject.AddComponent<UnitTraitMoving> ();
-        trait.Initialize (unit, (UnitTraitDataMoving) UnitTraitDataMoving.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataMoving.Instantiate (this));
         
         unit.SetTrait<IUnitTraitMoving> (trait);
         

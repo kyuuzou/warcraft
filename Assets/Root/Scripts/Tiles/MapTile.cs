@@ -10,13 +10,13 @@ public class MapTile : ITarget {
     public TileType Type { get; private set; }
     public TileData Data { get; private set; }
 
-    public IntVector2        AtlasCoordinates { get; private set; }
+    public Vector2Int        AtlasCoordinates { get; private set; }
     public string            Caption          { get; set; }
     public float             CurrentDepth     { get; set; }
     public bool              Dirty            { get; set; }
     public int               Height           { get; private set; }
     public Color             LightColor       { get; set; }
-    public IntVector2        MapPosition      { get; private set; }
+    public Vector2Int        MapPosition      { get; private set; }
     public MapTile[]         Neighbours       { get; set; }
     public float             Offset           { get; set; }
     public Vector3           RealPosition     { get; set; }
@@ -29,7 +29,7 @@ public class MapTile : ITarget {
         get { return this.atlasIndex; }
         set {
             this.atlasIndex = value;
-            this.AtlasCoordinates = new IntVector2 (value % 16, value / 16);
+            this.AtlasCoordinates = new Vector2Int (value % 16, value / 16);
         }
     }
 
@@ -81,8 +81,8 @@ public class MapTile : ITarget {
         get { return this; }
     }
 
-    public IntVector2 TileSize {
-        get { return new IntVector2(1, 1); }
+    public Vector2Int TileSize {
+        get { return new Vector2Int(1, 1); }
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class MapTile : ITarget {
         this.InitializeInhabitants ();
         this.InitializeLayers ();
 
-        this.MapPosition = new IntVector2 (column, row);
+        this.MapPosition = new Vector2Int (column, row);
         this.mapData = this.gameController.CurrentLevel.MapType.GetData ();
 
         this.SetType (type, variation);
@@ -173,9 +173,9 @@ public class MapTile : ITarget {
     }
     
     public void Discover () {
-		IntVector2 position = this.MapPosition;
-        int column = position.X;
-        int row = position.Y;
+		Vector2Int position = this.MapPosition;
+        int column = position.x;
+        int row = position.y;
 
         MapTile tile;
 
@@ -208,8 +208,8 @@ public class MapTile : ITarget {
 		}
 	}
 
-    public IntVector2[] GetBoundaries () {
-        return new IntVector2[] { this.MapPosition };
+    public Vector2Int[] GetBoundaries () {
+        return new Vector2Int[] { this.MapPosition };
     }
 
     public MapTile GetClosestTile () {
@@ -410,22 +410,22 @@ public class MapTile : ITarget {
     ///     Width, in tiles, around the destination, that are still considered as tolerance for overlapping.
     /// </param>
     public bool Overlaps (IMovementDestination destination, int padding) {
-        IntVector2 radiusA = new IntVector2(1, 1) * 0.5f;
-        IntVector2 radiusB = destination.TileSize * 0.5f;
+        Vector2Int radiusA = Vector2Int.one;
+        Vector2Int radiusB = destination.TileSize.Multiply(0.5f);
         
-        radiusA.X += padding;
-        radiusA.Y += padding;
+        radiusA.x += padding;
+        radiusA.y += padding;
         
-        IntVector2 centerA = this.MapPosition + radiusA;
-        IntVector2 centerB = destination.Pivot.MapPosition + radiusB;
+        Vector2Int centerA = this.MapPosition + radiusA;
+        Vector2Int centerB = destination.Pivot.MapPosition + radiusB;
         
-        centerA.X -= padding;
-        centerA.Y -= padding;
+        centerA.x -= padding;
+        centerA.y -= padding;
         
         bool intersects = false;
         
-        if (Mathf.Abs (centerA.X - centerB.X) < (radiusA.X + radiusB.X)) {
-            if (Mathf.Abs (centerA.Y - centerB.Y) < (radiusA.Y + radiusB.Y)) {
+        if (Mathf.Abs (centerA.x - centerB.x) < (radiusA.x + radiusB.x)) {
+            if (Mathf.Abs (centerA.y - centerB.y) < (radiusA.y + radiusB.y)) {
                 intersects = true;
             }
         }

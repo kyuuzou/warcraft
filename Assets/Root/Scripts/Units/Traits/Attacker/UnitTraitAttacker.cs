@@ -18,12 +18,12 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     private float lastAttack = float.MinValue;
     private Map map;
 
-    private Dictionary<Direction, List<IntVector2>> positionsInRange;
+    private Dictionary<Direction, List<Vector2Int>> positionsInRange;
 
     /// <summary>
     /// The positions around the positions in range. For encompassing units that are about to be in range.
     /// </summary>
-    private Dictionary<Direction, List<IntVector2>> extendedPositionsInRange;
+    private Dictionary<Direction, List<Vector2Int>> extendedPositionsInRange;
 
     public override UnitTraitType Type {
         get { return UnitTraitType.Attacker; }
@@ -158,28 +158,28 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         this.Unit.Play (AnimationType.Attacking);
     }
 
-    private Vector2 FindUnitPositionInPattern () {
+    private Vector2Int FindUnitPositionInPattern () {
         string[] lines = this.Data.RangePattern.Split ('\n');
 
         for (int y = 0; y < lines.Length; y ++) {
             int x = lines[y].IndexOf ("U");
             
             if (x > -1) {
-                return new Vector2 (x, y);
+                return new Vector2Int (x, y);
             }
         }
 
-        return Vector2.zero;
+        return Vector2Int.zero;
     }
 
     public List<MapTile> GetExtendedTilesInRange (Direction direction) {
         List<MapTile> extendedTilesInRange = new List<MapTile> ();
 
         MapTile currentTile = this.Unit.Tile;
-        IntVector2 directionOffset = direction.GetData ().Offset;
+        Vector2Int directionOffset = direction.GetData ().Offset;
 
-        foreach (IntVector2 position in this.positionsInRange[direction]) {
-            IntVector2 extendedPosition = position + directionOffset;
+        foreach (Vector2Int position in this.positionsInRange[direction]) {
+            Vector2Int extendedPosition = position + directionOffset;
 
             MapTile tileInRange = this.map.GetTile (currentTile.MapPosition + extendedPosition);
 
@@ -200,7 +200,7 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
             return new List<MapTile>();
         }
 
-        foreach (IntVector2 position in this.extendedPositionsInRange[this.Unit.Direction]) {
+        foreach (Vector2Int position in this.extendedPositionsInRange[this.Unit.Direction]) {
             MapTile tileInRange = this.map.GetTile (currentTile.MapPosition + position);
             
             if (tileInRange != null) {
@@ -221,7 +221,7 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         MapTile currentTile = this.Unit.Tile;
         tilesInRange.Add (currentTile);
 
-        foreach (IntVector2 position in this.positionsInRange[this.Unit.Direction]) {
+        foreach (Vector2Int position in this.positionsInRange[this.Unit.Direction]) {
             MapTile tileInRange = this.map.GetTile (currentTile.MapPosition + position);
             
             if (tileInRange != null) {
@@ -245,30 +245,30 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         this.InitializeExtendedPositionsInRange ();
     }
 
-    private void InitializeDirectionDictionary (ref Dictionary<Direction, List<IntVector2>> dictionary) {
-        dictionary = new Dictionary<Direction, List<IntVector2>> () {
-            { Direction.North, new List<IntVector2> () },
-            { Direction.East,  new List<IntVector2> () },
-            { Direction.South, new List<IntVector2> () },
-            { Direction.West,  new List<IntVector2> () }
+    private void InitializeDirectionDictionary (ref Dictionary<Direction, List<Vector2Int>> dictionary) {
+        dictionary = new Dictionary<Direction, List<Vector2Int>> () {
+            { Direction.North, new List<Vector2Int> () },
+            { Direction.East,  new List<Vector2Int> () },
+            { Direction.South, new List<Vector2Int> () },
+            { Direction.West,  new List<Vector2Int> () }
         };
     }
 
     private void InitializePositionsInRange () {
         this.InitializeDirectionDictionary (ref this.positionsInRange);
 
-        Vector2 unitPosition = this.FindUnitPositionInPattern ();
+        Vector2Int unitPosition = this.FindUnitPositionInPattern ();
         string[] lines = this.Data.RangePattern.Split ('\n');
 
         for (int y = 0; y < lines.Length; y ++) {
             for (int x = 0; x < lines[y].Length; x ++) {
                 if (lines[y][x] == 'X') {
-                    IntVector2 position = new IntVector2 (x - unitPosition.x, unitPosition.y - y);
+                    Vector2Int position = new Vector2Int (x - unitPosition.x, unitPosition.y - y);
 
                     this.positionsInRange[Direction.East].Add (position);
-                    this.positionsInRange[Direction.West].Add (position * -1.0f);
-                    this.positionsInRange[Direction.North].Add (new IntVector2 (position.Y * -1.0f, position.X));
-                    this.positionsInRange[Direction.South].Add (new IntVector2 (position.Y, position.X * -1.0f));
+                    this.positionsInRange[Direction.West].Add (position.Multiply(-1.0f));
+                    this.positionsInRange[Direction.North].Add (new Vector2Int (position.y * -1, position.x));
+                    this.positionsInRange[Direction.South].Add (new Vector2Int (position.y, position.x * -1));
                 }
             }
         }
@@ -278,12 +278,12 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         this.InitializeDirectionDictionary (ref this.extendedPositionsInRange);
 
         foreach (Direction key in this.positionsInRange.Keys) {
-            List<IntVector2> positions = this.positionsInRange[key];
+            List<Vector2Int> positions = this.positionsInRange[key];
 
-            foreach (IntVector2 position in positions) {
+            foreach (Vector2Int position in positions) {
                 // Expand range in all directions
                 foreach (Direction direction in this.positionsInRange.Keys) {
-                    IntVector2 extendedPosition = position + direction.GetData().Offset;
+                    Vector2Int extendedPosition = position + direction.GetData().Offset;
 
                     if (! positions.Contains (extendedPosition)) {
                         this.extendedPositionsInRange[key].Add (extendedPosition);
@@ -295,7 +295,7 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
 
     protected bool IsTargetInRange () {
         MapTile tile = this.Unit.GetRealTile ();
-        IntVector2 destination = this.map.FindClosestBoundary(tile, this.Target);
+        Vector2Int destination = this.map.FindClosestBoundary(tile, this.Target);
 
         tile = this.map.GetTile(destination);
 

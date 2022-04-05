@@ -15,7 +15,7 @@ public class BuildingTraitDataMinable : BuildingTraitData {
 
     public override BuildingTrait AddTrait (Building building) {
         BuildingTraitMinable trait = building.gameObject.AddComponent<BuildingTraitMinable> ();
-        trait.Initialize (building, (BuildingTraitDataMinable) BuildingTraitDataMinable.Instantiate (this));
+        trait.Initialize (building, BuildingTraitDataMinable.Instantiate (this));
         
         building.SetTrait<IBuildingTraitMinable> (trait);
         

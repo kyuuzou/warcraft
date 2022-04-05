@@ -16,8 +16,8 @@ public class SpawnableSpriteData : ScriptableObject {
     [Header ("Sprite data")]
 
     [SerializeField]
-    private IntVector2 tileSize = new IntVector2(1, 1);
-    public IntVector2 TileSize {
+    private Vector2Int tileSize = new Vector2Int(1, 1);
+    public Vector2Int TileSize {
         get { return this.tileSize; }
     }
    

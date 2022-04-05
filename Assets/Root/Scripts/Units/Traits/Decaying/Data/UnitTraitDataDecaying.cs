@@ -15,7 +15,7 @@ public class UnitTraitDataDecaying : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitDecaying trait = unit.gameObject.AddComponent<UnitTraitDecaying> ();
-        trait.Initialize (unit, (UnitTraitDataDecaying) UnitTraitDataDecaying.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataDecaying.Instantiate (this));
         
         unit.SetTrait<IUnitTraitDecaying> (trait);
 

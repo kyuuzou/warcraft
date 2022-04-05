@@ -9,7 +9,7 @@ public class UnitTraitDataNonShooter : UnitTraitData {
 
     public override UnitTrait AddTrait (Unit unit) {
         UnitTraitNonShooter trait = unit.gameObject.AddComponent<UnitTraitNonShooter> ();
-        trait.Initialize (unit, (UnitTraitDataNonShooter) UnitTraitDataNonShooter.Instantiate (this));
+        trait.Initialize (unit, UnitTraitDataNonShooter.Instantiate (this));
         
         unit.SetTrait<IUnitTraitShooter> (trait);
 

@@ -159,7 +159,7 @@ public class GameController : SceneObject {
             return null;
         }
 
-        Upgrade upgrade = (Upgrade) Upgrade.Instantiate (this.upgradeByIdentifier[identifier]);
+        Upgrade upgrade = Upgrade.Instantiate (this.upgradeByIdentifier[identifier]);
         upgrade.Initialize ();
 
         return upgrade;

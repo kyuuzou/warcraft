@@ -13,7 +13,7 @@ public class TileSlot : CustomSprite {
     [SerializeField]
     private GUIText valueText;
 
-    private IntVector2 atlasCoordinates = new IntVector2(-1, -1);
+    private Vector2Int atlasCoordinates = new Vector2Int(-1, -1);
     
     public override void Initialize (MapTile tile) {
         base.Initialize (tile);
@@ -52,7 +52,7 @@ public class TileSlot : CustomSprite {
         base.SetTile (tile);
         
         this.atlasCoordinates = tile.AtlasCoordinates;
-        this.UpdateUV (this.atlasCoordinates.X, this.atlasCoordinates.Y);
+        this.UpdateUV (this.atlasCoordinates.x, this.atlasCoordinates.y);
         
         Unit unit = tile.GetInhabitant<Unit>();
 
@@ -64,10 +64,10 @@ public class TileSlot : CustomSprite {
     private void LateUpdate () {
         this.valueText.text = this.Tile.Caption;
         
-        IntVector2 atlasCoordinates = this.Tile.AtlasCoordinates;
+        Vector2Int atlasCoordinates = this.Tile.AtlasCoordinates;
 
         if (atlasCoordinates != this.atlasCoordinates) { 
-            this.UpdateUV(atlasCoordinates.X, atlasCoordinates.Y);
+            this.UpdateUV(atlasCoordinates.x, atlasCoordinates.y);
         }
     }
     

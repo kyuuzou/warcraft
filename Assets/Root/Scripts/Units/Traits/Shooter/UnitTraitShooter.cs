@@ -7,7 +7,7 @@ public class UnitTraitShooter : UnitTrait, IUnitTraitShooter {
 
     public UnitTraitDataShooter Data { get; private set; }
 
-    private Dictionary<Direction, IntVector2> muzzles;
+    private Dictionary<Direction, Vector2Int> muzzles;
     private ITarget target;
     private IShootingListener shootingListener;
 
@@ -31,27 +31,27 @@ public class UnitTraitShooter : UnitTrait, IUnitTraitShooter {
     }
 
     private void InitializeMuzzles () {
-        this.muzzles = new Dictionary<Direction, IntVector2> ();
+        this.muzzles = new Dictionary<Direction, Vector2Int> ();
         
         foreach (Muzzle muzzle in this.Data.Muzzles) {
             this.muzzles[muzzle.Direction] = muzzle.Position;
         }
         
         if (this.muzzles.ContainsKey (Direction.Southeast)) {
-            IntVector2 position = this.muzzles[Direction.Southeast];
-            position.X = (int)this.Unit.Renderer.bounds.size.x - position.X;
+            Vector2Int position = this.muzzles[Direction.Southeast];
+            position.x = (int)this.Unit.Renderer.bounds.size.x - position.x;
             this.muzzles [Direction.Southwest] = position;
         }
         
         if (this.muzzles.ContainsKey (Direction.East)) {
-            IntVector2 position = this.muzzles[Direction.East];
-            position.X = (int)this.Unit.Renderer.bounds.size.x - position.X;
+            Vector2Int position = this.muzzles[Direction.East];
+            position.x = (int)this.Unit.Renderer.bounds.size.x - position.x;
             this.muzzles [Direction.West] = position;
         }
         
         if (this.muzzles.ContainsKey (Direction.Northeast)) {
-            IntVector2 position = this.muzzles[Direction.Northeast];
-            position.X = (int)this.Unit.Renderer.bounds.size.x - position.X;
+            Vector2Int position = this.muzzles[Direction.Northeast];
+            position.x = (int)this.Unit.Renderer.bounds.size.x - position.x;
             this.muzzles [Direction.Northwest] = position;
         }
     }
@@ -104,7 +104,7 @@ public class UnitTraitShooter : UnitTrait, IUnitTraitShooter {
         this.shootingListener = listener;
         this.target = target;
 
-        Projectile projectile = Transform.Instantiate (projectilePrefab) as Projectile;
+        Projectile projectile = Transform.Instantiate (projectilePrefab);
         projectile.transform.parent = this.spawnFactory.ProjectileParent;
         projectile.transform.position = this.Unit.Transform.position;
         
@@ -117,8 +117,8 @@ public class UnitTraitShooter : UnitTrait, IUnitTraitShooter {
             Vector2 localPosition = projectile.Transform.localPosition;
             Vector2 radius = this.Unit.Renderer.bounds.size * 0.5f;
             
-            localPosition.x += - radius.x + this.muzzles[direction].X;
-            localPosition.y += radius.y - this.muzzles [direction].Y;
+            localPosition.x += - radius.x + this.muzzles[direction].x;
+            localPosition.y += radius.y - this.muzzles [direction].y;
             projectile.Transform.localPosition = localPosition;
         } else {
             Debug.LogWarning (this.Unit + " does not have a muzzle when it's facing " + direction);

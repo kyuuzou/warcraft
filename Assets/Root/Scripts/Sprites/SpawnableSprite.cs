@@ -59,8 +59,8 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     }
 
     [SerializeField]
-    private IntVector2 tileSize = new IntVector2 (1, 1);
-    public IntVector2 TileSize {
+    private Vector2Int tileSize = new Vector2Int (1, 1);
+    public Vector2Int TileSize {
         get { return this.tileSize; }
         private set { this.tileSize = value; }
     }
@@ -164,12 +164,12 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     public override void ClaimTile (MapTile tile) {
         this.ReleaseClaimedTiles ();
 
-        IntVector2 position = tile.MapPosition;
-        int column = (int) position.X;
-        int row = (int) position.Y;
+        Vector2Int position = tile.MapPosition;
+        int column = position.x;
+        int row = position.y;
 
-        for (int x = 0; x < this.TileSize.X; x ++) {
-            for (int y = 0; y < this.TileSize.Y; y ++) {
+        for (int x = 0; x < this.TileSize.x; x ++) {
+            for (int y = 0; y < this.TileSize.y; y ++) {
                 MapTile neighbour = this.Map.GetTile (x + column, row + y);
                 neighbour.AddInhabitant (this);
                 //neighbour.Caption = this.Type.ToString ();
@@ -217,29 +217,29 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
         }
     }
 
-    public IntVector2[] GetBoundaries () {
-        IntVector2 position = this.Tile.MapPosition;
-        IntVector2 size = this.TileSize;
+    public Vector2Int[] GetBoundaries () {
+        Vector2Int position = this.Tile.MapPosition;
+        Vector2Int size = this.TileSize;
 
-        if (this.tileSize == new IntVector2(1, 1)) {
-            return new IntVector2[] { position };
+        if (this.tileSize == new Vector2Int(1, 1)) {
+            return new Vector2Int[] { position };
         }
 
-        IntVector2[] boundaries = new IntVector2[size.X * size.Y];
+        Vector2Int[] boundaries = new Vector2Int[size.x * size.y];
         int index = 0;
         
-        int columns = size.X;
-        int rows = size.Y;
+        int columns = size.x;
+        int rows = size.y;
 
         for (int column = 0; column < columns; column ++) {
             for (int row = 0; row < rows; row += rows - 1) {
-                boundaries[index ++] = new IntVector2 (position.X + column, position.Y + row);
+                boundaries[index ++] = new Vector2Int (position.x + column, position.y + row);
             }
         }
 
-        for (int row = 1; row < size.Y - 1; row ++) {
+        for (int row = 1; row < size.y - 1; row ++) {
             for (int column = 0; column < columns; column += columns - 1) {
-                boundaries[index ++] = new IntVector2 (position.X + column, position.Y + row);
+                boundaries[index ++] = new Vector2Int (position.x + column, position.y + row);
             }
         }
 
@@ -369,22 +369,22 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     ///     Width, in tiles, around the destination, that are still considered as tolerance for overlapping.
     /// </param>
     private bool Overlaps (IMovementDestination destination, int padding) {
-        IntVector2 radiusA = (IntVector2) this.TileSize * 0.5f;
-        IntVector2 radiusB = (IntVector2) destination.TileSize * 0.5f;
+        Vector2Int radiusA = this.TileSize.Multiply(0.5f);
+        Vector2Int radiusB = destination.TileSize.Multiply(0.5f);
         
-        radiusA.X += padding;
-        radiusA.Y += padding;
+        radiusA.x += padding;
+        radiusA.y += padding;
 
-        IntVector2 centerA = this.Tile.MapPosition + radiusA;
-        IntVector2 centerB = destination.Pivot.MapPosition + radiusB;
+        Vector2Int centerA = this.Tile.MapPosition + radiusA;
+        Vector2Int centerB = destination.Pivot.MapPosition + radiusB;
         
-        centerA.X -= padding;
-        centerA.Y -= padding;
+        centerA.x -= padding;
+        centerA.y -= padding;
 
         bool intersects = false;
         
-        if (Mathf.Abs (centerA.X - centerB.X) < (radiusA.X + radiusB.X)) {
-            if (Mathf.Abs (centerA.Y - centerB.Y) < (radiusA.Y + radiusB.Y)) {
+        if (Mathf.Abs (centerA.x - centerB.x) < (radiusA.x + radiusB.x)) {
+            if (Mathf.Abs (centerA.y - centerB.y) < (radiusA.y + radiusB.y)) {
                 intersects = true;
             }
         }
@@ -490,22 +490,22 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
             this.StatusBackgroundIndex = 7;
         }
 
-        this.TileSize = new IntVector2 (data.TileSize.X, data.TileSize.Y);
+        this.TileSize = new Vector2Int (data.TileSize.x, data.TileSize.y);
 
         this.Offset = new Vector2(
-            (this.TileSize.X - 1) * this.Grid.DefaultSlotSize.x * 0.5f,
-            -this.TileSize.Y * this.Grid.DefaultSlotSize.y
+            (this.TileSize.x - 1) * this.Grid.DefaultSlotSize.x * 0.5f,
+            -this.TileSize.y * this.Grid.DefaultSlotSize.y
         );
 
         BoxCollider2D collider = this.GetComponent<Collider2D>() as BoxCollider2D;
 
         if (collider != null) {
-            IntVector2 size = this.TileSize * 32.0f;
-            collider.size = new Vector2(size.X, size.Y);
+            Vector2Int size = this.TileSize.Multiply(32.0f);
+            collider.size = new Vector2(size.x, size.y);
         }
 
         if (this.Selectable) {
-            this.selection = Transform.Instantiate (this.selectionPrefab) as SpriteSelection;
+            this.selection = Transform.Instantiate (this.selectionPrefab);
             this.selection.name = this.selectionPrefab.name;
             this.InitializeSelection ();
         }

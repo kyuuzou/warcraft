@@ -130,7 +130,7 @@ public class UnitTraitSpellcaster : UnitTrait, IUnitTraitSpellcaster, IMovementL
 
         MapTile tile = this.Unit.GetRealTile ();
         
-        IntVector2 destination = this.map.FindClosestBoundary (tile, this.currentTarget);
+        Vector2Int destination = this.map.FindClosestBoundary (tile, this.currentTarget);
         
         int distance = tile.MapPosition.EstimateDistance (destination);
         

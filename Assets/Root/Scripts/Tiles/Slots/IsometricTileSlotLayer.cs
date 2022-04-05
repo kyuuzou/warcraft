@@ -66,19 +66,17 @@ public class IsometricTileSlotLayer : SceneObject {
             this.sprite.h / this.atlas.TextureSize.y
         ); 
 
-        IntVector2 position = new IntVector2 (
-            this.sprite.x / this.atlas.TextureSize.x,
-            1.0f - (this.sprite.y / this.atlas.TextureSize.y)
+        Vector2Int position = new Vector2Int (
+            (int)(this.sprite.x / this.atlas.TextureSize.x),
+            (int)(1.0f - (this.sprite.y / this.atlas.TextureSize.y))
         );
 
         Vector2[] uvs = new Vector2 [4];
 
-        uvs[0] = new Vector2 (position.X, position.Y - size.y);
-        uvs[1] = new Vector2 (position.X + size.x, position.Y - size.y);
-        uvs[2] = new Vector2 (position.X, position.Y);
-        uvs[3] = new Vector2 (position.X + size.x, position.Y);
-
-        //position.y = 0.038f;
+        uvs[0] = new Vector2 (position.x, position.y - size.y);
+        uvs[1] = new Vector2 (position.x + size.x, position.y - size.y);
+        uvs[2] = new Vector2 (position.x, position.y);
+        uvs[3] = new Vector2 (position.x + size.x, position.y);
 
         this.Mesh.uv = uvs;
     }

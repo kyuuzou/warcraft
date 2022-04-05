@@ -11,8 +11,8 @@ public abstract class PathfindingAlgorithm : MonoBehaviour {
     public abstract IEnumerator FindPath (
         Task parent,
         Unit unit,
-        IntVector2 origin,
-        IntVector2 destination,
+        Vector2Int origin,
+        Vector2Int destination,
         IMovementListener movementListener,
         bool overlapTarget = true
     );

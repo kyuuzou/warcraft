@@ -145,7 +145,7 @@ public class MeshAnimation : CustomScriptableObject {
     }
 
     private void InitializeMesh () {
-        this.mesh = (Mesh) Mesh.Instantiate (this.mesh);
+        this.mesh = Mesh.Instantiate (this.mesh);
         this.originalUV = this.mesh.uv;
 
         Color32[] colors = new Color32[this.mesh.vertexCount];
@@ -245,8 +245,8 @@ public class MeshAnimation : CustomScriptableObject {
 
         this.owner.Transform.SetLocalScaleX (this.owner.DefaultTransformData.LocalScale.x * data.SpriteMultiplier);
 
-        int x = (int) (currentFrame % (int) this.atlasSize.x);
-        int y = (int) (currentFrame / (int) this.atlasSize.x);
+        int x = currentFrame % (int) this.atlasSize.x;
+        int y = currentFrame / (int) this.atlasSize.x;
 
         while (i < uvs.Length) {
             uvs[i] = new Vector2 (

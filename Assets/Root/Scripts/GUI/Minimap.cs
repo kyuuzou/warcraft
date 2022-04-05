@@ -28,7 +28,7 @@ public class Minimap : SceneObject {
     private int lastColumn = -1;
     private int lastRow = -1;
     private bool isPressing;
-    private IntVector2 position = new IntVector2(0, 0);
+    private Vector2Int position = new Vector2Int(0, 0);
 
     private List<Unit> units;
     private List<Building> buildings;
@@ -66,8 +66,8 @@ public class Minimap : SceneObject {
             Color color = building.Faction.ControllingPlayer.Data.Color;
 
             foreach (MapTile tile in building.ClaimedTiles) {
-                IntVector2 position = tile.MapPosition;
-                this.ColorPixel(this.frontLayerTexture, position.X * 2, this.height - (position.Y * 2), color);
+                Vector2Int position = tile.MapPosition;
+                this.ColorPixel(this.frontLayerTexture, position.x * 2, this.height - (position.y * 2), color);
             }
         }
     }
@@ -81,9 +81,9 @@ public class Minimap : SceneObject {
 
     private void ColorUnits() {
         foreach (Unit unit in this.map.Units) {
-            IntVector2 unitPosition = unit.Tile.MapPosition;
+            Vector2Int unitPosition = unit.Tile.MapPosition;
             Color color = unit.Faction.ControllingPlayer.Data.Color;
-            this.ColorPixel(this.frontLayerTexture, unitPosition.X * 2, this.height - (unitPosition.Y * 2), color);
+            this.ColorPixel(this.frontLayerTexture, unitPosition.x * 2, this.height - (unitPosition.y * 2), color);
         }
     }
 
@@ -104,9 +104,9 @@ public class Minimap : SceneObject {
     }
 
     private void HandleClick(Vector3 clickPosition) {
-        IntVector2 position = new IntVector2(
-            clickPosition.x - this.x,
-            clickPosition.y - (Screen.height - this.height - this.y)
+        Vector2Int position = new Vector2Int(
+            (int)clickPosition.x - this.x,
+            (int)clickPosition.y - (Screen.height - this.height - this.y)
         );
 
         this.UpdatePosition(position);
@@ -134,7 +134,7 @@ public class Minimap : SceneObject {
         // }
     }
 
-    public void Initialize(IntVector2 position) {
+    public void Initialize(Vector2Int position) {
         this.SetPosition(position);
     }
 
@@ -155,9 +155,9 @@ public class Minimap : SceneObject {
         this.units.Remove(unit);
     }
 
-    public void SetPosition(IntVector2 position) {
-        position.X += this.horizontalRadius;
-        position.Y = this.height - position.Y - this.verticalRadius;
+    public void SetPosition(Vector2Int position) {
+        position.x += this.horizontalRadius;
+        position.y = this.height - position.y - this.verticalRadius;
 
         this.position = position;
     }
@@ -181,7 +181,7 @@ public class Minimap : SceneObject {
         this.backLayerTexture.Apply();
         this.backLayerMaterial.mainTexture = this.backLayerTexture;
 
-        if (this.position != new IntVector2(0, 0)) {
+        if (this.position != new Vector2Int(0, 0)) {
             this.UpdatePosition(this.position);
         } else {
             this.frontLayerTexture.Apply();
@@ -201,9 +201,9 @@ public class Minimap : SceneObject {
         this.frontLayerMaterial.mainTexture = this.frontLayerTexture;
     }
 
-    private void UpdatePosition(IntVector2 position) {
-        int column = position.X;
-        int row = position.Y;
+    private void UpdatePosition(Vector2Int position) {
+        int column = position.x;
+        int row = position.y;
 
         this.NormalizeCoordinate(ref column, this.width - this.horizontalRadius, this.horizontalRadius);
         this.NormalizeCoordinate(ref row, this.height - this.verticalRadius, this.verticalRadius);
@@ -220,6 +220,6 @@ public class Minimap : SceneObject {
         column = (column - this.horizontalRadius) / 2;
         row = (this.height - (row + this.verticalRadius)) / 2;
 
-        this.grid.SetPosition(new IntVector2(column, row));
+        this.grid.SetPosition(new Vector2Int(column, row));
     }
 }

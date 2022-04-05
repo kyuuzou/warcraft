@@ -20,8 +20,8 @@ public class UnitData : SpawnableSpriteData {
     }
 
     [SerializeField]
-    private IntVector2 selectionSize = new IntVector2 (1, 1);
-    public IntVector2 SelectionSize {
+    private Vector2Int selectionSize = new Vector2Int (1, 1);
+    public Vector2Int SelectionSize {
         get { return this.selectionSize; }
     }
 

@@ -83,7 +83,7 @@ public class SpawnFactory : MonoBehaviour {
 
     public BuildingData GetData (BuildingType type) {
         if (this.buildingData.ContainsKey (type)) {
-            return BuildingData.Instantiate (this.buildingData[type]) as BuildingData;
+            return BuildingData.Instantiate (this.buildingData[type]);
         }
 
         Debug.Log ("BuildingType not found: " + type);
@@ -92,7 +92,7 @@ public class SpawnFactory : MonoBehaviour {
 
     public DecorationData GetData (DecorationType type) {
         if (this.decorationData.ContainsKey (type)) {
-            return DecorationData.Instantiate (this.decorationData[type]) as DecorationData;
+            return DecorationData.Instantiate (this.decorationData[type]);
         }
 
         return null;
@@ -100,7 +100,7 @@ public class SpawnFactory : MonoBehaviour {
 
     public UnitData GetData (UnitType type) {
         if (this.unitData.ContainsKey (type)) {
-            return UnitData.Instantiate (this.unitData[type]) as UnitData;
+            return UnitData.Instantiate (this.unitData[type]);
         }
 
         return null;
@@ -214,7 +214,7 @@ public class SpawnFactory : MonoBehaviour {
         }
     }
 
-    public SpawnableSprite Spawn (string type, Faction faction, IntVector2 position) {
+    public SpawnableSprite Spawn (string type, Faction faction, Vector2Int position) {
         UnitType unitType = this.GetUnitType (type);
 
         if (unitType != UnitType.None) {
@@ -241,7 +241,7 @@ public class SpawnFactory : MonoBehaviour {
             this.buildingPrefab,
             new Vector3 (0.0f, 0.0f, 5.0f),
             Quaternion.identity
-        ) as Building;
+        );
 
         this.spawnCount ++;
         building.transform.parent = this.buildingParent;
@@ -254,7 +254,7 @@ public class SpawnFactory : MonoBehaviour {
         return building;
     }
     
-    public Building SpawnBuilding (BuildingType type, Faction faction, IntVector2 position) {
+    public Building SpawnBuilding (BuildingType type, Faction faction, Vector2Int position) {
         Building building = this.SpawnBuilding (type, faction);
 
         if (building == null) {
@@ -263,10 +263,10 @@ public class SpawnFactory : MonoBehaviour {
 
         //Exception for castles, which seem to be one tile to the right, for some reason
         if (type == BuildingType.HumanCastle || type == BuildingType.OrcCastle) {
-            position.X --;
+            position.x --;
         }
 
-        MapTile tile = this.map.GetTile (position.X, position.Y);
+        MapTile tile = this.map.GetTile (position.x, position.y);
         building.Initialize (tile);
 
         return building;
@@ -279,7 +279,7 @@ public class SpawnFactory : MonoBehaviour {
 
         Decoration decoration = GameObject.Instantiate (
             type == DecorationType.Unknown ? this.spriteDecorationPrefab : this.meshDecorationPrefab
-        ) as Decoration;
+        );
         
         this.spawnCount ++;
         decoration.transform.parent = this.decorationParent;
@@ -291,7 +291,7 @@ public class SpawnFactory : MonoBehaviour {
         return decoration;
     }
     
-    public Decoration SpawnDecoration (DecorationType type, Faction faction, IntVector2 position) {
+    public Decoration SpawnDecoration (DecorationType type, Faction faction, Vector2Int position) {
         if (this.GetData (type) == null) {
             Debug.LogError ("No data found for: " + type);
             return null;
@@ -303,13 +303,13 @@ public class SpawnFactory : MonoBehaviour {
             return null;
         }
         
-        MapTile tile = this.map.GetTile (position.X, position.Y);
+        MapTile tile = this.map.GetTile (position.x, position.y);
         decoration.Initialize (tile);
 
         return decoration;
     }
     
-    public Decoration SpawnDecoration (TileType type, Faction faction, IntVector2 position) {
+    public Decoration SpawnDecoration (TileType type, Faction faction, Vector2Int position) {
         if (this.decorationByTileType.ContainsKey (type)) {
             return this.SpawnDecoration (this.decorationByTileType[type], faction, position);
         }
@@ -318,7 +318,7 @@ public class SpawnFactory : MonoBehaviour {
     }
 
     /// <param name="relativePosition">Relative position from the center of the tile.</param>
-    public Item SpawnItem (ItemIdentifier identifier, IntVector2 position, Vector3 relativePosition) {
+    public Item SpawnItem (ItemIdentifier identifier, Vector2Int position, Vector3 relativePosition) {
         Item item = Item.Instantiate<Item> (this.itemByIdentifier[identifier]);
 
         item.InitializeExternals ();
@@ -329,7 +329,7 @@ public class SpawnFactory : MonoBehaviour {
     }
 
     public Unit SpawnUnit (UnitType unitType, Faction faction) {
-        Unit unit = GameObject.Instantiate (this.unitPrefab) as Unit;
+        Unit unit = GameObject.Instantiate (this.unitPrefab);
 
         this.spawnCount ++;
         unit.transform.parent = this.unitParent;
@@ -343,7 +343,7 @@ public class SpawnFactory : MonoBehaviour {
         return unit;
     }
     
-    public Unit SpawnUnit (UnitType type, Faction faction, IntVector2 position) {
+    public Unit SpawnUnit (UnitType type, Faction faction, Vector2Int position) {
         if (this.GetData (type) == null) {
             Debug.LogError ("No data found for: " + type);
             return null;
@@ -355,7 +355,7 @@ public class SpawnFactory : MonoBehaviour {
             return null;
         }
 
-        MapTile tile = this.map.GetTile (position.X, position.Y);
+        MapTile tile = this.map.GetTile (position.x, position.y);
         unit.Initialize (tile);
         this.map.AddUnit (unit);
 

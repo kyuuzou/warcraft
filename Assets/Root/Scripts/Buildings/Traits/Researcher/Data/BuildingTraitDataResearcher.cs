@@ -9,7 +9,7 @@ public class BuildingTraitDataResearcher : BuildingTraitData {
 
     public override BuildingTrait AddTrait (Building building) {
         BuildingTraitResearcher trait = building.gameObject.AddComponent<BuildingTraitResearcher> ();
-        trait.Initialize (building, (BuildingTraitDataResearcher) BuildingTraitDataResearcher.Instantiate (this));
+        trait.Initialize (building, BuildingTraitDataResearcher.Instantiate (this));
         
         building.SetTrait<IBuildingTraitResearcher> (trait);
         

@@ -77,8 +77,8 @@ public class AStar : PathfindingAlgorithm {
     public override IEnumerator FindPath (
         Task parent,
         Unit unit,
-        IntVector2 origin,
-        IntVector2 destination,
+        Vector2Int origin,
+        Vector2Int destination,
         IMovementListener movementListener,
         bool overlapTarget = true
     ) {
@@ -207,7 +207,7 @@ public class AStar : PathfindingAlgorithm {
         this.units.Remove (unit);
     }
 
-    private PathfindingNode GetNode (MapTile tile, IntVector2 destination, PathfindingNode parent = null, float cost = 0) {
+    private PathfindingNode GetNode (MapTile tile, Vector2Int destination, PathfindingNode parent = null, float cost = 0) {
         PathfindingNode node;
         
         if (this.nodes.ContainsKey (tile)) {

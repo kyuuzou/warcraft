@@ -151,7 +151,7 @@ public class SceneObject : MonoBehaviour {
     }
 
     public void SeparateMesh () {
-        this.Mesh = (Mesh) GameObject.Instantiate (this.MeshFilter.sharedMesh);
+        this.Mesh = GameObject.Instantiate (this.MeshFilter.sharedMesh);
         this.MeshFilter.mesh = this.Mesh;
     }
 

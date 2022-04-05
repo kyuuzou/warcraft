@@ -35,22 +35,22 @@ public class SpriteSelection : MonoBehaviour {
         bound.localPosition = localPosition;
     }
     
-    public void InitializeSelection (Transform parent, IntVector2 tileSize, Material material = null) {
+    public void InitializeSelection (Transform parent, Vector2Int tileSize, Material material = null) {
         this.transform.parent = parent;
         this.transform.SetLocalPosition (0.0f, 0.0f, -10.0f);
         
-        Vector3 horizontalScale = new Vector3 (tileSize.X, 1.0f, 1.0f);
-        Vector3 verticalScale = new Vector3 (1.0f, tileSize.Y, 1.0f);
+        Vector3 horizontalScale = new Vector3 (tileSize.x, 1.0f, 1.0f);
+        Vector3 verticalScale = new Vector3 (1.0f, tileSize.y, 1.0f);
         Vector3 diagonalScale = new Vector3 (
-            Mathf.Sqrt (tileSize.X * tileSize.X + tileSize.Y * tileSize.Y) - 0.1f,
+            Mathf.Sqrt (tileSize.x * tileSize.x + tileSize.y * tileSize.y) - 0.1f,
             1.0f,
             1.0f
         );
         
-        this.InitializeBound (0, horizontalScale, tileSize.Y, new Vector3 ( 0.0f, -1.0f, 0.0f));
-        this.InitializeBound (1, verticalScale,   tileSize.X, new Vector3 (-1.0f,  0.0f, 0.0f));
-        this.InitializeBound (2, horizontalScale, tileSize.Y, new Vector3 ( 0.0f,  1.0f, 0.0f));
-        this.InitializeBound (3, verticalScale,   tileSize.X, new Vector3 ( 1.0f,  0.0f, 0.0f));
+        this.InitializeBound (0, horizontalScale, tileSize.y, new Vector3 ( 0.0f, -1.0f, 0.0f));
+        this.InitializeBound (1, verticalScale,   tileSize.x, new Vector3 (-1.0f,  0.0f, 0.0f));
+        this.InitializeBound (2, horizontalScale, tileSize.y, new Vector3 ( 0.0f,  1.0f, 0.0f));
+        this.InitializeBound (3, verticalScale,   tileSize.x, new Vector3 ( 1.0f,  0.0f, 0.0f));
         this.InitializeBound (4, diagonalScale,   1.0f, Vector3.zero);
         this.InitializeBound (5, diagonalScale,   1.0f, Vector3.zero);
 
