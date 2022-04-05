@@ -31,10 +31,6 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
     private Color color;
 #endif
 
-    public void LateManualUpdate () {
-
-    }
-
     public bool MayMoveDiagonally {
         get { return this.Data.MayMoveDiagonally; }
     }
@@ -114,11 +110,15 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
         return tile.IsTraversable (this.Unit.GetTrait<IUnitTraitMoving> ().MovementType, this.Unit);
     }
 
+    public void LateManualUpdate() {
+
+    }
+
     public void ManualUpdate () {
         if (this.Unit.Tile == null) {
             return;
         }
-        
+
         Vector3 basePosition = this.Unit.Tile.RealPosition;
         //basePosition = basePosition.Add(this.Unit.Offset);
 
@@ -147,20 +147,10 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
                 
                 this.movementListener.TileChanged ();
                 this.UpdateTargetTile ();
-                /*
-                if (this.Unit.Selected && this.Unit.IsSquadLeader ()) {
-                    Vector2 lastCameraOffset = this.Unit.Tile.RealPosition - this.mainCamera.Transform.position;
-                    this.grid.SetPosition (this.Unit.Tile.MapPosition);
-                    this.mainCamera.Transform.position = this.Unit.Tile.RealPosition.Add (-lastCameraOffset);
-                }*/
             }
         } else {
             this.transform.position = this.basePosition + this.RelativePosition;
         }
-
-        this.transform.AddToPosition (0.0f, this.Unit.Tile.CurrentDepth, 0.0f);
-
-        //this.mainCamera.CenterOnUnit (this.Unit);
     }
 
     public void Move (

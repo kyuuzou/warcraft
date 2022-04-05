@@ -131,28 +131,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
 
     private void AdjustCollider () {
         BoxCollider2D collider = this.GetCollider<BoxCollider2D> ();
-        Vector2 size = this.Sprite.MeshRenderer.bounds.size;
-
-        collider.size = size;
-        collider.offset = new Vector2 (0.0f, size.y * 0.5f);
-    }
-
-    public void AdjustSpritePosition () {
-        if (this.Sprite == null) {
-            Debug.Log(this);
-        } else if (this.Sprite.Transform == null) {
-            Debug.Log(this);
-        } else if (this.MeshAnimator == null) {
-            Debug.Log(this);
-        } else if (this.MeshAnimator.GetAnimation(AnimationType.Idle) == null) {
-            Debug.Log(this);
-        } else if (this.MeshAnimator.GetAnimation(AnimationType.Idle).Mesh == null) {
-            Debug.Log(this);
-        }
-
-        this.Sprite.Transform.SetLocalY (
-            this.MeshAnimator.GetAnimation (AnimationType.Idle).Mesh.bounds.size.y * 0.5f
-        );
+        collider.size = this.TileSize * this.Grid.DefaultSlotSize;
     }
 
     protected override void Awake () {
@@ -494,7 +473,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
 
         this.Offset = new Vector2(
             (this.TileSize.x - 1) * this.Grid.DefaultSlotSize.x * 0.5f,
-            -this.TileSize.y * this.Grid.DefaultSlotSize.y
+            -(this.TileSize.y - 1) * this.Grid.DefaultSlotSize.y * 0.5f
         );
 
         BoxCollider2D collider = this.GetComponent<Collider2D>() as BoxCollider2D;
@@ -523,8 +502,6 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
         if (this.Data.RootMenuNode != null) {
             this.Data.RootMenuNode.Initialize ();
         }
-
-        this.AdjustSpritePosition ();
     }
 
     protected virtual void SetHitPoints (int hitPoints) {

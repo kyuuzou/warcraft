@@ -12,10 +12,7 @@ public class MapTile : ITarget {
 
     public Vector2Int        AtlasCoordinates { get; private set; }
     public string            Caption          { get; set; }
-    public float             CurrentDepth     { get; set; }
     public bool              Dirty            { get; set; }
-    public int               Height           { get; private set; }
-    public Color             LightColor       { get; set; }
     public Vector2Int        MapPosition      { get; private set; }
     public MapTile[]         Neighbours       { get; set; }
     public float             Offset           { get; set; }
@@ -116,9 +113,7 @@ public class MapTile : ITarget {
 
         this.Color = MapTile.UndiscoveredColor;
         this.Discovered = ! Settings.Instance.FogOfWar;
-        this.CurrentDepth = - this.grid.DefaultSlotSize.y;
-
-        this.RefreshHeight ();
+        
         this.RefreshTargetColor ();
 
         this.Dirty = true;
@@ -389,16 +384,6 @@ public class MapTile : ITarget {
             }
         }
 
-        /*
-        // TODO: This should take into account the height of the tile, in comparison with the height of the tile the
-        // unit is on
-        if (layers[1] != null && layers[1].TileData != null) {
-            if (! layers[1].TileData.TraversableSameLevel) {
-                return false;
-            }
-        }
-        */
-
         return this.Data.IsTraversable (movementType);
     }
 
@@ -444,18 +429,6 @@ public class MapTile : ITarget {
         }
         
         Debug.Log (neighbours);
-    }
-
-    public void RefreshHeight () {
-        int height = 0;
-
-        foreach (MapTileLayer layer in this.layers.Values) {
-            if (layer.TileData != null) {
-                height += layer.TileData.Height;
-            }
-        }
-
-        this.Height = height;
     }
 
     public void RefreshNeighbours (TileType typeFilter = TileType.None) {
