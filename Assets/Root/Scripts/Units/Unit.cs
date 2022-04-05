@@ -307,7 +307,6 @@ public partial class Unit : SpawnableSprite {
 
     private void LateUpdate () {
         this.GetTrait<IUnitTraitMoving> ().LateManualUpdate ();
-        this.UpdateDepth ();
     }
 
     public void LeaveBuilding () {
@@ -598,72 +597,6 @@ public partial class Unit : SpawnableSprite {
     public void Stop () {
         this.GetTrait<IUnitTraitMoving> ().Deactivate ();
     }
-
-    public void UpdateDepth () {
-        /*
-        if (this.Tile != null) {
-            if (this.IsDead ()) {
-                if (this.Tile.Slot != null) {
-                    this.transform.SetZ (this.Tile.Slot.GetLayer (1).Transform.position.z - 0.1f);
-                }
-            } else {
-                float rowOffset;
-
-                if (Settings.Instance.Isometric) {
-                    if (this.Tile.Visible) {
-                        rowOffset = this.Tile.Slot.SceneObject.Transform.position.z;
-
-                        if (this.TargetTile != null && this.TargetTile.Visible) {
-                            float targetZ = this.TargetTile.Slot.SceneObject.Transform.position.z;
-
-                            /*
-                            float totalDistance = Vector3.Distance (
-                                this.Tile.RealPosition,
-                                this.TargetTile.RealPosition
-                            );
-
-                            float distanceToTarget = Vector3.Distance (
-                                this.Transform.position,
-                                this.TargetTile.RealPosition
-                            );
-
-                            float delta = 1.0f - distanceToTarget / totalDistance;
-
-                            Debug.Log (delta);
-                            */
-
-/*                            if (this.Direction == Direction.North || this.Direction == Direction.East) {
-                                rowOffset = Mathf.Max (rowOffset, targetZ);
-                            } else {
-                                //rowOffset = Mathf.Lerp (rowOffset, targetZ, delta);
-                                //rowOffset = Mathf.Min (rowOffset, targetZ);
-                            }
-                        }
-
-                        rowOffset -= 21.0f;
-                        //rowOffset -= 7.5f;
-                    } else {
-                        rowOffset = 0.0f;
-                    }
-
-                    //rowOffset = this.Tile.Visible ? this.Tile.Slot.SceneObject.Transform.position.z - 41.0f : 0.0f;
-
-                    //rowOffset = Camera.main.WorldToViewportPoint (this.Transform.position).y;
-                    //rowOffset = Mathf.Lerp (- 30.0f, 0.0f, rowOffset);
-                } else {
-                    rowOffset = this.Tile.Visible ? this.Tile.Slot.Row * 2.0f : 0.0f;
-                    rowOffset = - 2.0f - rowOffset;
-                }
-
-                if (this.name.Contains ("Elara")) {
-                    rowOffset --;
-                }
-
-                this.Transform.SetZ (rowOffset);
-            }
-        }*/
-    }
-
     private IEnumerator WanderCoroutine () {
         do {
             float seconds = Random.Range (2.0f, 10.0f);
