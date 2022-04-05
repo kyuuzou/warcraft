@@ -119,9 +119,9 @@ public partial class Building : SpawnableSprite {
         return null;
     }
 
-    public override void Die (DeathType deathType = DeathType.None) {
+    public override void Die () {
         if (! this.Dead) {
-            base.Die (deathType);
+            base.Die ();
 
             this.collapsingAnimation.Renderer.enabled = true;
             this.collapsingAnimation.Play (AnimationType.CollapseStage2);

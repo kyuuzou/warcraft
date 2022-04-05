@@ -85,7 +85,7 @@ public partial class Unit : SpawnableSprite {
         //this.CurrentMode.Detect (unit);
     }
 
-    public override void Die (DeathType deathType = DeathType.None) {
+    public override void Die () {
         if (! this.Dead) {
             if (this.Selected) {
                 this.GameController.OnGameOver ();
@@ -104,15 +104,6 @@ public partial class Unit : SpawnableSprite {
                 float distanceToTile = Vector3.Distance (this.Transform.position, this.Tile.RealPosition);
 
                 spawnTile = distanceToTargetTile > distanceToTile ? this.Tile : this.TargetTile;
-            }
-
-            if (deathType != DeathType.Falling) {
-                ItemIdentifier itemIdentifier = this.SpawnFactory.GetRandomItemIdentifier (
-                    ItemIdentifier.Crystal, ItemIdentifier.HealingCrystal
-                );
-
-                //TODO: this relative position won't make sense if we're talking about the target tile
-                this.SpawnFactory.SpawnItem (itemIdentifier, spawnTile.MapPosition, relativePosition);
             }
 
             base.Die ();
@@ -140,13 +131,8 @@ public partial class Unit : SpawnableSprite {
 
             //this.AudioManager.Play (this.Data.DeadSound);
 
-            if (deathType == DeathType.Falling) {
-                this.StartCoroutine (this.Fall (trait));
-            } else {
-                this.Play (AnimationType.Dying);
-                this.HealthBar.Deactivate ();
-            }
-
+            this.Play (AnimationType.Dying);
+            this.HealthBar.Deactivate ();
             this.ReleaseClaimedTiles ();
 
             //this.Collider.enabled = false;

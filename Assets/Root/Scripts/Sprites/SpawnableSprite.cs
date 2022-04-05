@@ -199,7 +199,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
         this.Damage ((int) (this.CurrentHitPoints * percentage));
     }
 
-    public virtual void Die (DeathType deathType = DeathType.None) {
+    public virtual void Die () {
         if (! this.Dead) {
             this.Dead = true;
 

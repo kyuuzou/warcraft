@@ -13,9 +13,6 @@ public class SpawnFactory : MonoBehaviour {
     private BuildingData[] buildingDataPrefabs;
 
     [SerializeField]
-    private Item[] itemPrefabs;
-
-    [SerializeField]
     private Decoration meshDecorationPrefab;
 
     [SerializeField]
@@ -58,7 +55,6 @@ public class SpawnFactory : MonoBehaviour {
     private Dictionary<string, UnitType> nameToUnitType;
 
     private Dictionary<TileType, DecorationType> decorationByTileType;
-    private Dictionary<ItemIdentifier, Item> itemByIdentifier;
     private Dictionary<Type, TraitData> traitByType;
 
     private int spawnCount = 0;
@@ -118,33 +114,6 @@ public class SpawnFactory : MonoBehaviour {
         return this.decorationByTileType[tileType];
     }
 
-    public ItemIdentifier GetRandomItemIdentifier (params ItemIdentifier[] identifiers) {
-        float total = 0;
-
-        foreach (ItemIdentifier identifier in identifiers) {
-            total += this.itemByIdentifier[identifier].Probability;
-        }
-
-        float random = Random.Range (0, total);
-        total = 0;
-
-        foreach (ItemIdentifier identifier in identifiers) {
-            float probability = this.itemByIdentifier[identifier].Probability;
-
-            if (probability == 0.0f) {
-                continue;
-            }
-
-            total += probability;
-
-            if (total >= random) {
-                return identifier;
-            }
-        }
-
-        return ItemIdentifier.None;
-    }
-
     private UnitType GetUnitType (string nameOnFile) {
         if (this.nameToUnitType.ContainsKey (nameOnFile)) {
             return this.nameToUnitType[nameOnFile];
@@ -157,7 +126,6 @@ public class SpawnFactory : MonoBehaviour {
         this.buildingData = new Dictionary<BuildingType, BuildingData> ();
         this.decorationData = new Dictionary<DecorationType, DecorationData> ();
         this.decorationByTileType = new Dictionary<TileType, DecorationType> ();
-        this.itemByIdentifier = new Dictionary<ItemIdentifier, Item> ();
         this.unitData = new Dictionary<UnitType, UnitData> ();
 
         foreach (BuildingData building in this.buildingDataPrefabs) {
@@ -195,10 +163,6 @@ public class SpawnFactory : MonoBehaviour {
             } else {
                 this.nameToUnitType[unit.NameOnFile] = unit.Type;
             }
-        }
-
-        foreach (Item item in this.itemPrefabs) {
-            this.itemByIdentifier[item.Identifier] = item;
         }
     }
 
@@ -313,17 +277,6 @@ public class SpawnFactory : MonoBehaviour {
         }
 
         return null;
-    }
-
-    /// <param name="relativePosition">Relative position from the center of the tile.</param>
-    public Item SpawnItem (ItemIdentifier identifier, Vector2Int position, Vector3 relativePosition) {
-        Item item = Item.Instantiate<Item> (this.itemByIdentifier[identifier]);
-
-        item.InitializeExternals ();
-        item.SetTile (this.map.GetTile (position));
-        //item.RelativePosition = relativePosition;
-
-        return item;
     }
 
     public Unit SpawnUnit (UnitType unitType, Faction faction) {

@@ -68,9 +68,9 @@ public class Decoration : SpawnableSprite, IInhabitant {
         base.Damage (damage);
     }
 
-    public override void Die (DeathType deathType = DeathType.None) {
+    public override void Die () {
         if (! this.Dead) {
-            base.Die (deathType);
+            base.Die ();
 
             this.GetComponent<Renderer>().enabled = false;
 

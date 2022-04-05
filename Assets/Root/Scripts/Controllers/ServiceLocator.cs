@@ -55,12 +55,6 @@ public class ServiceLocator : Singleton<ServiceLocator> {
     }
 
     [SerializeField]
-    private Inventory inventory;
-    public Inventory Inventory {
-        get { return this.inventory; }
-    }
-
-    [SerializeField]
     private Map map;
     public Map Map {
         get { return this.map; }
