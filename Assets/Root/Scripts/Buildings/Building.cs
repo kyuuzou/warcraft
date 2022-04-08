@@ -320,6 +320,14 @@ public partial class Building : SpawnableSprite {
         this.ManualDestroy ();
     }
 
+    public override bool OnManualMouseDown() {
+        base.OnManualMouseDown();
+
+        this.GameController.CurrentGroup.Set(true, this);
+
+        return true;
+    }
+
     protected override void PlaySelectionSound () {
         if (this.underConstruction) {
             this.AudioManager.PlayUnique (AudioIdentifier.Building);

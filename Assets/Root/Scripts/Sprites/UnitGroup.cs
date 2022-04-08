@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class SpawnableSpriteGroup {
 
@@ -17,28 +15,26 @@ public class SpawnableSpriteGroup {
     }
 
     public SpawnableSpriteGroup (SpawnableSpriteGroup group) : this () {
-        foreach (Unit unit in group.Sprites) {
-            this.Add (unit);
+        foreach (SpawnableSprite sprite in group.Sprites) {
+            this.Add (sprite);
         }
     }
 
-    public bool Add (Unit unit) {
+    public bool Add (SpawnableSprite sprite) {
         if (this.Sprites.Count >= SpawnableSpriteGroup.maximumElements) {
             return false;
         }
         
-        this.Sprites.AddExclusive (unit);
-        unit.Group = this;
+        this.Sprites.AddExclusive (sprite);
+        //sprite.Group = this;
 
         this.OnGroupChanged ();
 
         return true;
     }
 
-    public bool Add (Unit unit, int index) {
-        Debug.Log (unit);
-
-        if (! this.Add (unit)) {
+    public bool Add (SpawnableSprite sprite, int index) {
+        if (! this.Add (sprite)) {
             return false;
         }
 
@@ -52,54 +48,54 @@ public class SpawnableSpriteGroup {
         this.Sprites.Clear ();
     }
 
-    /// <param name="index">The index of the unit that is causing this chain death.</param>
+    /// <param name="index">The index of the sprite that is causing this chain death.</param>
     public void Die (int index) {
         for (int i = this.Sprites.Count - 1; i > index; i --) {
             this.Sprites[i].Die ();
         }
     }
 
-    public int GetIndex (Unit unit) {
-        return this.Sprites.IndexOf (unit);
+    public int GetIndex (SpawnableSprite sprite) {
+        return this.Sprites.IndexOf (sprite);
     }
 
     private void OnGroupChanged () {
-        foreach (Unit unit in this.Sprites) {
-            unit.GetTrait<IUnitTraitMoving> ().OnGroupChanged ();
+        foreach (SpawnableSprite sprite in this.Sprites) {
+            //sprite.GetTrait<ISpawnableSpriteTraitMoving> ().OnGroupChanged ();
         }
     }
 
-    public void Remove (Unit unit) {
-        this.Sprites.Remove (unit);
-        unit.SetSelected (false);
+    public void Remove (SpawnableSprite sprite) {
+        this.Sprites.Remove (sprite);
+        sprite.SetSelected (false);
 
         this.OnGroupChanged ();
     }
 
-    public void Set (bool selected, params Unit[] units) {
+    public void Set (bool selected, params SpawnableSprite[] sprites) {
         this.Clear ();
 
-        foreach (Unit unit in units) {
-            this.Add (unit);
-            unit.SetSelected (selected);
+        foreach (SpawnableSprite sprite in sprites) {
+            this.Add (sprite);
+            sprite.SetSelected (selected);
         }
     }
 
     public void SetSelected (bool selected) {
-        foreach (Unit unit in this.Sprites) {
-            unit.SetSelected (selected);
+        foreach (SpawnableSprite sprite in this.Sprites) {
+            sprite.SetSelected (selected);
         }
     }
 
-    public void Toggle (Unit unit) {
-        if (this.Sprites.Contains (unit)) {
-            this.Remove (unit);
+    public void Toggle (SpawnableSprite sprite) {
+        if (this.Sprites.Contains (sprite)) {
+            this.Remove (sprite);
         } else {
-            this.Add (unit);
+            this.Add (sprite);
         }
     }
 
     public override string ToString () {
-        return string.Join (":", this.Sprites.ConvertAll (unit => unit.ToString ()).ToArray ());
+        return string.Join (":", this.Sprites.ConvertAll (sprite => sprite.ToString ()).ToArray ());
     }
 }
