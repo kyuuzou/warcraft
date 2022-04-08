@@ -46,7 +46,7 @@ public class GroupSelection : SceneObject {
     private void UpdateSelectedGroup (Vector3 origin, Vector3 ending) {
         Collider2D[] colliders = Physics2D.OverlapAreaAll (origin, ending, this.selectionMask);
 
-        UnitGroup group = this.gameController.CurrentGroup;
+        SpawnableSpriteGroup group = this.gameController.CurrentGroup;
         group.Clear ();
 
         if (colliders.Length == 0) {

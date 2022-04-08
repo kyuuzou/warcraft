@@ -16,12 +16,6 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     }
 
     [SerializeField]
-    private HealthBar healthBar;
-    public HealthBar HealthBar {
-        get { return this.healthBar; }
-    }
-
-    [SerializeField]
     private SpriteSelection selectionPrefab;
 
     [SerializeField]
@@ -43,7 +37,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     }
 
     public GameButtonType Portrait {
-        get { return this.Data.Portrait; }
+        get { return this.Data.Portrait + 1; }
     }
 
     public string Title {
@@ -508,8 +502,6 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
         this.CurrentHitPoints = Mathf.Clamp (hitPoints, 0, this.Data.HitPoints);
 
         this.StatusPane.ManualUpdate ();
-
-        //this.healthBar.SetHitpoints (this.HitPointPercentage);
     }
 
     protected virtual void SetManaPoints (int manaPoints) {
@@ -530,7 +522,8 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
             this.selection.SetVisible (selected);
 
             this.StatusPane.ManualUpdate ();
-            this.ContextMenu.ManualUpdate ();
+            this.ContextMenu.SetNode(this.Data.RootMenuNode);
+            //this.ContextMenu.ManualUpdate ();
 
             if (selected) {
                 this.PlaySelectionSound ();

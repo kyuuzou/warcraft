@@ -10,6 +10,7 @@ public class InteractionModeHarvest : InteractionMode {
     }
 
     private void ClickBuilding(Collider2D collider) {
+        /*
         Building building = collider.GetComponent<Building>();
 
         if (building.Type == BuildingType.GoldMine) {
@@ -18,6 +19,7 @@ public class InteractionModeHarvest : InteractionMode {
 
             InputHandler.Instance.SetMode(InteractionModeType.Regular);
         }
+        */
     }
 
     private void ClickGround(Collider2D collider) {

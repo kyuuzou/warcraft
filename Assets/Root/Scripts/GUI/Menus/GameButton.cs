@@ -42,10 +42,10 @@ public class GameButton : SceneObject {
 
     private void OnMouseUpAsButton () {
         if (this.action != GameButtonType.None) {
-            IList<Unit> units = this.gameController.CurrentGroup.Units;
+            IList<SpawnableSprite> sprites = this.gameController.CurrentGroup.Sprites;
 
-            foreach (Unit unit in units) {
-                unit.OnButtonPress (this.action);
+            foreach (SpawnableSprite sprite in sprites) {
+                sprite.OnButtonPress (this.action);
             }
         }
     }

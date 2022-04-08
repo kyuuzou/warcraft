@@ -1,8 +1,7 @@
 
 public enum Scene {
     None,
-    SplashScreen    = 0,
-    MainMenu        = 1,
-    Mission         = 2,
-    MissionOutcome  = 3
+    SplashScreen    = 1,
+    MainMenu        = 2,
+    Mission         = 3
 }

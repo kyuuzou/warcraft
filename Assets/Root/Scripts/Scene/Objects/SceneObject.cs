@@ -95,6 +95,10 @@ public class SceneObject : MonoBehaviour {
 
     }
 
+    public virtual void OnInputChanged (InputSource source, InputType type, bool status) {
+
+    }
+
     public virtual bool OnManualMouseDown () {
         return true;
     }
@@ -151,7 +155,7 @@ public class SceneObject : MonoBehaviour {
     }
 
     public void SeparateMesh () {
-        this.Mesh = GameObject.Instantiate (this.MeshFilter.sharedMesh);
+        this.Mesh = (Mesh) GameObject.Instantiate (this.MeshFilter.sharedMesh);
         this.MeshFilter.mesh = this.Mesh;
     }
 

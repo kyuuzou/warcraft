@@ -23,11 +23,6 @@ public class InteractionModeDefault : InteractionMode {
     private void ClickGround(Collider2D collider) {
         TileSlot slot = collider.GetComponent<TileSlot>();
         this.ClickGround(slot.Tile);
-
-#if DEBUG
-        TileSlot tileSlot = collider.GetComponent<TileSlot>();
-        RichDebug.Log(tileSlot.Tile.MapPosition, tileSlot.Tile.AtlasIndex);
-#endif
     }
 
     private void ClickGround(MapTile tile) {
@@ -52,7 +47,8 @@ public class InteractionModeDefault : InteractionMode {
             }
 
             this.selectedSprite = unit;
-            this.selectedSprite.SetSelected(true);
+            //this.selectedSprite.SetSelected(true);
+            ServiceLocator.Instance.GameController.CurrentGroup.Set(this.selectedSprite);
         }
     }
 

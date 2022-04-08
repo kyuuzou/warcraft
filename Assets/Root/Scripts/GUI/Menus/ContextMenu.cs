@@ -55,7 +55,7 @@ public class ContextMenu : SceneObject {
             return;
         }
 
-        IList<Unit> units = this.gameController.CurrentGroup.Units;
+        IList<SpawnableSprite> units = this.gameController.CurrentGroup.Sprites;
 
         switch (units.Count) {
             case 0:
@@ -77,7 +77,7 @@ public class ContextMenu : SceneObject {
         this.SetCaption (string.Empty);
     }
 
-    private GameButtonType[] MergeButtons (IList<Unit> units) {
+    private GameButtonType[] MergeButtons (IList<SpawnableSprite> units) {
         GameButtonType[] buttons = new GameButtonType[6];
         
         foreach (SpawnableSprite sprite in units) {
@@ -117,10 +117,10 @@ public class ContextMenu : SceneObject {
             this.buttonRoot.SetActive (true);
         }
         
-        IList<Unit> units = this.gameController.CurrentGroup.Units;
+        IList<SpawnableSprite> sprites = this.gameController.CurrentGroup.Sprites;
 
-        foreach (SpawnableSprite unit in units) {
-            unit.FilterButtons (ref buttons);
+        foreach (SpawnableSprite sprite in sprites) {
+            sprite.FilterButtons (ref buttons);
         }
         
         int index = 0;

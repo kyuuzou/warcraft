@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class InputHandler : MonoBehaviour {
-
+/*
     public static InputHandler Instance { get; private set; }
 
     private static bool mouseDown = false;
@@ -48,4 +48,5 @@ public class InputHandler : MonoBehaviour {
     private void Update() {
         this.currentMode.Update();
     }
+    */
 }

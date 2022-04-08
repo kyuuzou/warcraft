@@ -49,6 +49,12 @@ public class ServiceLocator : Singleton<ServiceLocator> {
     }
 
     [SerializeField]
+    private InputController inputController;
+    public InputController InputController {
+        get { return this.inputController; }
+    }
+
+    [SerializeField]
     private InputHandler inputHandler;
     public InputHandler InputHandler {
         get { return this.inputHandler; }

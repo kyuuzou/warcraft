@@ -91,10 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   columns: 1
-  rows: 94
-  currentTile:
-    x: 0
-    y: 0
+  rows: 93
+  currentTile: {x: 0, y: 0}
   inverted: 0
 --- !u!1 &100002
 GameObject:

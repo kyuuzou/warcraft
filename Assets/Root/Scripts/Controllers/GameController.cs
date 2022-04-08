@@ -12,7 +12,7 @@ public class GameController : SceneObject {
     [SerializeField]
     private TextMesh lumberText;
 
-    public UnitGroup CurrentGroup { get; private set; }
+    public SpawnableSpriteGroup CurrentGroup { get; private set; }
     public bool Paused { get; private set; }
 
     public delegate void BuildingCompleteHandler (object sender, BuildingCompleteArgs e);
@@ -48,7 +48,7 @@ public class GameController : SceneObject {
     private Player mainPlayer;
     private Mission mission;
     private List<Player> players;
-    private Dictionary<int, UnitGroup> savedGroups;
+    private Dictionary<int, SpawnableSpriteGroup> savedGroups;
     private Dictionary<UpgradeIdentifier, Upgrade> upgradeByIdentifier;
     private Rect windowRect;
 
@@ -81,8 +81,8 @@ public class GameController : SceneObject {
         this.goldText.text = this.gold.ToString();
         this.lumberText.text = this.lumber.ToString();
 
-        this.savedGroups = new Dictionary<int, UnitGroup> ();
-        this.CurrentGroup = new UnitGroup ();
+        this.savedGroups = new Dictionary<int, SpawnableSpriteGroup> ();
+        this.CurrentGroup = new SpawnableSpriteGroup ();
 
         this.campaignByType = new Dictionary<CampaignType, Campaign> ();
 
@@ -145,9 +145,9 @@ public class GameController : SceneObject {
         return this.lumber;
     }
 
-    public UnitGroup GetSavedGroup (int key) {
+    public SpawnableSpriteGroup GetSavedGroup (int key) {
         if (this.savedGroups.ContainsKey (key)) {
-            return new UnitGroup (this.savedGroups[key]);
+            return new SpawnableSpriteGroup (this.savedGroups[key]);
         }
         
         return null;
@@ -297,7 +297,7 @@ public class GameController : SceneObject {
     }
 
     public void SaveGroup (int key) {
-        this.savedGroups[key] = new UnitGroup (this.CurrentGroup);
+        this.savedGroups[key] = new SpawnableSpriteGroup (this.CurrentGroup);
     }
 
     public void SetGold(int gold) {

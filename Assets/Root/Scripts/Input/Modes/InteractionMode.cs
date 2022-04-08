@@ -26,6 +26,7 @@ public abstract class InteractionMode {
     }
 
     public virtual void Update() {
+        /*
         if (InputHandler.Enabled) {
             if (Input.GetMouseButtonDown(0) && InputHandler.MouseDown == false) {
                 InputHandler.MouseDown = true;
@@ -35,5 +36,6 @@ public abstract class InteractionMode {
                 InputHandler.MouseDown = false;
             }
         }
+        */
     }
 }

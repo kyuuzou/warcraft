@@ -16,7 +16,7 @@ public partial class Unit : SpawnableSprite {
 
     public override MapTile TargetTile { get; set; }
 
-    public UnitGroup Group { get; set; }
+    public SpawnableSpriteGroup Group { get; set; }
     public bool Invisible { get; set; }
     public bool OffensiveMoving { get; set; }
 
@@ -131,7 +131,6 @@ public partial class Unit : SpawnableSprite {
             //this.AudioManager.Play (this.Data.DeadSound);
 
             this.Play (AnimationType.Dying);
-            this.HealthBar.Deactivate ();
             this.ReleaseClaimedTiles ();
 
             //this.Collider.enabled = false;
@@ -229,7 +228,6 @@ public partial class Unit : SpawnableSprite {
         this.GetComponent<Light>().enabled = false;
 
         this.Play (AnimationType.Dying);
-        this.HealthBar.Deactivate ();
     }
 
     public void ForcedMove (
@@ -429,20 +427,10 @@ public partial class Unit : SpawnableSprite {
 
     public override bool OnManualMouseDown () {
         base.OnManualMouseDown ();
-        /*
-        Unit unit = this.GameController.CurrentGroup.GetNextUnit();
 
-        if (unit == this) {
-            return false;
-        }
+        this.GameController.CurrentGroup.Set(true, this);
 
-        if (this.inputController.MayNotify (unit)) {
-            unit.Interact (this);
-
-            return true;
-        }
-        */
-        return false;
+        return true;
     }
 
     private void OnMend () {
@@ -489,8 +477,6 @@ public partial class Unit : SpawnableSprite {
         //this.RegisterSpriteTrigger (SpriteTriggerType.Attack, this.OnAttackSpriteTrigger);
 
         this.SetRandomDirection ();
-
-        //this.HealthBar.Initialize (this);
     }
 
     public void SetDestination (MapTile tile) {

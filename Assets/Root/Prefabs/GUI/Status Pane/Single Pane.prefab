@@ -92,9 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 1
   rows: 94
-  currentTile:
-    x: 0
-    y: 0
+  currentTile: {x: 0, y: 0}
   inverted: 0
 --- !u!1 &100002
 GameObject:
@@ -146,9 +144,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portrait: {fileID: 11400000}
   portraitTexture:
-    dungeonTexture: {fileID: 0}
-    forestTexture: {fileID: 0}
-    swampTexture: {fileID: 0}
+    dungeonTexture: {fileID: 2800000, guid: 2a27ee6e1f56e564ebf62f2fc3ba18f2, type: 3}
+    forestTexture: {fileID: 2800000, guid: 0dbb95cc2d684da4ab11e3c05417d0de, type: 3}
+    swampTexture: {fileID: 2800000, guid: e36fecaf8990298418c6b45609b45a21, type: 3}
   hitPointColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.9034482, g: 1, b: 0, a: 1}

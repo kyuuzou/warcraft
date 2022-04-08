@@ -10,19 +10,21 @@ public class InteractionModeAttacking : InteractionMode {
     }
 
     private void ClickBuilding(Collider2D collider) {
+        /*
         Building building = collider.GetComponent<Building>();
 
         this.unit.Attack(building);
         this.unit.PressCancel();
 
-        InputHandler.Instance.SetMode(InteractionModeType.Regular);
+        InputHandler.Instance.SetMode(InteractionModeType.Regular);*/
     }
 
     private void ClickGround(Collider2D collider) {
-        InputHandler.Instance.SetMode(InteractionModeType.Regular);
+        //InputHandler.Instance.SetMode(InteractionModeType.Regular);
     }
 
     private void ClickUnit(Collider2D collider) {
+        /*
         Unit unit = collider.GetComponent<Unit>();
 
         if (!unit.IsDead()) {
@@ -31,6 +33,7 @@ public class InteractionModeAttacking : InteractionMode {
 
             InputHandler.Instance.SetMode(InteractionModeType.Regular);
         }
+        */
     }
 
     public override void DisableMode() {

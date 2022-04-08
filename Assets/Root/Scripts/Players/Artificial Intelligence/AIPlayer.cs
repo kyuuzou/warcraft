@@ -15,7 +15,7 @@ public class AIPlayer : Player {
     private IEnumerator Think () {
         yield return new WaitForSeconds (1.0f);
         List<Unit> attackers = this.Factions [0].GetUnits ();
-        List<UnitGroup> movingGroups = new List<UnitGroup> ();
+        List<SpawnableSpriteGroup> movingGroups = new List<SpawnableSpriteGroup> ();
 
         int unitCount = attackers.Count;
 

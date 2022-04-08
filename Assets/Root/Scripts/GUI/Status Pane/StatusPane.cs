@@ -57,9 +57,9 @@ public class StatusPane : SceneObject {
             return;
         }
 
-        UnitGroup group = this.gameController.CurrentGroup;
+        SpawnableSpriteGroup group = this.gameController.CurrentGroup;
 
-        switch (group.Units.Count) {
+        switch (group.Sprites.Count) {
             case 0:
                 this.Hide ();
                 break;
@@ -75,9 +75,9 @@ public class StatusPane : SceneObject {
     }
 
     public void SetBackgroundIndex (int tileIndex) {
-        this.progressBar.GetComponent<Renderer>().enabled = tileIndex == 6 ? true : false;
+        this.progressBar.GetComponent<Renderer>().enabled = tileIndex == 6;
 
-        this.background.SetCurrentTileY (tileIndex);
+        //this.background.SetCurrentTileY (tileIndex);
     }
 
     public void SetProgress (float progress) {
@@ -99,7 +99,7 @@ public class StatusPane : SceneObject {
         this.groupPane.SetActive (true);
         this.singlePane.Deactivate ();
 
-        IList<Unit> sprites = this.gameController.CurrentGroup.Units;
+        IList<SpawnableSprite> sprites = this.gameController.CurrentGroup.Sprites;
 
         int i;
         int spriteCount = sprites.Count;
@@ -122,7 +122,7 @@ public class StatusPane : SceneObject {
         this.groupPane.SetActive (false);
         this.singlePane.Activate ();
 
-        SpawnableSprite owner = this.gameController.CurrentGroup.Units[0];
+        SpawnableSprite owner = this.gameController.CurrentGroup.Sprites[0];
 
         this.singlePane.Owner = owner;
         this.SetBackgroundIndex (owner.StatusBackgroundIndex);
