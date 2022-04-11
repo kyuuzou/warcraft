@@ -14,6 +14,7 @@ public class WarcraftAssetImporter : EditorWindow {
 	private const string ToolPath = "Tools";
 	private const string WindowTitle = "Warcraft Asset Importer";
 
+    private const string DataFile = "DATA.WAR";
 	private const string ToolsURL = "https://github.com/kyuuzou/warcraft/releases/download/war1tool_v3.2.1/";
 	private const string FFMpegFilename = "ffmpeg.exe";
 	private const string War1toolFilename = "war1tool.exe";
@@ -100,16 +101,8 @@ public class WarcraftAssetImporter : EditorWindow {
         }
     }
 
-    private IEnumerator ExtractAssets() {
-        string path = this.dataWarPath;
-
-        if (string.IsNullOrEmpty(path) || !File.Exists(path) || string.Compare(Path.GetFileName(path), "DATA.WAR") != 0) {
-            Debug.LogError("Could not find DATA.WAR. Please select it before importing.");
-            this.Abort();
-            yield break;
-        }
-
-        //string toolPath = Application.dataPath.Replace('/', '\\') + "\\Tools\\";
+    private void ExtractAssets() {
+#if UNITY_EDITOR_WIN        
         string toolPath = $"{Application.dataPath}\\{WarcraftAssetImporter.ToolPath}\\";
 
         // Inject the script into a command in case running scripts is disabled on the system.
@@ -120,13 +113,64 @@ public class WarcraftAssetImporter : EditorWindow {
         Process process = Process.Start("powershell.exe", script);
         process.WaitForExit();
         process.Close();
+# elif UNITY_EDITOR_OSX
+        string toolPath = $"{Application.dataPath}/{WarcraftAssetImporter.ToolPath}/";
+        string script = File.ReadAllText($"{toolPath}ExtractFilesOnMac.applescript");
+
+        Process process = Process.Start("osascript", $"-e '{script}'");
+        process.WaitForExit();
+        process.Close();
+#endif
+    }
+
+    private bool FindDataWarFile() {
+        try {
+            if (string.IsNullOrEmpty(this.dataWarPath)) {
+                throw new FileNotFoundException();
+            }
+            
+            if (!(File.Exists(this.dataWarPath) || Directory.Exists(this.dataWarPath))) {
+                throw new FileNotFoundException();
+            }
+
+            string fileName = Path.GetFileName(this.dataWarPath);
+
+            if (string.Compare(fileName, WarcraftAssetImporter.DataFile, StringComparison.OrdinalIgnoreCase) == 0) {
+                return true;
+            }
+
+            if (Directory.Exists(this.dataWarPath)) {
+                string[] files = Directory.GetFiles(
+                    this.dataWarPath,
+                    WarcraftAssetImporter.DataFile,
+                    SearchOption.AllDirectories
+                );
+
+                if (files.Length > 0) {
+                    this.dataWarPath = files[0];
+                    return true;
+                }
+            }
+
+            throw new FileNotFoundException();
+        } catch (FileNotFoundException exception) {
+            Debug.LogError($"Could not find {WarcraftAssetImporter.DataFile}. Please select it before importing.");
+            this.Abort();
+        }
+        
+        return false;
     }
 
     private IEnumerator Import() {
-	    EditorUtility.DisplayCancelableProgressBar(WindowTitle, "Preparing...", 0.0f);
+        EditorUtility.DisplayCancelableProgressBar(WindowTitle, "Preparing...", 0.0f);
 
         yield return this.DownloadTools();
-        yield return this.ExtractAssets();
+        
+        if (!this.FindDataWarFile()) {
+            yield break;
+        }
+        
+        this.ExtractAssets();
 
 	    EditorUtility.ClearProgressBar();
 	    AssetDatabase.Refresh();
@@ -147,13 +191,13 @@ public class WarcraftAssetImporter : EditorWindow {
 
         if (this.importingCoroutine == null) {
             GUILayout.BeginHorizontal();
-            EditorGUILayout.TextField("Path to DATA.WAR:", this.dataWarPath);
+            EditorGUILayout.TextField($"Path to {WarcraftAssetImporter.DataFile}:", this.dataWarPath);
 
             if (GUILayout.Button("...", GUILayout.ExpandWidth(false))) {
                 this.dataWarPath = EditorUtility.OpenFilePanelWithFilters(
-                    "Select Warcraft: Orcs and Humans' DATA.WAR file",
+                    $"Select Warcraft: Orcs and Humans' {WarcraftAssetImporter.DataFile} file",
                     ".",
-                    new string[] { "WAR files", "WAR" }
+                    new string[] { "WAR files", "WAR", "Mac OS Application", "app" }
                 );
             }
 
