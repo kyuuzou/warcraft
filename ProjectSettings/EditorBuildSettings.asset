@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Root/Scenes/Splash Screen.unity
+    path: Assets/Root/Scenes/SplashScreen.unity
     guid: 99b43ac916c06914aa3b3b9ecc306389
   - enabled: 1
-    path: Assets/Root/Scenes/Main Menu.unity
+    path: Assets/Root/Scenes/MainMenu.unity
     guid: a586779991a05446087d9a29bc4436d1
   - enabled: 1
     path: Assets/Root/Scenes/Mission.unity
     guid: fc110a48151f6264f91d82ef36f8b306
   - enabled: 1
-    path: Assets/Root/Scenes/Mission Outcome.unity
+    path: Assets/Root/Scenes/MissionOutcome.unity
     guid: 7c8dca45f1cd68441afe9c2c7ba12b44
   m_configObjects: {}

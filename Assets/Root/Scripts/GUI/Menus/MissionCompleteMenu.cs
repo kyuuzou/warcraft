@@ -12,7 +12,7 @@ public class MissionCompleteMenu : Menu {
     private void PressContinue () {
         this.GameController.Resume ();
 
-        SceneManager.LoadScene ("Mission Outcome");
+        SceneManager.LoadScene (Scene.MissionOutcome.ToString());
     }
 
     private void PressSave () {

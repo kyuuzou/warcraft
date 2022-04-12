@@ -110,7 +110,7 @@ public class SplashScreen : MonoBehaviour {
         yield return this.StartCoroutine (this.PlayDosSequence ());
         yield return this.StartCoroutine (this.ShowLogo ());
 
-        SceneManager.LoadScene ((int) Scene.MainMenu);
+        SceneManager.LoadScene(Scene.MainMenu.ToString());
     }
 
     private IEnumerator ShowLogo () {

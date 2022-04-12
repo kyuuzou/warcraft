@@ -32,6 +32,6 @@ public class MainMenu : Menu {
     }
 
     private void PressStart () {
-        SceneManager.LoadScene ((int) Scene.Mission);
+        SceneManager.LoadScene (Scene.Mission.ToString());
     }
 }
