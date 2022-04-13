@@ -45,25 +45,8 @@ public class TileData : CustomScriptableObject {
     }
 
     [SerializeField]
-    private bool traversableByAir = true;
-    public bool TraversableByAir {
-        get { return this.traversableByAir; }
-        set { this.traversableByAir = value; }
-    }
-
-    [SerializeField]
-    private bool traversableByLand = true;
-    public bool TraversableByLand {
-        get { return this.traversableByLand; }
-        set { this.traversableByLand = value; }
-    }
-
-    [SerializeField]
-    private bool traversableBySea = true;
-    public bool TraversableBySea {
-        get { return this.traversableBySea; }
-        set { this.traversableBySea = value; }
-    }
+    private bool traversable = true;
+    public bool Traversable => this.traversable;
 
     /// <summary>
     /// The neighbours pattern that leads to this type of tile. To be filled only if applicable.
@@ -126,24 +109,4 @@ public class TileData : CustomScriptableObject {
     public Vector2 Offset { get; set; }
 
     public string ImageSource { get; set; }
-
-    private Dictionary<MovementType, bool> traversableByType;
-
-    public override void Initialize () {
-        base.Initialize ();
-
-        this.traversableByType = new Dictionary<MovementType, bool> () {
-            { MovementType.Air, this.traversableByAir },
-            { MovementType.Land, this.traversableByLand },
-            { MovementType.Sea, this.traversableBySea }
-        };
-    }
-
-    public bool IsTraversable (MovementType movementType) {
-        if (movementType == MovementType.None) {
-            return false;
-        }
-
-        return this.traversableByType [movementType];
-    }
 }

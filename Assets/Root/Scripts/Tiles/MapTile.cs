@@ -374,17 +374,7 @@ public class MapTile : ITarget {
             }
         }
 
-        for (int i = 0; i < 2; i ++) {
-            MapTileLayer layer = this.layers[i];
-
-            if (layer != null && layer.TileData != null) {
-                if (! layer.TileData.IsTraversable (movementType)) {
-                    return false;
-                }
-            }
-        }
-
-        return this.Data.IsTraversable (movementType);
+        return this.Data.Traversable;
     }
 
     public bool Overlaps (IMovementDestination destination) {

@@ -48,7 +48,7 @@ public class InteractionModeDefault : InteractionMode {
 
             this.selectedSprite = unit;
             //this.selectedSprite.SetSelected(true);
-            ServiceLocator.Instance.GameController.CurrentGroup.Set(this.selectedSprite);
+            ServiceLocator.Instance.GameController.CurrentGroup.Set(true, this.selectedSprite);
         }
     }
 

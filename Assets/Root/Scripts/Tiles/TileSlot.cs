@@ -39,6 +39,17 @@ public class TileSlot : CustomSprite {
         );
     }
 
+    /*
+    public override bool OnManualMouseDown () {
+        foreach (SpawnableSprite sprite in ServiceLocator.Instance.GameController.CurrentGroup.Sprites) {
+            IUnitTraitMoving movingTrait = sprite.GetTrait<IUnitTraitMoving>();
+            movingTrait.Move(this.Tile, movingTrait, true, false);
+        }
+        
+        return true;
+    }
+    */
+
     public void SetParent (Transform parent) {
         this.parent = parent;
     }

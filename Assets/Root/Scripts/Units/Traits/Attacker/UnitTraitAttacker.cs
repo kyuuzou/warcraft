@@ -178,6 +178,10 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         MapTile currentTile = this.Unit.Tile;
         Vector2Int directionOffset = direction.GetData ().Offset;
 
+        if (! this.positionsInRange.ContainsKey(direction)) {
+            return new List<MapTile>();
+        }
+
         foreach (Vector2Int position in this.positionsInRange[direction]) {
             Vector2Int extendedPosition = position + directionOffset;
 
