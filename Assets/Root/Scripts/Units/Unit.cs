@@ -385,7 +385,8 @@ public partial class Unit : SpawnableSprite {
                         break;
 
                     default:
-                        throw new NotSupportedException($"Received unexpected value: {animationType}");
+                        // do nothing
+                        break;
                 }
 
                 break;
