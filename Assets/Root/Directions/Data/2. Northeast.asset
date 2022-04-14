@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: 2. Northeast
   m_EditorClassIdentifier: 
   identifier: 2
-  offset:
-    x: 1
-    y: 1
+  offset: {x: 1, y: -1}
   spriteMultiplier: 1
   spriteOffset: 1

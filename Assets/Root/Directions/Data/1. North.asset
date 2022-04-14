@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: 1. North
   m_EditorClassIdentifier: 
   identifier: 1
-  offset:
-    x: 0
-    y: 1
+  offset: {x: 0, y: -1}
   spriteMultiplier: 1
   spriteOffset: 0

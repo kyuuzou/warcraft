@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: 6. Southwest
   m_EditorClassIdentifier: 
   identifier: 6
-  offset:
-    x: -1
-    y: -1
+  offset: {x: -1, y: 1}
   spriteMultiplier: -1
   spriteOffset: 3
