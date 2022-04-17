@@ -88,7 +88,6 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
 
     private List<IDeathListener> deathListeners;
     private List<IPhasedOutListener> phasedOutListeners;
-    private ScrollTextPool scrollTextPool;
     private Dictionary<Type, ISpawnableTrait> traitByType;
 
     private bool phasedOut = false;
@@ -154,12 +153,10 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
 
     public virtual void Damage (int damage) {
         if (this.Invincible) {
-            this.scrollTextPool.Scroll (this.Transform, Color.red, "0");
             return;
         }
 
         if (! this.Dead) {
-            this.scrollTextPool.Scroll (this.Transform, Color.red, damage.ToString ());
             this.SetHitPoints (this.CurrentHitPoints - damage);
 
             if (this.CurrentHitPoints <= 0) {
@@ -268,7 +265,6 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
         this.ContextMenu = serviceLocator.ContextMenu;
         this.CursorStylist = serviceLocator.CursorStylist;
         this.MissionStatistics = serviceLocator.MissionStatistics;
-        this.scrollTextPool = serviceLocator.GetPool<ScrollTextPool> ();
         this.SpawnFactory = serviceLocator.SpawnFactory;
         this.StatusPane = serviceLocator.StatusPane;
 
@@ -436,7 +432,6 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     
     public void Restore (int hitPoints) {
         if (! this.Dead) {
-            this.scrollTextPool.Scroll (this.Transform, Color.green, hitPoints.ToString ());
             this.SetHitPoints (this.CurrentHitPoints + hitPoints);
         }
     }
