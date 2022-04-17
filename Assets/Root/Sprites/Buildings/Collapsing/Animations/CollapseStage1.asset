@@ -16,7 +16,7 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 59008c29cb86fb74babe554b821782c7, type: 2}
   overrideTexture: {fileID: 0}
   mesh: {fileID: 4300000, guid: 1afd27df8ea80694bb8e0d1452367bc2, type: 2}
-  tileSize: {x: 32, y: 64}
+  atlasSize: {x: 1, y: 17}
   offset: {x: 0, y: 0}
   margin: {x: 0, y: 0}
   frames: 00000000010000000200000003000000
