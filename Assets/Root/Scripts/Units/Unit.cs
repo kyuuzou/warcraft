@@ -434,7 +434,7 @@ public partial class Unit : SpawnableSprite {
     }
 
     public void OnOrderAccepted () {
-        //this.AudioManager.Play (this.Data.AcknowledgeSound);
+        this.AudioManager.Play (this.Data.AcknowledgeSound);
     }
 
     public void OnPathFindingFailed () {
