@@ -5,7 +5,7 @@ public class SpawnableSpriteGroup {
     public List<SpawnableSprite> Sprites { get; private set; }
 
     public Faction Faction {
-        get { return this.Sprites[0].Faction; }
+        get { return this.Sprites.Count > 0 ? this.Sprites[0].Faction : null; }
     }
     
     private static readonly int maximumElements = 99;
