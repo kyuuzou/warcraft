@@ -174,12 +174,7 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
         }
         
         this.lastDestinationPivot = destination.Pivot;
-                
-        if (this.Unit.Tile.Overlaps (destination) || (! overlapTarget && this.Unit.Tile.IsAdjacent (destination))) {
-            this.movementListener.ReachedTarget ();
-            return;
-        }
-
+        
         this.movement = new Task (this.MoveCoroutine (destination, overlapTarget));
         this.movement.Start ();
     }

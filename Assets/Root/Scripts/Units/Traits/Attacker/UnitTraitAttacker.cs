@@ -13,7 +13,6 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     protected ITarget Target { get; private set; }
 
     private IEnumerator attackAfterCooldownCoroutine = null;
-    //private Tile destination;
     private bool engaging = false;
     private float lastAttack = float.MinValue;
     private Map map;
@@ -28,9 +27,16 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     
     public void Attack (SpawnableSprite target) {
         this.Activate ();
-
+        
         this.SetTarget (target);
         this.Unit.OnOrderAccepted ();
+        
+        if (this.IsTargetInRange ()) {
+            this.Engage ();
+        } else {
+            this.Disengage();
+            this.Unit.Move(this.Target, this, false, false);
+        }
     }
 
     public virtual void Attack (MapTile target) {
@@ -38,7 +44,7 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     }
 
     public void AttackAfterCooldown () {
-        if (this.attackAfterCooldownCoroutine != null) {
+        if (this.attackAfterCooldownCoroutine != null) { 
             this.StopCoroutine (this.attackAfterCooldownCoroutine);
         }
         
@@ -50,27 +56,28 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         if (! this.Active || this.Unit.IsDead ()) {
             yield break;
         }
-
+        
         // So triggers on the last frame of an attack animation get a chance to be processed
         yield return null;
 
-        this.Unit.Play (this.Unit.TargetTile == null ? AnimationType.Idle : AnimationType.Walking);
+        if (!this.IsTargetInRange()) {
+            this.Disengage();
+            this.Unit.Move(this.Target, this, false, false);
+            yield break;
+        }
 
+        yield return new WaitForSeconds (delay);
+        
+        if (! this.Active || this.Unit.IsDead ()) {
+            yield break;
+        }
+        
         if (this.IsTargetInRange ()) {
-            yield return new WaitForSeconds (delay);
-
-            if (! this.Active || this.Unit.IsDead ()) {
-                yield break;
-            }
-
-            if (this.IsTargetInRange ()) {
-                this.lastAttack = Time.time;
-                this.Unit.Play (AnimationType.Attacking);
-            } else {
-                this.Deactivate ();
-            }
+            this.lastAttack = Time.time;
+            this.Unit.Play (AnimationType.Attacking);
         } else {
-            this.Deactivate ();
+            this.Disengage();
+            this.Unit.Move(this.Target, this, false, false);
         }
     }
     
@@ -87,12 +94,11 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     }
 
     public virtual void DamageTarget (int damage) {
-        /*
-        if (this.Active) {
-            this.Unit.FindDirection (this.Unit.Tile, this.Target.GetRealTile ());
+        if (! this.Active) {
+            return;
         }
-        */
-
+        
+        this.Unit.FindDirection (this.Unit.Tile, this.Target.GetRealTile ());
         this.Target.Damage (damage);
     }
     
@@ -100,58 +106,41 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         base.Deactivate ();
 
         if (! this.Unit.Dead) {
-            this.Unit.Play (this.Unit.TargetTile == null ? AnimationType.Idle : AnimationType.Walking);
+            this.Unit.Stop ();
         }
-
+        
         this.Unit.MeshAnimator.UnregisterTriggerListener (this);
-
+        
         if (this.attackAfterCooldownCoroutine != null) {
             this.StopCoroutine (this.attackAfterCooldownCoroutine);
         }
-
+        
         this.Disengage ();
     }
     
     private void Disengage () {
         this.engaging = false;
-
-        /*
-        if (this.Unit.CurrentAnimationType == AnimationType.Attacking) {
-            //TODO: If the line below is uncommented, attack animations get interrupted when the target dies.
-            //Find some better way to prevent units from attacking dead targets
-            //this.Unit.Play (AnimationType.Idle);
+        
+        if (this.Unit.MeshAnimator.CurrentAnimation.Type == AnimationType.Attacking) {
+            this.Unit.Play (AnimationType.Idle);
         }
-        */
     }
 
     private void Engage () {
         if (this.engaging) {
             return;
         }
-
+        
         if (this.Target.IsDead () || this.Target.PhasedOut) {
             this.Deactivate ();
             return;
         }
-
-        if (this.lastAttack + this.Data.AttackCooldown > Time.time) {
-            this.Deactivate ();
-            return;
-        }
-
+        
         this.engaging = true;
-
-        //this.Unit.Stop ();
-
-        /*
-        this.Unit.FindDirection (this.Unit.Tile, this.Target.Tile);
-        */
-
         this.lastAttack = Time.time;
-        this.Unit.Play (AnimationType.Attacking);
-    }
 
-
+        this.Unit.FindDirection (this.Unit.Tile, this.Target.Tile);
+        this.Unit.Play(AnimationType.Attacking);
     }
 
     public void Initialize (Unit unit, UnitTraitDataAttacker data) {
@@ -198,24 +187,11 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         if (this.IsTargetInRange ()) {
             this.DamageTarget (this.CalculateAttackDamage ());
             this.AudioManager.Play (this.Data.AttackSound);
-        } else {
-            this.Deactivate ();
         }
     }
 
     public void OnDeathNotification (SpawnableSprite sprite) {
         if (sprite == this.Target) {
-            //Debug.Log ("target is dead");
-            
-            /*
-            if (this.Unit.OffensiveMoving) {
-                this.Unit.SetMode (UnitModeType.OffensiveMoving, force: true);
-            } else {
-                this.Unit.Stop ();
-                this.Unit.SetMode (UnitModeType.Idle);
-            }
-            */
-
             this.Deactivate ();
         }
     }
@@ -225,48 +201,25 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     }
 
     public void OnPhasedOut (SpawnableSprite sprite) {
-        if (sprite == this.Target) {
-            Debug.Log ("Phased out");
-            this.Deactivate ();
-            //this.Unit.Stop ();
-        }
+        
     }
 
-    public void ReachedTarget () {
-        if (this.IsTargetInRange ()) {
+    public void ReachedTarget() {
+        if (this.IsTargetInRange()) {
             this.Engage ();
         } else {
-            this.Deactivate ();
+            this.Disengage();
+            this.Unit.Move(this.Target, this, false, false);
         }
-
-        //if (! this.engaging && ! this.target.IsDead ())
-        //    this.unit.MoveTowards (this.target);
     }
 
     protected void SetTarget (ITarget target) {
-        //this.Unit.StopAllCoroutines ();
-        //this.engaging = false;
-        
         this.Target = target;
         this.Target.AddDeathListener (this);
         this.Target.AddPhasedOutListener (this);
-
-        if (this.IsTargetInRange ()) {
-            this.Engage ();
-        } else {
-            this.Deactivate ();
-        }
     }
 
     public void TileChanged () {
-        if (! this.Active || this.Target.IsDead () || this.Target.PhasedOut /* || this.destination == null*/) {
-            return;
-        }
         
-        if (this.IsTargetInRange ()) {
-            this.Engage ();
-        } else {
-            this.Deactivate ();
-        }
     }
 }
