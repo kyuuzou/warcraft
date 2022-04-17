@@ -96,7 +96,6 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
     }
 
     public void ManualDestroy () {
-        this.GetComponent<Renderer>().enabled = false;
         MonoBehaviour.DestroyImmediate (this.gameObject);
 
         if (this.GameObjectDestroyed != null) {
