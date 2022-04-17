@@ -308,7 +308,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     }
 
     private void OnDecomposed () {
-        this.GetComponent<Renderer>().enabled = false;
+        this.Sprite.Renderer.enabled = false;
         MonoBehaviour.Destroy (this.gameObject);
     }
 

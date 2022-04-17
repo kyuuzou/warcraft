@@ -126,7 +126,7 @@ public partial class Building : SpawnableSprite {
             this.collapsingAnimation.Renderer.enabled = true;
             this.collapsingAnimation.Play (AnimationType.CollapseStage2);
 
-            this.GetComponent<Renderer>().enabled = false;
+            this.Sprite.Renderer.enabled = false;
             this.ScorchFloor ();
 
             this.MissionStatistics.Score -= 20;
@@ -247,8 +247,8 @@ public partial class Building : SpawnableSprite {
 
         unit.RefreshPosition ();
 
-        unit.GetComponent<Renderer>().enabled = true;
-        unit.GetComponent<Collider2D>().enabled = true;
+        unit.Sprite.Renderer.enabled = true;
+        unit.Collider.enabled = true;
         unit.Tile.Discover ();
 
         unit.PhasedOut = false;
@@ -313,7 +313,7 @@ public partial class Building : SpawnableSprite {
     }
 
     private void OnCollapseAnimationFinished (object sender, EventArgs args) {
-        this.GetComponent<Renderer>().enabled = false;
+        this.Sprite.Renderer.enabled = false;
 
         this.ReleaseClaimedTiles ();
 
@@ -493,8 +493,8 @@ public partial class Building : SpawnableSprite {
 
         this.Play (AnimationType.ConstructionStage0);
         
-        this.GetComponent<Renderer>().enabled = true;
-        this.GetComponent<Collider2D>().enabled = true;
+        this.Sprite.Renderer.enabled = true;
+        this.Collider.enabled = true;
         this.selection.SetLocked (false);
         this.selection.SetVisible (false);
         
