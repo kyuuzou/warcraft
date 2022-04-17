@@ -17,14 +17,7 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
     private bool engaging = false;
     private float lastAttack = float.MinValue;
     private Map map;
-
-    private Dictionary<Direction, List<Vector2Int>> positionsInRange;
-
-    /// <summary>
-    /// The positions around the positions in range. For encompassing units that are about to be in range.
-    /// </summary>
-    private Dictionary<Direction, List<Vector2Int>> extendedPositionsInRange;
-
+    
     public override UnitTraitType Type {
         get { return UnitTraitType.Attacker; }
     }
@@ -158,84 +151,9 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         this.Unit.Play (AnimationType.Attacking);
     }
 
-    private Vector2Int FindUnitPositionInPattern () {
-        string[] lines = this.Data.RangePattern.Split ('\n');
 
-        for (int y = 0; y < lines.Length; y ++) {
-            int x = lines[y].IndexOf ("U");
-            
-            if (x > -1) {
-                return new Vector2Int (x, y);
-            }
-        }
-
-        return Vector2Int.zero;
     }
 
-    public List<MapTile> GetExtendedTilesInRange (Direction direction) {
-        List<MapTile> extendedTilesInRange = new List<MapTile> ();
-
-        MapTile currentTile = this.Unit.Tile;
-        Vector2Int directionOffset = direction.GetData ().Offset;
-
-        if (! this.positionsInRange.ContainsKey(direction)) {
-            return new List<MapTile>();
-        }
-
-        foreach (Vector2Int position in this.positionsInRange[direction]) {
-            Vector2Int extendedPosition = position + directionOffset;
-
-            MapTile tileInRange = this.map.GetTile (currentTile.MapPosition + extendedPosition);
-
-            if (tileInRange != null) {
-                extendedTilesInRange.Add (tileInRange);
-            }
-        }
-
-        return extendedTilesInRange;
-    }
-
-    public List<MapTile> GetExtendedTilesInRange () {
-        List<MapTile> extendedTilesInRange = new List<MapTile> ();
-        
-        MapTile currentTile = this.Unit.Tile;
-
-        if (! this.extendedPositionsInRange.ContainsKey(this.Unit.Direction)) {
-            return new List<MapTile>();
-        }
-
-        foreach (Vector2Int position in this.extendedPositionsInRange[this.Unit.Direction]) {
-            MapTile tileInRange = this.map.GetTile (currentTile.MapPosition + position);
-            
-            if (tileInRange != null) {
-                extendedTilesInRange.Add (tileInRange);
-            }
-        }
-        
-        return extendedTilesInRange;
-    }
-
-    public List<MapTile> GetTilesInRange () {
-        if (! this.positionsInRange.ContainsKey (this.Unit.Direction)) {
-            return new List<MapTile> ();
-        }
-
-        List<MapTile> tilesInRange = new List<MapTile> ();
-
-        MapTile currentTile = this.Unit.Tile;
-        tilesInRange.Add (currentTile);
-
-        foreach (Vector2Int position in this.positionsInRange[this.Unit.Direction]) {
-            MapTile tileInRange = this.map.GetTile (currentTile.MapPosition + position);
-            
-            if (tileInRange != null) {
-                tilesInRange.Add (tileInRange);
-            }
-        }
-
-        return tilesInRange;
-    }
-    
     public void Initialize (Unit unit, UnitTraitDataAttacker data) {
         base.Initialize (unit);
 
@@ -244,135 +162,26 @@ public class UnitTraitAttacker : UnitTrait, IDeathListener, IMovementListener, I
         ServiceLocator serviceLocator = ServiceLocator.Instance;
         this.AudioManager = serviceLocator.AudioManager;
         this.map = serviceLocator.Map;
-
-        this.InitializePositionsInRange ();
-        this.InitializeExtendedPositionsInRange ();
-    }
-
-    private void InitializeDirectionDictionary (ref Dictionary<Direction, List<Vector2Int>> dictionary) {
-        dictionary = new Dictionary<Direction, List<Vector2Int>> () {
-            { Direction.North, new List<Vector2Int> () },
-            { Direction.East,  new List<Vector2Int> () },
-            { Direction.South, new List<Vector2Int> () },
-            { Direction.West,  new List<Vector2Int> () }
-        };
-    }
-
-    private void InitializePositionsInRange () {
-        this.InitializeDirectionDictionary (ref this.positionsInRange);
-
-        Vector2Int unitPosition = this.FindUnitPositionInPattern ();
-        string[] lines = this.Data.RangePattern.Split ('\n');
-
-        for (int y = 0; y < lines.Length; y ++) {
-            for (int x = 0; x < lines[y].Length; x ++) {
-                if (lines[y][x] == 'X') {
-                    Vector2Int position = new Vector2Int (x - unitPosition.x, unitPosition.y - y);
-
-                    this.positionsInRange[Direction.East].Add (position);
-                    this.positionsInRange[Direction.West].Add (position.Multiply(-1.0f));
-                    this.positionsInRange[Direction.North].Add (new Vector2Int (position.y * -1, position.x));
-                    this.positionsInRange[Direction.South].Add (new Vector2Int (position.y, position.x * -1));
-                }
-            }
-        }
-    }
-
-    private void InitializeExtendedPositionsInRange () {
-        this.InitializeDirectionDictionary (ref this.extendedPositionsInRange);
-
-        foreach (Direction key in this.positionsInRange.Keys) {
-            List<Vector2Int> positions = this.positionsInRange[key];
-
-            foreach (Vector2Int position in positions) {
-                // Expand range in all directions
-                foreach (Direction direction in this.positionsInRange.Keys) {
-                    Vector2Int extendedPosition = position + direction.GetData().Offset;
-
-                    if (! positions.Contains (extendedPosition)) {
-                        this.extendedPositionsInRange[key].Add (extendedPosition);
-                    }
-                }
-            }
-        }
     }
 
     protected bool IsTargetInRange () {
-        MapTile tile = this.Unit.GetRealTile ();
-        Vector2Int destination = this.map.FindClosestBoundary(tile, this.Target);
-
-        tile = this.map.GetTile(destination);
-
-        List<MapTile> tilesInRange = this.GetTilesInRange();
-
-        if (tilesInRange.Contains(tile)) {
-            return true;
-        }
-
-        tilesInRange = this.GetExtendedTilesInRange ();
-
-        if (tilesInRange.Contains (this.Target.TargetTile)) {
-            return true;
-        }
-
-        tilesInRange = this.GetExtendedTilesInRange (this.Unit.Direction);
-
-        if (tilesInRange.Contains (this.Target.GetClosestTile ())) {
-            return true;
-        }
-
-        return false;
+        MapTile attackerTile = this.Unit.Tile; 
+        Vector2Int attackerMapPosition = attackerTile.MapPosition;
+        Vector2Int targetMapPosition = this.map.FindClosestBoundary(attackerTile, this.Target);
+            
+        // Add 1 to cover the minimum distance between tiles, as Warcraft considers range 0 to be the melee distance 
+        int range = this.Data.AttackRange + 1;
+        float distance = attackerMapPosition.EstimateDistance(targetMapPosition);
+        
+        return distance <= range;
     }
 
     public bool IsTileTraversable (MapTile tile) {
         return tile.IsTraversable (this.Unit.GetTrait<IUnitTraitMoving> ().MovementType, this.Unit);
     }
 
-    public void ManualUpdate () {
-        if (this.Active) {
-            return;
-        }
-
-        List<MapTile> tilesInRange = this.GetTilesInRange ();
-
-        foreach (MapTile tile in tilesInRange) {
-            Unit unit = tile.GetInhabitant<Unit> ();
-
-            if (unit != null && unit.Faction.IsEnemy (this.Unit.Faction)) {
-                this.Attack (unit);
-                break;
-            }
-        }
-
-        foreach (MapTile tile in this.GetExtendedTilesInRange ()) {
-            Unit unit = tile.GetInhabitant<Unit> ();
-            
-            if (unit == null || ! unit.Faction.IsEnemy (this.Unit.Faction)) {
-                continue;
-            }
-
-            if (tilesInRange.Contains (unit.TargetTile)) {
-                this.Attack (unit);
-                break;
-            }
-        }
-
-        if (this.Unit.TargetTile != null && this.Unit.GetClosestTile () == this.Unit.TargetTile) {
-            List<MapTile> extendedTiles = this.GetExtendedTilesInRange (this.Unit.Direction);
-
-            foreach (MapTile tile in extendedTiles) {
-                Unit unit = tile.GetInhabitant<Unit> ();
-
-                if (unit == null || ! unit.Faction.IsEnemy (this.Unit.Faction)) {
-                    continue;
-                }
-
-                if (extendedTiles.Contains (unit.GetClosestTile ())) {
-                    this.Attack (unit);
-                    break;
-                }
-            }
-        }
+    public void ManualUpdate() {
+        
     }
 
     public void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType) {

@@ -10,10 +10,6 @@ public interface IUnitTraitAttacker : IAnimationTriggerListener, IUnitTrait {
 
     void AttackAfterCooldown ();
 
-    List<MapTile> GetExtendedTilesInRange ();
-
-    List<MapTile> GetTilesInRange ();
-
     void ManualUpdate ();
 
     void OnAttack ();

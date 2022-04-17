@@ -33,13 +33,6 @@ public class UnitTraitDataAttacker : UnitTraitData {
         get { return this.randomDamage; }
     }
 
-    [SerializeField]
-    [TextArea ()]
-    private string rangePattern;
-    public string RangePattern {
-        get { return this.rangePattern; }
-    }
-
     public override UnitTraitType Type {
         get { return UnitTraitType.Attacker; }
     }
