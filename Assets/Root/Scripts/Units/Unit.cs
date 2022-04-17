@@ -86,9 +86,6 @@ public partial class Unit : SpawnableSprite {
 
     public override void Die () {
         if (! this.Dead) {
-
-            this.Group.Die (this.Group.GetIndex (this));
-
             this.Collider.enabled = false;
 
             Vector3 relativePosition = this.GetTrait<IUnitTraitMoving> ().RelativePosition;
