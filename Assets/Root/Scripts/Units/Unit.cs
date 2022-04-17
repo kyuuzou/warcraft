@@ -86,9 +86,6 @@ public partial class Unit : SpawnableSprite {
 
     public override void Die () {
         if (! this.Dead) {
-            if (this.Selected) {
-                this.GameController.OnGameOver ();
-            }
 
             this.Group.Die (this.Group.GetIndex (this));
 
