@@ -89,7 +89,6 @@ public partial class Unit : SpawnableSprite {
             this.Collider.enabled = false;
 
             Vector3 relativePosition = this.GetTrait<IUnitTraitMoving> ().RelativePosition;
-
             MapTile spawnTile = this.Tile;
 
             if (this.TargetTile != null) {
@@ -119,41 +118,15 @@ public partial class Unit : SpawnableSprite {
             UnitTraitNonMoving trait = (UnitTraitNonMoving) this.GetTrait<IUnitTraitMoving> ();
             trait.Initialize (this, this.SpawnFactory.GetData<UnitTraitDataNonMoving> ());
             trait.RelativePosition = relativePosition;
-
-            //this.Transform.SetZ (this.Transform.position.z - 2.5f);
-
-            //this.AudioManager.Play (this.Data.DeadSound);
-
+            
             this.Play (AnimationType.Dying);
             this.ReleaseClaimedTiles ();
-
-            //this.Collider.enabled = false;
 
             this.MissionStatistics.Score -= 20;
             this.MissionStatistics.UnitsEnemyDestroyed ++;
 
             this.Faction.RemoveUnit (this);
             this.Map.RemoveUnit (this);
-
-            /*
-            Projectile projectile = Projectile.Instantiate<Projectile> (this.Data.ProjectilePrefab);
-            position.z -= 10.0f;
-            projectile.Transform.position = position;
-            projectile.Tile = this.Tile;
-            projectile.Activate ();
-            */
-
-            //this.OnAnimationTrigger (AnimationType.Decomposing, AnimationTriggerType.OnDecomposed);
-
-            /*
-            int count = this.Map.GetUnits (UnitType.Wolfie).Count;
-
-            if (count == 0) {
-                ServiceLocator.Instance.ScoreText.text = "You win... but AT WHAT COST!?";
-            } else {
-                ServiceLocator.Instance.ScoreText.text = string.Format ("{0} wolfies remaining", count);
-            }
-            */
         }
     }
 

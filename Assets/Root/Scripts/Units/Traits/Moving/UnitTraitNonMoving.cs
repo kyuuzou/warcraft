@@ -85,7 +85,9 @@ public class UnitTraitNonMoving : UnitTrait, IUnitTraitMoving {
 
         Vector3 position = this.Unit.Tile.RealPosition + this.RelativePosition;
         position = position.Add(this.Unit.Offset);
-        position.z -= 0.1f;
+        
+        // Have non-moving units be below moving units, so the living can walk over the dead
+        position.z += 0.1f;
 
         this.transform.position = position;
     }
