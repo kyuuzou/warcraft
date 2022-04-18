@@ -2810,6 +2810,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
+      propertyPath: rows
+      value: 93
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4024bdcf749d22f44acca2cbc229c354, type: 3}
 --- !u!4 &1283266896 stripped

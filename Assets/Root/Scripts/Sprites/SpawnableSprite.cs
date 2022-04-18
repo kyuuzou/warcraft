@@ -37,7 +37,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     }
 
     public GameButtonType Portrait {
-        get { return this.Data.Portrait + 1; }
+        get { return this.Data.Portrait; }
     }
 
     public string Title {
