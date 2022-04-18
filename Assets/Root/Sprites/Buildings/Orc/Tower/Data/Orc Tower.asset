@@ -17,9 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2621bf6d0fae22748bdb21a11870618a, type: 2}
   - {fileID: 11400000, guid: 43a25121c62061341917fa184389483c, type: 2}
   - {fileID: 11400000, guid: a5ab9af1802d4324fa1412c677ac031f, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 2, y: 2}
   armourPoints: 0
   hitPoints: 900
   manaPoints: 0
