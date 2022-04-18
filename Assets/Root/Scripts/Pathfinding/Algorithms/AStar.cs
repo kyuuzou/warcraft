@@ -153,7 +153,7 @@ public class AStar : PathfindingAlgorithm {
                     sprite = neighbour.GetInhabitant<Unit> ();
 
                     if (sprite != null && sprite != unit && targetSprite != sprite && ! sprite.PhasedOut) {
-                        //continue;
+                        continue;
                     }
 
                     if (! this.map.IsAreaTraversable (neighbour.MapPosition, unit.TileSize, movementListener)) {

@@ -338,14 +338,16 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
     ///     Width, in tiles, around the destination, that are still considered as tolerance for overlapping.
     /// </param>
     private bool Overlaps (IMovementDestination destination, int padding) {
-        Vector2Int radiusA = this.TileSize.Multiply(0.5f);
-        Vector2Int radiusB = destination.TileSize.Multiply(0.5f);
+        Vector2 radiusA = new Vector2(this.TileSize.x * 0.5f, this.TileSize.y * 0.5f);
+        Vector2 radiusB = new Vector2(destination.TileSize.x * 0.5f, destination.TileSize.y * 0.5f);
         
         radiusA.x += padding;
         radiusA.y += padding;
 
-        Vector2Int centerA = this.Tile.MapPosition + radiusA;
-        Vector2Int centerB = destination.Pivot.MapPosition + radiusB;
+        Vector2Int tileMapPosition = this.Tile.MapPosition;
+        Vector2Int destinationMapPosition = destination.Pivot.MapPosition;
+        Vector2 centerA = new Vector2(tileMapPosition.x + radiusA.x, tileMapPosition.y + radiusA.y);
+        Vector2 centerB = new Vector2(destinationMapPosition.x + radiusB.x, destinationMapPosition.y + radiusB.y);
         
         centerA.x -= padding;
         centerA.y -= padding;
@@ -357,7 +359,7 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
                 intersects = true;
             }
         }
-        
+
         return intersects;
     }
 

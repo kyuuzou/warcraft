@@ -10,16 +10,14 @@ public class InteractionModeHarvest : InteractionMode {
     }
 
     private void ClickBuilding(Collider2D collider) {
-        /*
         Building building = collider.GetComponent<Building>();
 
         if (building.Type == BuildingType.GoldMine) {
             this.harvester.Mine(building);
-            this.harvester.PressCancel();
+            //this.harvester.PressCancel();
 
             InputHandler.Instance.SetMode(InteractionModeType.Regular);
         }
-        */
     }
 
     private void ClickGround(Collider2D collider) {
@@ -63,9 +61,6 @@ public class InteractionModeHarvest : InteractionMode {
             case "Ground":
                 this.ClickGround(collider);
                 break;
-
-            default:
-                throw new NotSupportedException($"Received unexpected value: {collider.tag}");
         }
 
         return hit;

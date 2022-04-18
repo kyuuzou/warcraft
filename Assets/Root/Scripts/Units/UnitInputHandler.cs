@@ -47,6 +47,13 @@ public partial class Unit {
         this.EnterAttackingMode ();
     }
 
+    private void PressHarvestLumberMineGold() {
+        ServiceLocator.Instance.InputHandler.SetMode(
+            InteractionModeType.Harvest,
+            new InteractionModeHarvestArgs(this)
+        );
+    }
+    
     private void PressHealing () {
         this.EnterSpellcastingMode (SpellType.Healing);
     }
