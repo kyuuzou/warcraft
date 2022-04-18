@@ -76,8 +76,7 @@ public class StatusPane : SceneObject {
 
     public void SetBackgroundIndex (int tileIndex) {
         this.progressBar.GetComponent<Renderer>().enabled = tileIndex == 6;
-
-        //this.background.SetCurrentTileY (tileIndex);
+        this.background.SetCurrentTileY (tileIndex - 1);
     }
 
     public void SetProgress (float progress) {
