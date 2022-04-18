@@ -15,11 +15,11 @@ public class InteractionModeAttacking : InteractionMode {
         this.unit.Attack(building);
         this.unit.PressCancel();
 
-        InputHandler.Instance.SetMode(InteractionModeType.Regular);
+        InteractionHandler.Instance.SetMode(InteractionModeType.Regular);
     }
 
     private void ClickGround(Collider2D collider) {
-        InputHandler.Instance.SetMode(InteractionModeType.Regular);
+        InteractionHandler.Instance.SetMode(InteractionModeType.Regular);
     }
 
     private void ClickUnit(Collider2D collider) {
@@ -29,7 +29,7 @@ public class InteractionModeAttacking : InteractionMode {
             this.unit.Attack(unit);
             this.unit.PressCancel();
 
-            InputHandler.Instance.SetMode(InteractionModeType.Regular);
+            InteractionHandler.Instance.SetMode(InteractionModeType.Regular);
         }
     }
 

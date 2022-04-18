@@ -55,9 +55,9 @@ public class ServiceLocator : Singleton<ServiceLocator> {
     }
 
     [SerializeField]
-    private InputHandler inputHandler;
-    public InputHandler InputHandler {
-        get { return this.inputHandler; }
+    private InteractionHandler interactionHandler;
+    public InteractionHandler InteractionHandler {
+        get { return this.interactionHandler; }
     }
 
     [SerializeField]

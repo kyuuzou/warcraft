@@ -131,7 +131,7 @@ public partial class Unit : SpawnableSprite {
     }
 
     private void EnterAttackingMode () {
-        InputHandler.Instance.SetMode(InteractionModeType.Attacking, new InteractionModeAttackingArgs(this));
+        InteractionHandler.Instance.SetMode(InteractionModeType.Attacking, new InteractionModeAttackingArgs(this));
         this.ContextMenu.SetNode (this.ContextMenu.CancelNode);
     }
 

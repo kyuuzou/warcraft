@@ -113,7 +113,7 @@ public class Minimap : SceneObject {
     }
 
     private void HandleInput() {
-        //        if (InputHandler.Enabled) {
+        //        if (InteractionHandler.Enabled) {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 position = Input.mousePosition;
 

@@ -70,7 +70,7 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         }
 
         if (build) {
-            InputHandler interactionHandler = ServiceLocator.Instance.InputHandler;
+            InteractionHandler interactionHandler = ServiceLocator.Instance.InteractionHandler;
             
             interactionHandler.SetMode (
                 InteractionModeType.Building,

@@ -16,7 +16,7 @@ public class InteractionModeHarvest : InteractionMode {
             this.harvester.Mine(building);
             //this.harvester.PressCancel();
 
-            InputHandler.Instance.SetMode(InteractionModeType.Regular);
+            InteractionHandler.Instance.SetMode(InteractionModeType.Regular);
         }
     }
 
@@ -28,7 +28,7 @@ public class InteractionModeHarvest : InteractionMode {
             this.harvester.GetTrait<UnitTraitHarvester>(). (slot.Tile);
             this.harvester.PressCancel ();
             
-            InputHandler.Instance.SetMode (InteractionModeType.Regular);*/
+            InteractionHandler.Instance.SetMode (InteractionModeType.Regular);*/
         }
     }
 

@@ -3496,7 +3496,7 @@ MonoBehaviour:
   groupSelection: {fileID: 2116388903}
   guiCamera: {fileID: 1044199002}
   inputController: {fileID: 1799725797}
-  inputHandler: {fileID: 2094279448}
+  interactionHandler: {fileID: 2094279448}
   map: {fileID: 1684690679}
   mainCamera: {fileID: 1739375089}
   minimap: {fileID: 549195765}
@@ -4723,7 +4723,7 @@ GameObject:
   - component: {fileID: 2094279449}
   - component: {fileID: 2094279448}
   m_Layer: 0
-  m_Name: Input Handler
+  m_Name: Interaction Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

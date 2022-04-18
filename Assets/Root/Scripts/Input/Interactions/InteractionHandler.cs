@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class InputHandler : MonoBehaviour {
+public class InteractionHandler : MonoBehaviour {
 
-    public static InputHandler Instance { get; private set; }
+    public static InteractionHandler Instance { get; private set; }
 
     private static bool mouseDown = false;
     public static bool MouseDown {
-        get { return InputHandler.mouseDown; }
-        set { InputHandler.mouseDown = value; }
+        get { return InteractionHandler.mouseDown; }
+        set { InteractionHandler.mouseDown = value; }
     }
 
     public static bool Enabled { get; set; }
@@ -16,11 +16,11 @@ public class InputHandler : MonoBehaviour {
     private InteractionMode currentMode;
 
     private void Awake() {
-        if (InputHandler.Instance != null && InputHandler.Instance != this) {
+        if (InteractionHandler.Instance != null && InteractionHandler.Instance != this) {
             MonoBehaviour.Destroy(this.gameObject);
         }
 
-        InputHandler.Instance = this;
+        InteractionHandler.Instance = this;
 
         this.modes = new InteractionMode[4];
         this.modes[(int)InteractionModeType.Attacking] = new InteractionModeAttacking();
@@ -30,7 +30,7 @@ public class InputHandler : MonoBehaviour {
 
         this.currentMode = this.modes[(int)InteractionModeType.Regular];
 
-        InputHandler.Enabled = true;
+        InteractionHandler.Enabled = true;
     }
 
     public void SetMode(InteractionModeType type, InteractionModeArgs args = null) {

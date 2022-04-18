@@ -2,12 +2,12 @@ using UnityEngine;
 
 public abstract class InteractionMode {
 
-    protected InputHandler inputHandler;
+    protected InteractionHandler interactionHandler;
     protected Camera camera;
     protected ContextMenu contextMenu;
 
     public InteractionMode() {
-        this.inputHandler = ServiceLocator.Instance.InputHandler;
+        this.interactionHandler = ServiceLocator.Instance.InteractionHandler;
         this.camera = ServiceLocator.Instance.GUICamera;
         this.contextMenu = ServiceLocator.Instance.ContextMenu;
     }
@@ -26,13 +26,13 @@ public abstract class InteractionMode {
     }
 
     public virtual void Update() {
-        if (InputHandler.Enabled) {
-            if (Input.GetMouseButtonDown(0) && InputHandler.MouseDown == false) {
-                InputHandler.MouseDown = true;
+        if (InteractionHandler.Enabled) {
+            if (Input.GetMouseButtonDown(0) && InteractionHandler.MouseDown == false) {
+                InteractionHandler.MouseDown = true;
 
                 this.HandleClick();
-            } else if (Input.GetMouseButtonUp(0) && InputHandler.MouseDown) {
-                InputHandler.MouseDown = false;
+            } else if (Input.GetMouseButtonUp(0) && InteractionHandler.MouseDown) {
+                InteractionHandler.MouseDown = false;
             }
         }
     }

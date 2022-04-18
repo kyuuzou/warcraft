@@ -103,7 +103,7 @@ public class InteractionModeBuilding : InteractionMode {
                         
                         //this.builder.Build (this.building);
                         
-                        InputHandler.Instance.SetMode (InteractionModeType.Regular);
+                        InteractionHandler.Instance.SetMode (InteractionModeType.Regular);
                         //this.builder.PressCancel ();
                     }
                 }
