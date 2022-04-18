@@ -11,7 +11,6 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
     private GameController gameController;
     private Map map;
     private SpawnFactory spawnFactory;
-
     private Building building;
 
     private static Dictionary<GameButtonType, BuildingType> buildingByButtonType;
@@ -43,7 +42,6 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         this.Activate ();
 
         int currency = this.gameController.GetGold ();
-
         BuildingData data = this.spawnFactory.GetData (type);
 
         if (currency < data.Cost) {
@@ -56,34 +54,29 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         }
 
         this.building = this.spawnFactory.SpawnBuilding (type, this.Unit.Faction);
-        this.building.GetComponent<Renderer>().enabled = false;
-
+        this.building.Sprite.Renderer.enabled = false;
         this.building.AddDeathListener (this);
-
-        this.gameController.DecreaseGold (data.Cost);
         
+        this.gameController.DecreaseGold (data.Cost);
         this.contextMenu.SetNode (this.contextMenu.CancelNode);
 
-        //bool build = true;
+        bool build = true;
 
         if (data.Rooted) {
             Vector2Int position = this.Unit.Faction.GetRootedPosition (type);
 
-            if (position != null) {
-                //build = false;
-
-                this.building.SetUpConstructionSite (this.Unit, this.map.GetTile (position));
-            }
+            build = false;
+            this.building.SetUpConstructionSite (this.Unit, this.map.GetTile (position));
         }
 
-        /*
         if (build) {
-            this.interactionHandler.SetMode (
+            InputHandler interactionHandler = ServiceLocator.Instance.InputHandler;
+            
+            interactionHandler.SetMode (
                 InteractionModeType.Building,
                 new InteractionModeBuildingArgs (this.building, this.Unit)
             );
         }
-        */
     }
 
     public override void Deactivate () {

@@ -53,15 +53,14 @@ public class InteractionModeBuilding : InteractionMode {
 
     public override void Update() {
         base.Update();
-
+        
         Vector3 mousePosition = Input.mousePosition;
         Vector3 worldMousePosition = this.camera.ScreenToWorldPoint(mousePosition);
 
         if (this.viewport.Contains(worldMousePosition)) {
-            Ray ray = this.camera.ScreenPointToRay(mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray, 30.0f);
-
-            RaycastHit hit = new RaycastHit();
+            Vector3 mouseWorldPoint = camera.ScreenToWorldPoint (Input.mousePosition);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPoint, Vector2.zero);
+            RaycastHit2D hit = new RaycastHit2D();
 
             for (int i = 0; i < hits.Length; i++) {
                 if (hits[i].collider.tag == "Ground") {
@@ -71,7 +70,6 @@ public class InteractionModeBuilding : InteractionMode {
             }
 
             if (hit.collider != null) {
-
                 if (!this.selection.IsVisible()) {
                     this.selection.SetVisible(true, true);
                 }
@@ -101,13 +99,12 @@ public class InteractionModeBuilding : InteractionMode {
                 if (!invalid) {
                     if (Input.GetMouseButtonDown(0)) {
                         this.building.Initialize(tile);
-                        /*
-                        this.building.SetUpConstructionSite();
+                        this.building.SetUpConstructionSite(this.builder, tile);
                         
-                        this.peasant.Build (this.building);
+                        //this.builder.Build (this.building);
                         
                         InputHandler.Instance.SetMode (InteractionModeType.Regular);
-                        this.peasant.PressCancel ();*/
+                        //this.builder.PressCancel ();
                     }
                 }
             }
