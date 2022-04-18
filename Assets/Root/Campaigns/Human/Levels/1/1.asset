@@ -28,4 +28,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 604c4eb90d048a8419784d81f2384f20, type: 2}
   - {fileID: 11400000, guid: 4d9f517913df7274b93857fa0a135470, type: 2}
   startCurrency: 0
-  startPosition: {x: 69, y: 32}
+  startPosition: {x: 70, y: 32}
