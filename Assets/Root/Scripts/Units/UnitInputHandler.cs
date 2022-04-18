@@ -48,6 +48,8 @@ public partial class Unit {
     }
 
     private void PressHarvestLumberMineGold() {
+        this.ContextMenu.SetNode (this.ContextMenu.CancelNode);
+
         ServiceLocator.Instance.InputHandler.SetMode(
             InteractionModeType.Harvest,
             new InteractionModeHarvestArgs(this)
