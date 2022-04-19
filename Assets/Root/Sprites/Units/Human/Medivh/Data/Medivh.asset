@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animations:
   - {fileID: 11400000, guid: f2c9456eab9b3024db0c9bf719ca91f2, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 40
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 750
-  cost: 0
+  <GoldCost>k__BackingField: 2500
+  <LumberCost>k__BackingField: 0
   portrait: 38
   title: Medivh
   rootMenuNode: {fileID: 11400000, guid: 15de316f4dc700342a8fdf431260c586, type: 2}
@@ -31,10 +30,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 47
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

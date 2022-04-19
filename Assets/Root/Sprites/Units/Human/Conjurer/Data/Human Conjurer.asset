@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c359ddd68d119443a051b6017c493e6, type: 2}
   - {fileID: 11400000, guid: 3d24a09fa8c11cd48a079752666c76b1, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 40
   manaPoints: 100
   regainsMana: 1
   timeToBuild: 900
-  cost: 0
+  <GoldCost>k__BackingField: 900
+  <LumberCost>k__BackingField: 0
   portrait: 90
   title: Conjurer
   rootMenuNode: {fileID: 11400000, guid: 54953ca8d15f1c74e9f5ac079157b1cd, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 21
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

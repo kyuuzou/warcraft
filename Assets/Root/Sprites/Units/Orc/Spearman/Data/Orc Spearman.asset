@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2fa089947ec2d2a4a9bf9dc93b6a17c2, type: 2}
   - {fileID: 11400000, guid: 74f2bbb91c714b94a81d58d01c351d2f, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 1
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 700
-  cost: 0
+  <GoldCost>k__BackingField: 450
+  <LumberCost>k__BackingField: 50
   portrait: 81
   title: Spearman
   rootMenuNode: {fileID: 11400000, guid: d838b167a5f498e48812dc939b008a17, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 36
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

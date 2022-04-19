@@ -19,15 +19,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 879d31d223ee7ff4eb7764b18ed414e0, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
   - {fileID: 11400000, guid: 69484e690378f1a4da8121cb22883eb2, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 40
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 750
-  cost: 0
+  <GoldCost>k__BackingField: 400
+  <LumberCost>k__BackingField: 0
   portrait: 88
   title: Peasant
   rootMenuNode: {fileID: 11400000, guid: 161816d67b9bf7347a4930856fac1743, type: 2}
@@ -36,10 +35,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 17
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

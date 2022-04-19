@@ -23,7 +23,8 @@ MonoBehaviour:
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 2000
-  cost: 0
+  <GoldCost>k__BackingField: 1400
+  <LumberCost>k__BackingField: 300
   portrait: 73
   title: Tower
   rootMenuNode: {fileID: 11400000, guid: 187091797e977044d952be31c8760d0c, type: 2}

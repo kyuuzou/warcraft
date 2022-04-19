@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: afd6f07655b3f5f4b912126162f150d0, type: 2}
   - {fileID: 11400000, guid: c1af695a4763cde40a4538e539a18cb0, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 1
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 700
-  cost: 0
+  <GoldCost>k__BackingField: 450
+  <LumberCost>k__BackingField: 50
   portrait: 82
   title: Archer
   rootMenuNode: {fileID: 11400000, guid: 8a16d5e85746d8945bfe2c37b6127bdc, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 6
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

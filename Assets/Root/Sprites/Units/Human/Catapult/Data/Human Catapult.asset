@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78fa3358cd1f19e4fbcbc7241a569683, type: 2}
   - {fileID: 11400000, guid: 8c49941f034ee5a4f90362b35a3b760c, type: 2}
   - {fileID: 11400000, guid: 97072d68d51429642b6482f44a0c1d71, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 120
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1000
-  cost: 0
+  <GoldCost>k__BackingField: 900
+  <LumberCost>k__BackingField: 200
   portrait: 86
   title: Catapult
   rootMenuNode: {fileID: 11400000, guid: fa67029889705fb41a012d1b7072ffd8, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 10
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 22
   annoyedSound: 0
   deadSound: 0

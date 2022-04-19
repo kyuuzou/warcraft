@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1fed338c92cb654589d54bba97bde30, type: 2}
   - {fileID: 11400000, guid: 2756a12e00d539340937262e97147b45, type: 2}
   - {fileID: 11400000, guid: 72f2f1bff24ddf54d8b1ee8cdf942e88, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 2
   hitPoints: 30
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 0
-  cost: 0
+  <GoldCost>k__BackingField: 400
+  <LumberCost>k__BackingField: 0
   portrait: 42
   title: Skeleton
   rootMenuNode: {fileID: 11400000, guid: 212f2e7333f10564e9e68f791a292d75, type: 2}
@@ -34,10 +33,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 3
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

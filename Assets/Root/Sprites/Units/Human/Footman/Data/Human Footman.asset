@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43688cfe679064c4da86a49364516342, type: 2}
   - {fileID: 11400000, guid: 219efdffd9ca50c43914bdffb51543d8, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 2
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 600
-  cost: 0
+  <GoldCost>k__BackingField: 400
+  <LumberCost>k__BackingField: 0
   portrait: 92
   title: Footman
   rootMenuNode: {fileID: 11400000, guid: 16b8018ff82351d4397f7e52886c8a4b, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 14
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

@@ -23,7 +23,8 @@ MonoBehaviour:
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1500
-  cost: 0
+  <GoldCost>k__BackingField: 600
+  <LumberCost>k__BackingField: 500
   portrait: 70
   title: Mill
   rootMenuNode: {fileID: 11400000, guid: a1b9908b2362f2f45923e5a43145d5e6, type: 2}

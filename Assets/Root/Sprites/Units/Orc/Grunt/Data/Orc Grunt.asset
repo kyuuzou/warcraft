@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: adde73eec3ef82244b10cd09f906a5b0, type: 2}
   - {fileID: 11400000, guid: 35f04ebffb9101c4dbf7d89594ae5a69, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 2
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 600
-  cost: 0
+  <GoldCost>k__BackingField: 400
+  <LumberCost>k__BackingField: 0
   portrait: 91
   title: Grunt
   rootMenuNode: {fileID: 11400000, guid: b5b7b9e015af53b428ab09b08b1f1845, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 29
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

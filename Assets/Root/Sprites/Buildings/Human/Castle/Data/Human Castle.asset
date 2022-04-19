@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animations:
   - {fileID: 11400000, guid: ed6104e1e7a411346b38d6cde0951298, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 5, y: 5}
   armourPoints: 0
   hitPoints: 5000
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 0
-  cost: 0
+  <GoldCost>k__BackingField: 0
+  <LumberCost>k__BackingField: 0
   portrait: 61
   title: 
   rootMenuNode: {fileID: 11400000, guid: 2c0f7b417448b1b4ba92a8114334c637, type: 2}

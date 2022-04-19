@@ -19,15 +19,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06a373aacdce9394cb0ff26e93ba22ac, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
   - {fileID: 11400000, guid: de3011967d4e9b2449dc03a918687552, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 40
   manaPoints: 100
   regainsMana: 1
   timeToBuild: 800
-  cost: 0
+  <GoldCost>k__BackingField: 700
+  <LumberCost>k__BackingField: 0
   portrait: 80
   title: Cleric
   rootMenuNode: {fileID: 11400000, guid: bc7c3159a5c662648880860c9133596f, type: 2}
@@ -36,10 +35,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 12
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

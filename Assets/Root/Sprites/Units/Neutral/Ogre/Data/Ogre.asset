@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animations:
   - {fileID: 11400000, guid: bf0e80836204d804697df839bd72f1b0, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 3
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 0
-  cost: 0
+  <GoldCost>k__BackingField: 900
+  <LumberCost>k__BackingField: 0
   portrait: 48
   title: 
   rootMenuNode: {fileID: 11400000, guid: 5180a3c14db3b454d9ab1161cdabed76, type: 2}
@@ -31,10 +30,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 22
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

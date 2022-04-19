@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 48bd6c3786f0dbf4e92a7faae85ba201, type: 2}
   - {fileID: 11400000, guid: 5a9af689319cdc6449c863e164b374a7, type: 2}
   - {fileID: 11400000, guid: 1bd644fab1610e2469bc466a5987e785, type: 2}
-  tileSize:
-    x: 2
-    y: 2
+  tileSize: {x: 2, y: 2}
   armourPoints: 0
   hitPoints: 400
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1000
-  cost: 0
+  <GoldCost>k__BackingField: 500
+  <LumberCost>k__BackingField: 300
   portrait: 78
   title: Farm
   rootMenuNode: {fileID: 11400000, guid: 3735f0790e2d8a94c989eb6685814ca0, type: 2}

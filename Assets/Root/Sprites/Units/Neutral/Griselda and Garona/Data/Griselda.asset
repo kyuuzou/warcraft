@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animations:
   - {fileID: 11400000, guid: 75bd3bc299734564e9f55b45f8ae9696, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 2
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 600
-  cost: 0
+  <GoldCost>k__BackingField: 2500
+  <LumberCost>k__BackingField: 0
   portrait: 36
   title: Griselda
   rootMenuNode: {fileID: 11400000, guid: 73915c513172bc04db3e75f20e01d1ea, type: 2}
@@ -31,10 +30,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 46
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

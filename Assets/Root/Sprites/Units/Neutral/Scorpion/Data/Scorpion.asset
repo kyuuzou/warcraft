@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87812d5ec7483844798e3a5a1f55a478, type: 2}
   - {fileID: 11400000, guid: fbd382c5311593e43aa517bb67d545e1, type: 2}
   - {fileID: 11400000, guid: 4d156da681f005f46993792af094ff23, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 30
   manaPoints: 100
   regainsMana: 0
   timeToBuild: 0
-  cost: 0
+  <GoldCost>k__BackingField: 200
+  <LumberCost>k__BackingField: 0
   portrait: 44
   title: Scorpion
   rootMenuNode: {fileID: 11400000, guid: ec074ade2223d574f87bc3984f236ce8, type: 2}
@@ -34,10 +33,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 40
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 11

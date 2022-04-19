@@ -23,7 +23,8 @@ MonoBehaviour:
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1500
-  cost: 0
+  <GoldCost>k__BackingField: 1000
+  <LumberCost>k__BackingField: 400
   portrait: 68
   title: Stables
   rootMenuNode: {fileID: 11400000, guid: 57755e67af0834540abf7f37dfa3d727, type: 2}

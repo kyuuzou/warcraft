@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 20d9c6fadb8b2bb469f8e68d1dd17228, type: 2}
   - {fileID: 11400000, guid: b9dfc16703bf26144917e1c7880f2252, type: 2}
   - {fileID: 11400000, guid: f687b8c0b5319604bb4ed273cf037e81, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 600
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1500
-  cost: 0
+  <GoldCost>k__BackingField: 600
+  <LumberCost>k__BackingField: 500
   portrait: 69
   title: 
   rootMenuNode: {fileID: 11400000, guid: 40a8b2032b2068e4dbce10978ee954ca, type: 2}

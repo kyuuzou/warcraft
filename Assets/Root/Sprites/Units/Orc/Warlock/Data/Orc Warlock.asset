@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6c780926aca073459cb8222debf3bdc, type: 2}
   - {fileID: 11400000, guid: acad8f0e4bb80ef4ab66df98d0260b3b, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 40
   manaPoints: 100
   regainsMana: 1
   timeToBuild: 900
-  cost: 0
+  <GoldCost>k__BackingField: 900
+  <LumberCost>k__BackingField: 0
   portrait: 89
   title: Warlock
   rootMenuNode: {fileID: 11400000, guid: 54e70ce8270355d4894d1902eb342516, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 27
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

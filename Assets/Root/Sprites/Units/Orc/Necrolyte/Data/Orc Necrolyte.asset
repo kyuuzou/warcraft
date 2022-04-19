@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9dc6913727c12a3498bd6e92e75b0812, type: 2}
   - {fileID: 11400000, guid: 38a39a19f1eb3294082523a958af27dd, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 40
   manaPoints: 100
   regainsMana: 1
   timeToBuild: 800
-  cost: 0
+  <GoldCost>k__BackingField: 700
+  <LumberCost>k__BackingField: 0
   portrait: 79
   title: Necrolyte
   rootMenuNode: {fileID: 11400000, guid: a0442e5ac80bc0048b2c2579e6302ab1, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 32
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

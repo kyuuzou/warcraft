@@ -23,7 +23,8 @@ MonoBehaviour:
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 2000
-  cost: 0
+  <GoldCost>k__BackingField: 800
+  <LumberCost>k__BackingField: 500
   portrait: 64
   title: Church
   rootMenuNode: {fileID: 11400000, guid: 2c638382c2dbe064ab5b5cee130af86f, type: 2}

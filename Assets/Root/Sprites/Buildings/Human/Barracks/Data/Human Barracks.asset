@@ -23,7 +23,8 @@ MonoBehaviour:
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1500
-  cost: 0
+  <GoldCost>k__BackingField: 600
+  <LumberCost>k__BackingField: 500
   portrait: 76
   title: Barracks
   rootMenuNode: {fileID: 11400000, guid: e1a42aef482e5a34b968a69782eea326, type: 2}

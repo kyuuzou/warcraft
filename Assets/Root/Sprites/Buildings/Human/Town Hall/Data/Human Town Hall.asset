@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f57ed68a5f30f24ca97847524e877c0, type: 2}
   - {fileID: 11400000, guid: 77a6c44888898d14dbbb73ac31a58311, type: 2}
   - {fileID: 11400000, guid: baf94659b9a2f0c49a81abe59a64484b, type: 2}
-  tileSize:
-    x: 3
-    y: 3
+  tileSize: {x: 3, y: 3}
   armourPoints: 0
   hitPoints: 2500
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1000
-  cost: 0
+  <GoldCost>k__BackingField: 400
+  <LumberCost>k__BackingField: 400
   portrait: 72
   title: Town Hall
   rootMenuNode: {fileID: 11400000, guid: df1235061361f454bbeaaa2906bada35, type: 2}

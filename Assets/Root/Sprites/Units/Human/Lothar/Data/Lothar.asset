@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f4cbc97885d255d40b9854a214c46ada, type: 2}
   - {fileID: 11400000, guid: cecff152a3c52b1478ff5bd50ff7623b, type: 2}
   - {fileID: 11400000, guid: 4ff9ef8ba16d1374781347e00986cd27, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 2
   hitPoints: 60
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 600
-  cost: 0
+  <GoldCost>k__BackingField: 2500
+  <LumberCost>k__BackingField: 0
   portrait: 39
   title: Lothar
   rootMenuNode: {fileID: 11400000, guid: bf1dd0c196652e0448d0da715a2cb37f, type: 2}
@@ -34,10 +33,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 44
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

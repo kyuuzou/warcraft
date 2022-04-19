@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 237635065cfc1dd47820166ed41a098a, type: 2}
   - {fileID: 11400000, guid: 0fbc2dbdf97e1c24e83b9d37432a44db, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 5
   hitPoints: 90
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 800
-  cost: 0
+  <GoldCost>k__BackingField: 850
+  <LumberCost>k__BackingField: 0
   portrait: 84
   title: Knight
   rootMenuNode: {fileID: 11400000, guid: eaf44509662bd7044a96ede975dec204, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 17
   type: 15
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 16
   annoyedSound: 17
   deadSound: 18

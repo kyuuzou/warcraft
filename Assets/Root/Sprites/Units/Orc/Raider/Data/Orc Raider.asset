@@ -18,15 +18,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4d328ba31f53984d8d5de11e3b50258, type: 2}
   - {fileID: 11400000, guid: f9b43d0b3f16237479849388bdc660a1, type: 2}
   - {fileID: 11400000, guid: 6880d2bb7e7a01746980c827121ba372, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 5
   hitPoints: 90
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 800
-  cost: 0
+  <GoldCost>k__BackingField: 850
+  <LumberCost>k__BackingField: 0
   portrait: 83
   title: Raider
   rootMenuNode: {fileID: 11400000, guid: a0515fdf82317144ca876bd1cdbf38eb, type: 2}
@@ -35,10 +34,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 34
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

@@ -23,7 +23,8 @@ MonoBehaviour:
   manaPoints: 0
   regainsMana: 1
   timeToBuild: 1500
-  cost: 0
+  <GoldCost>k__BackingField: 900
+  <LumberCost>k__BackingField: 400
   portrait: 66
   title: Blacksmith
   rootMenuNode: {fileID: 11400000, guid: d6f21d1c818213c45bf9d7ba5d977649, type: 2}

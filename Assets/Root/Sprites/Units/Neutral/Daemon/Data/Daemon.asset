@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c9e3caf68b0eecd448cecfd42e9ec63f, type: 2}
   - {fileID: 11400000, guid: 3d0f5a4347cc59245b1c3f4f3181f438, type: 2}
   - {fileID: 11400000, guid: de9449af5059f09448098b1ca09d25bc, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 300
   manaPoints: 100
   regainsMana: 0
   timeToBuild: 0
-  cost: 0
+  <GoldCost>k__BackingField: 2000
+  <LumberCost>k__BackingField: 0
   portrait: 1041
   title: unit-daemon
   rootMenuNode: {fileID: 11400000, guid: 5c691856a5870d7448d99960dde56ff7, type: 2}
@@ -34,10 +33,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 2
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 0

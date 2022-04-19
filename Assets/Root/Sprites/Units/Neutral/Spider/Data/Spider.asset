@@ -17,15 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec42a207958f93d498ddd6625972b15a, type: 2}
   - {fileID: 11400000, guid: 66468d7035589684b9f56a2fac9e163e, type: 2}
   - {fileID: 11400000, guid: 46919fb50457e444aa7ebe32f7e699ec, type: 2}
-  tileSize:
-    x: 1
-    y: 1
+  tileSize: {x: 1, y: 1}
   armourPoints: 0
   hitPoints: 30
   manaPoints: 100
   regainsMana: 0
   timeToBuild: 0
-  cost: 0
+  <GoldCost>k__BackingField: 200
+  <LumberCost>k__BackingField: 0
   portrait: 1047
   title: 
   rootMenuNode: {fileID: 11400000, guid: b8283d8d732a42a458b67b0e093627a9, type: 2}
@@ -34,10 +33,7 @@ MonoBehaviour:
   consecutiveSelectionSound: 0
   type: 42
   projectilePrefab: {fileID: 0}
-  selectionSize:
-    x: 1
-    y: 1
-  wanderWhileIdle: 1
+  selectionSize: {x: 1, y: 1}
   acknowledgeSound: 0
   annoyedSound: 0
   deadSound: 11
