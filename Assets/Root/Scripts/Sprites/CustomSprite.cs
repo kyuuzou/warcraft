@@ -1,9 +1,8 @@
-using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class CustomSprite: SceneObject, IAnimationTriggerListener {
+public class CustomSprite : SceneObject, IAnimationTriggerListener {
 
     [SerializeField]
     private Vector2 atlasSize;
@@ -29,11 +28,11 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
         }
     }
 
-    public delegate void GameObjectDestroyedHandler (object sender, EventArgs e);
+    public delegate void GameObjectDestroyedHandler(object sender, EventArgs e);
     private event GameObjectDestroyedHandler GameObjectDestroyed;
 
-    protected override void Awake () {
-        base.Awake ();
+    protected override void Awake() {
+        base.Awake();
 
         ServiceLocator serviceLocator = ServiceLocator.Instance;
         this.AudioManager = serviceLocator.AudioManager;
@@ -42,21 +41,21 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
         this.GameController = serviceLocator.GameController;
     }
 
-    public virtual void ClaimTile (MapTile tile) {
+    public virtual void ClaimTile(MapTile tile) {
 
     }
 
-    public Direction FindDirection (MapTile origin, MapTile destination, bool allowDiagonals = true) {
-        return this.FindDirection (origin.MapPosition, destination.MapPosition, allowDiagonals);
+    public Direction FindDirection(MapTile origin, MapTile destination, bool allowDiagonals = true) {
+        return this.FindDirection(origin.MapPosition, destination.MapPosition, allowDiagonals);
     }
 
-    public Direction FindDirection (Vector2Int origin, Vector2Int destination, bool allowDiagonals = true) {
+    public Direction FindDirection(Vector2Int origin, Vector2Int destination, bool allowDiagonals = true) {
         Vector2Int offset = destination - origin;
         //offset.y *= -1.0f;
 
-        Vector2Int absOffset = new Vector2Int (
-            Mathf.Abs (offset.x),
-            Mathf.Abs (offset.y)
+        Vector2Int absOffset = new Vector2Int(
+            Mathf.Abs(offset.x),
+            Mathf.Abs(offset.y)
         );
 
         if (absOffset.x > 1 || absOffset.y > 1) {
@@ -72,10 +71,10 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
             }
         }
 
-        Direction direction = DirectionDictionary.Instance.GetKey (offset);
+        Direction direction = DirectionDictionary.Instance.GetKey(offset);
 
-        if (! allowDiagonals && ((int) direction) % 2 == 0) {
-            direction = (direction - 1).RoundClamp ();
+        if (!allowDiagonals && ((int)direction) % 2 == 0) {
+            direction = (direction - 1).RoundClamp();
         }
 
         if (direction != Direction.None) {
@@ -84,42 +83,42 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
 
         return direction;
     }
-    
-    public virtual void Initialize (MapTile tile) {
+
+    public virtual void Initialize(MapTile tile) {
         this.Tile = tile;
 
-        this.ClaimedTiles = new List<MapTile> ();
+        this.ClaimedTiles = new List<MapTile>();
 
         /*Vector2 tilePosition = this.Tile.RealPosition;
         this.Position = new Vector3 (tilePosition.x, tilePosition.y, this.Transform.position.z);
         this.transform.position = this.Position;*/
     }
 
-    public void ManualDestroy () {
-        MonoBehaviour.DestroyImmediate (this.gameObject);
+    public void ManualDestroy() {
+        MonoBehaviour.DestroyImmediate(this.gameObject);
 
         if (this.GameObjectDestroyed != null) {
-            this.GameObjectDestroyed (this, EventArgs.Empty);
+            this.GameObjectDestroyed(this, EventArgs.Empty);
         }
     }
 
-    public virtual void ManualUpdate () {
+    public virtual void ManualUpdate() {
 
     }
 
-    public virtual void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType) {
-        
-    }
-    
-    protected void OnManualDestroy (object sender, EventArgs args) {
-        this.ManualDestroy ();
+    public virtual void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType) {
+
     }
 
-    public void Register (GameObjectDestroyedHandler handler) {
+    protected void OnManualDestroy(object sender, EventArgs args) {
+        this.ManualDestroy();
+    }
+
+    public void Register(GameObjectDestroyedHandler handler) {
         this.GameObjectDestroyed += handler;
     }
 
-    public void SetAnimatorLayer (int layer) {
+    public void SetAnimatorLayer(int layer) {
         /*
         for (int i = 0; i < this.Animator.layerCount; i ++) {
             this.Animator.SetLayerWeight (i, 0.0f);
@@ -129,7 +128,7 @@ public class CustomSprite: SceneObject, IAnimationTriggerListener {
         */
     }
 
-    public virtual void SetTile (MapTile tile) {
+    public virtual void SetTile(MapTile tile) {
         this.Tile = tile;
     }
 }

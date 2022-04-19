@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ServiceLocator : Singleton<ServiceLocator> {
 
-    [Header ("Services")]
+    [Header("Services")]
     [SerializeField]
     private AudioManager audioManager;
     public AudioManager AudioManager {
@@ -43,8 +42,8 @@ public class ServiceLocator : Singleton<ServiceLocator> {
     }
 
     [SerializeField]
-	private Camera guiCamera;
-	public Camera GUICamera {
+    private Camera guiCamera;
+    public Camera GUICamera {
         get { return this.guiCamera; }
     }
 
@@ -120,34 +119,34 @@ public class ServiceLocator : Singleton<ServiceLocator> {
         get { return this.statusPane; }
     }
 
-    [Header ("Pools")]
+    [Header("Pools")]
     [SerializeField]
     private PoolBase[] pools;
 
     private Dictionary<Type, PoolBase> poolByType;
 
-    public T GetPool<T> () {
-        Type poolType = typeof (T);
-            
-        if (this.poolByType.ContainsKey (poolType)) {
-            return (T) (object) this.poolByType[poolType];
+    public T GetPool<T>() {
+        Type poolType = typeof(T);
+
+        if (this.poolByType.ContainsKey(poolType)) {
+            return (T)(object)this.poolByType[poolType];
         }
 
-        return default (T);
+        return default(T);
     }
 
-    protected override void InitializeInternals () {
+    protected override void InitializeInternals() {
         if (this.InitializedInternals) {
             return;
         }
 
-        base.InitializeInternals ();
+        base.InitializeInternals();
 
-        this.InitializePools ();
+        this.InitializePools();
     }
 
-    private void InitializePools () {
-        this.poolByType = new Dictionary<Type, PoolBase> ();
+    private void InitializePools() {
+        this.poolByType = new Dictionary<Type, PoolBase>();
 
         foreach (PoolBase pool in this.pools) {
             this.poolByType[pool.PoolType] = pool;

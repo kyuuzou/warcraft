@@ -1,23 +1,20 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public abstract class MissionRequirement : CustomScriptableObject {
+﻿public abstract class MissionRequirement : CustomScriptableObject {
 
     private Mission mission;
 
     public bool Satisfied { get; private set; }
 
-    public virtual void Initialize (Mission mission) {
-        this.Initialize ();
+    public virtual void Initialize(Mission mission) {
+        this.Initialize();
 
         this.mission = mission;
     }
 
-    protected void SetSatisfied (bool satisfied) {
+    protected void SetSatisfied(bool satisfied) {
         this.Satisfied = satisfied;
 
         if (satisfied) {
-            this.mission.OnRequirementSatisfied ();
+            this.mission.OnRequirementSatisfied();
         }
     }
 }

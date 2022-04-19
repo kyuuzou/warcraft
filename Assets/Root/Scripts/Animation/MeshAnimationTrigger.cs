@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [System.Serializable]
 public class MeshAnimationTrigger {
@@ -18,7 +17,7 @@ public class MeshAnimationTrigger {
         set { this.type = value; }
     }
 
-    public MeshAnimationTrigger (int frameIndex, AnimationTriggerType type) {
+    public MeshAnimationTrigger(int frameIndex, AnimationTriggerType type) {
         this.frameIndex = frameIndex;
         this.Type = type;
     }

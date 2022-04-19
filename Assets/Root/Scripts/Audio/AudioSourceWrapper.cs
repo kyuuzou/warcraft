@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class AudioSourceWrapper {
 
@@ -57,41 +56,41 @@ public class AudioSourceWrapper {
         get { return this.audioSource.isPlaying; }
     }
 
-    public AudioSourceWrapper (AudioManager audioManager) {
+    public AudioSourceWrapper(AudioManager audioManager) {
         this.audioManager = audioManager;
 
-        this.audioSource = this.audioManager.GameObject.AddComponent<AudioSource> ();
+        this.audioSource = this.audioManager.GameObject.AddComponent<AudioSource>();
         this.audioSource.playOnAwake = false;
 
         this.Volume = 1.0f;
     }
 
-    public void Pause () {
+    public void Pause() {
         if (this.audioSample != null) {
             this.audioSample.PlayedTime = this.audioSource.time;
         }
 
-        this.audioSource.Pause ();
+        this.audioSource.Pause();
     }
 
-    public void PollLoop () {
+    public void PollLoop() {
         if (this.audioSource.time > this.AudioSample.CurrentClip.length - 4.0f) {
-            if (! this.IsLoop) {
-                this.audioManager.Remove (this);
-                this.Pause ();
+            if (!this.IsLoop) {
+                this.audioManager.Remove(this);
+                this.Pause();
             } else if (this.AudioSample.Crossfade) {
-                this.audioManager.Crossfade (this);
+                this.audioManager.Crossfade(this);
             } else {
                 this.audioSource.time = 0.0f;
             }
         }
     }
 
-    public void Play (AudioSample sample, int? forceIndex = null, float volumeModifier = 1.0f) {
+    public void Play(AudioSample sample, int? forceIndex = null, float volumeModifier = 1.0f) {
         if (forceIndex == null) {
-            sample.RandomizeClip ();
+            sample.RandomizeClip();
         } else {
-            sample.CurrentClipIndex = (int) forceIndex;
+            sample.CurrentClipIndex = (int)forceIndex;
         }
 
         this.AudioSample = sample;
@@ -99,12 +98,12 @@ public class AudioSourceWrapper {
         this.audioSource.time = 0.0f;
         this.audioSource.volume = sample.Volume * volumeModifier;
 
-        this.audioSource.Play ();
+        this.audioSource.Play();
 
         this.PlayTime = Time.time;
     }
 
-    public void Resume (AudioSample sample) {
+    public void Resume(AudioSample sample) {
         if (this.AudioSample == sample) {
             if (this.IsPlaying) {
                 return;
@@ -114,6 +113,6 @@ public class AudioSourceWrapper {
             this.audioSource.time = sample.PlayedTime;
         }
 
-        this.audioSource.Play ();
+        this.audioSource.Play();
     }
 }

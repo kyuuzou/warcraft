@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitTraitDataBuilder : UnitTraitData {
 
@@ -9,17 +7,17 @@ public class UnitTraitDataBuilder : UnitTraitData {
     public AudioIdentifier WorkCompleteSound {
         get { return this.workCompleteSound; }
     }
-    
+
     public override UnitTraitType Type {
         get { return UnitTraitType.Builder; }
     }
-    
-    public override UnitTrait AddTrait (Unit unit) {
-        UnitTraitBuilder trait = unit.gameObject.AddComponent<UnitTraitBuilder> ();
-        trait.Initialize (unit, UnitTraitDataBuilder.Instantiate (this));
-        
-        unit.SetTrait<IUnitTraitBuilder> (trait);
-        
+
+    public override UnitTrait AddTrait(Unit unit) {
+        UnitTraitBuilder trait = unit.gameObject.AddComponent<UnitTraitBuilder>();
+        trait.Initialize(unit, UnitTraitDataBuilder.Instantiate(this));
+
+        unit.SetTrait<IUnitTraitBuilder>(trait);
+
         return trait;
     }
 }

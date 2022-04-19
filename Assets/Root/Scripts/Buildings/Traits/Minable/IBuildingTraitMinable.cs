@@ -1,7 +1,7 @@
 ﻿
 public interface IBuildingTraitMinable : IBuildingTrait {
 
-    bool IsMinable ();
+    bool IsMinable();
 
-    int Mine (IUnitTraitMiner miner);
+    int Mine(IUnitTraitMiner miner);
 }

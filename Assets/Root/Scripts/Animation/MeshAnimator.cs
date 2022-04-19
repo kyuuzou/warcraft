@@ -26,55 +26,55 @@ public class MeshAnimator : SceneObject {
     private List<IAnimationTriggerListener> listeners;
     private SceneObject owner;
 
-    private bool ActivateAnimation (AnimationType animationType, bool inverted) {
-        this.InitializeExternals ();
+    private bool ActivateAnimation(AnimationType animationType, bool inverted) {
+        this.InitializeExternals();
 
         if (this.animateEnumerator != null) {
-            this.StopCoroutine (this.animateEnumerator);
+            this.StopCoroutine(this.animateEnumerator);
         }
 
-        if (! this.animationByType.ContainsKey (animationType)) {
-            Debug.LogError ("Animation not found: " + animationType + ", on " + this);
+        if (!this.animationByType.ContainsKey(animationType)) {
+            Debug.LogError("Animation not found: " + animationType + ", on " + this);
             return false;
         }
 
         this.CurrentAnimation = this.animationByType[animationType];
         this.CurrentAnimation.Inverted = inverted;
         this.CurrentAnimation.Direction = this.Direction;
-        this.CurrentAnimation.Activate ();
+        this.CurrentAnimation.Activate();
 
         return true;
     }
 
-    private IEnumerator Animate () {
-        while (this.CurrentAnimation.Iterate ()) {
-            yield return new WaitForSeconds (this.CurrentAnimation.Delay);
+    private IEnumerator Animate() {
+        while (this.CurrentAnimation.Iterate()) {
+            yield return new WaitForSeconds(this.CurrentAnimation.Delay);
         }
     }
 
-    protected override void Awake () {
-        base.Awake ();
+    protected override void Awake() {
+        base.Awake();
 
-        this.InitializeExternals ();
+        this.InitializeExternals();
     }
 
-    public MeshAnimation GetAnimation (AnimationType type) {
-        if (this.animationByType.ContainsKey (type)) {
+    public MeshAnimation GetAnimation(AnimationType type) {
+        if (this.animationByType.ContainsKey(type)) {
             return this.animationByType[type];
         }
 
         return null;
     }
 
-    public override void InitializeExternals () {
+    public override void InitializeExternals() {
         if (this.InitializedExternals) {
             return;
         }
 
-        base.InitializeExternals ();
+        base.InitializeExternals();
 
-        this.listeners = new List<IAnimationTriggerListener> ();
-        this.animationByType = new Dictionary<AnimationType, MeshAnimation> ();
+        this.listeners = new List<IAnimationTriggerListener>();
+        this.animationByType = new Dictionary<AnimationType, MeshAnimation>();
 
         /*
         CustomSprite sprite = this.GetComponent<CustomSprite> ();
@@ -85,54 +85,54 @@ public class MeshAnimator : SceneObject {
         */
     }
 
-    public void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType) {
+    public void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType) {
         foreach (IAnimationTriggerListener listener in this.listeners) {
-            listener.OnAnimationTrigger (animationType, triggerType);
+            listener.OnAnimationTrigger(animationType, triggerType);
         }
     }
 
-    private void OnEnable () {
+    private void OnEnable() {
         if (this.lastAnimationType != AnimationType.None) {
-            this.Play (this.lastAnimationType, this.lastAnimationInverted);
+            this.Play(this.lastAnimationType, this.lastAnimationInverted);
         }
     }
 
-    public override void Play (AnimationType animationType, bool inverted) {
-        if (this.ActivateAnimation (animationType, inverted)) {
+    public override void Play(AnimationType animationType, bool inverted) {
+        if (this.ActivateAnimation(animationType, inverted)) {
             this.lastAnimationType = animationType;
             this.lastAnimationInverted = inverted;
 
             if (this.GameObject.activeInHierarchy) {
                 if (this.animateEnumerator != null) {
-                    this.StopCoroutine (this.animateEnumerator);
+                    this.StopCoroutine(this.animateEnumerator);
                 }
 
-                this.animateEnumerator = this.Animate ();
-                this.StartCoroutine (this.animateEnumerator);
+                this.animateEnumerator = this.Animate();
+                this.StartCoroutine(this.animateEnumerator);
             }
         }
     }
 
-    public void Play (AnimationType animationType, bool inverted, int currentTile) {
-        if (this.ActivateAnimation (animationType, inverted)) {
+    public void Play(AnimationType animationType, bool inverted, int currentTile) {
+        if (this.ActivateAnimation(animationType, inverted)) {
             this.CurrentAnimation.CurrentFrame = currentTile;
 
             if (this.animateEnumerator != null) {
-                this.StopCoroutine (this.animateEnumerator);
+                this.StopCoroutine(this.animateEnumerator);
             }
 
-            this.animateEnumerator = this.Animate ();
-            this.StartCoroutine (this.animateEnumerator);
+            this.animateEnumerator = this.Animate();
+            this.StartCoroutine(this.animateEnumerator);
         }
     }
 
-    public void RegisterTriggerListener (IAnimationTriggerListener listener) {
-        if (! this.listeners.Contains (listener)) {
-            this.listeners.Add (listener);
+    public void RegisterTriggerListener(IAnimationTriggerListener listener) {
+        if (!this.listeners.Contains(listener)) {
+            this.listeners.Add(listener);
         }
     }
 
-    public void SetAnimations (MeshAnimation[] animations) {
+    public void SetAnimations(MeshAnimation[] animations) {
         foreach (MeshAnimation animationObject in animations) {
             if (animationObject == null) {
                 continue;
@@ -144,22 +144,22 @@ public class MeshAnimator : SceneObject {
         }
     }
 
-    public void Stop () {
-        this.StopAllCoroutines ();
+    public void Stop() {
+        this.StopAllCoroutines();
     }
 
-    public void UnregisterTriggerListener (IAnimationTriggerListener listener) {
-        this.listeners.Remove (listener);
+    public void UnregisterTriggerListener(IAnimationTriggerListener listener) {
+        this.listeners.Remove(listener);
     }
 
-    public override IEnumerator YieldPlay (AnimationType animationType, bool inverted) {
-        if (this.ActivateAnimation (animationType, inverted)) {
+    public override IEnumerator YieldPlay(AnimationType animationType, bool inverted) {
+        if (this.ActivateAnimation(animationType, inverted)) {
             if (this.animateEnumerator != null) {
-                this.StopCoroutine (this.animateEnumerator);
+                this.StopCoroutine(this.animateEnumerator);
             }
 
-            this.animateEnumerator = this.Animate ();
-            yield return this.StartCoroutine (this.animateEnumerator);
+            this.animateEnumerator = this.Animate();
+            yield return this.StartCoroutine(this.animateEnumerator);
         }
     }
 }

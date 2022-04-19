@@ -1,13 +1,13 @@
 ﻿
 public interface IUnitTraitBuilder : IUnitTrait {
 
-    void Build (BuildingType type);
+    void Build(BuildingType type);
 
-    void MoveToConstructionSite (Building building);
+    void MoveToConstructionSite(Building building);
 
-    void OnWorkComplete ();
+    void OnWorkComplete();
 
-    void ShowAdvancedStructures ();
+    void ShowAdvancedStructures();
 
-    void ShowBasicStructures ();
+    void ShowBasicStructures();
 }

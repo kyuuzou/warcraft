@@ -7,22 +7,22 @@ public class Introduction : MonoBehaviour {
 
     [SerializeField]
     private TextAsset textFile;
-    
+
     [SerializeField]
     private Material[] materials;
-    
+
     [SerializeField]
     private MainMenu menu;
-    
+
     [SerializeField]
     private Transform fullCanvas;
-    
+
     [SerializeField]
     private Transform partialCanvas;
-    
+
     [SerializeField]
     private GUITexture fadeTexture;
-    
+
     [SerializeField]
     private GUIText subtitles;
 
@@ -42,32 +42,32 @@ public class Introduction : MonoBehaviour {
 
     [SerializeField]
     private AudioClip[] sounds;
-    
+
     [SerializeField]
     private AudioClip doorSound;
 
     private int soundIndex;
 
-    private void Awake () {
-        this.ParseTextFile ();
+    private void Awake() {
+        this.ParseTextFile();
         this.fullCanvas.GetComponent<Renderer>().enabled = false;
     }
 
-    private IEnumerator ChangeSubtitles (float delay) {
-        yield return new WaitForSeconds (delay);
+    private IEnumerator ChangeSubtitles(float delay) {
+        yield return new WaitForSeconds(delay);
         this.subtitles.text = string.Empty;
-        yield return new WaitForSeconds (0.25f);
-        this.subtitles.text = this.subtitlesText [this.subtitleIndex ++];
+        yield return new WaitForSeconds(0.25f);
+        this.subtitles.text = this.subtitlesText[this.subtitleIndex++];
     }
 
-    private IEnumerator Fade (float start = 0.5f, float end = 0.0f) {
+    private IEnumerator Fade(float start = 0.5f, float end = 0.0f) {
         Color color = this.fadeTexture.color;
 
         float elapsed = 0.0f;
         float length = 2.0f;
 
         while (elapsed < length) {
-            color.a = Mathf.Lerp (start, end, elapsed / length);
+            color.a = Mathf.Lerp(start, end, elapsed / length);
             this.fadeTexture.color = color;
 
             elapsed += Time.deltaTime;
@@ -76,35 +76,35 @@ public class Introduction : MonoBehaviour {
         }
     }
 
-    private IEnumerator FadeIntoMovie () {
+    private IEnumerator FadeIntoMovie() {
         this.subtitles.text = string.Empty;
-        yield return this.StartCoroutine (this.Fade (0.0f, 0.5f));
-        this.PlayMovie ();
+        yield return this.StartCoroutine(this.Fade(0.0f, 0.5f));
+        this.PlayMovie();
 
         // Wait three frames so the video is visible for the fade in
-        for (int i = 0; i < 3; i ++) {
-            yield return new WaitForEndOfFrame ();
+        for (int i = 0; i < 3; i++) {
+            yield return new WaitForEndOfFrame();
         }
 
-        this.videoPlayer.Pause ();
-        yield return this.StartCoroutine (this.Fade ());
-        this.videoPlayer.Play ();
+        this.videoPlayer.Pause();
+        yield return this.StartCoroutine(this.Fade());
+        this.videoPlayer.Play();
     }
 
-    private void OnEnable () {
+    private void OnEnable() {
         this.videoIndex = this.subtitleIndex = this.soundIndex = 0;
 
         // this.StartCoroutine (this.PlaySequence ());
-        this.StartCoroutine (this.PlayPremadeVideo ());
+        this.StartCoroutine(this.PlayPremadeVideo());
     }
 
-    private void ParseTextFile () {
-        string[] separator = new string[] {"\r\n\r\n", "\n\n"};
-        this.subtitlesText = this.textFile.text.Split (separator, StringSplitOptions.RemoveEmptyEntries);
+    private void ParseTextFile() {
+        string[] separator = new string[] { "\r\n\r\n", "\n\n" };
+        this.subtitlesText = this.textFile.text.Split(separator, StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private void PlayMovie (bool loop = false) {
-        Material material = this.materials [this.videoIndex ++];
+    private void PlayMovie(bool loop = false) {
+        Material material = this.materials[this.videoIndex++];
         this.partialCanvas.GetComponent<Renderer>().material = material;
 
         this.videoPlayer.playOnAwake = false;
@@ -117,12 +117,12 @@ public class Introduction : MonoBehaviour {
         this.videoPlayer.Play();
     }
 
-    private IEnumerator PlayPremadeVideo () {
-        this.fadeTexture.gameObject.SetActive (false);
+    private IEnumerator PlayPremadeVideo() {
+        this.fadeTexture.gameObject.SetActive(false);
         this.partialCanvas.GetComponent<Renderer>().enabled = false;
 
         this.fullCanvas.GetComponent<Renderer>().enabled = true;
-        this.fullCanvas.GetComponent<Renderer>().material = this.materials [0];
+        this.fullCanvas.GetComponent<Renderer>().material = this.materials[0];
 
         this.videoPlayer.playOnAwake = false;
         this.videoPlayer.clip = this.videoClip;
@@ -148,42 +148,42 @@ public class Introduction : MonoBehaviour {
         yield return this.StartCoroutine (this.PlaySound (118.0f));
         yield return this.StartCoroutine (this.PlaySound (123.0f));
         */
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
-        this.menu.OnIntroductionFinished ();
+        this.menu.OnIntroductionFinished();
     }
 
-    private IEnumerator PlaySequence () {
-        yield return this.StartCoroutine (this.FadeIntoMovie ());
-        this.subtitles.text = this.subtitlesText [subtitleIndex ++];
+    private IEnumerator PlaySequence() {
+        yield return this.StartCoroutine(this.FadeIntoMovie());
+        this.subtitles.text = this.subtitlesText[this.subtitleIndex++];
 
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
-        this.PlayMovie (true);
+        this.PlayMovie(true);
 
-        yield return this.StartCoroutine (this.ChangeSubtitles (1.0f));
-        yield return this.StartCoroutine (this.ChangeSubtitles (8.0f));
-        yield return this.StartCoroutine (this.ChangeSubtitles (8.0f));
-        yield return this.StartCoroutine (this.ChangeSubtitles (8.0f));
+        yield return this.StartCoroutine(this.ChangeSubtitles(1.0f));
+        yield return this.StartCoroutine(this.ChangeSubtitles(8.0f));
+        yield return this.StartCoroutine(this.ChangeSubtitles(8.0f));
+        yield return this.StartCoroutine(this.ChangeSubtitles(8.0f));
 
-        yield return new WaitForSeconds (8.0f);
+        yield return new WaitForSeconds(8.0f);
 
         /*
         this.videoIndex = 2;
         this.subtitleIndex = 5;
         */
 
-        yield return this.StartCoroutine (this.FadeIntoMovie ());
-        this.subtitles.text = this.subtitlesText [subtitleIndex ++];
+        yield return this.StartCoroutine(this.FadeIntoMovie());
+        this.subtitles.text = this.subtitlesText[this.subtitleIndex++];
 
-        yield return this.StartCoroutine (this.ChangeSubtitles (8.0f));
+        yield return this.StartCoroutine(this.ChangeSubtitles(8.0f));
 
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
-        this.PlayMovie (true);
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
+        this.PlayMovie(true);
 
-        yield return this.StartCoroutine (this.ChangeSubtitles (7.0f));
-        this.PlayMovie ();
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
+        yield return this.StartCoroutine(this.ChangeSubtitles(7.0f));
+        this.PlayMovie();
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
         /*
         this.videoIndex = 5;
@@ -193,15 +193,15 @@ public class Introduction : MonoBehaviour {
         this.fadeTexture.color = color;
         */
 
-        this.PlayMovie ();
-        this.subtitles.text = this.subtitlesText [subtitleIndex ++];
+        this.PlayMovie();
+        this.subtitles.text = this.subtitlesText[this.subtitleIndex++];
 
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
-        this.PlayMovie (true);
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
+        this.PlayMovie(true);
 
-        yield return this.StartCoroutine (this.ChangeSubtitles (1.5f));
-        yield return this.StartCoroutine (this.ChangeSubtitles (5.0f));
-        yield return new WaitForSeconds (3.0f);
+        yield return this.StartCoroutine(this.ChangeSubtitles(1.5f));
+        yield return this.StartCoroutine(this.ChangeSubtitles(5.0f));
+        yield return new WaitForSeconds(3.0f);
         this.subtitles.text = string.Empty;
 
         /*
@@ -212,29 +212,29 @@ public class Introduction : MonoBehaviour {
         this.fadeTexture.color = color;
         */
 
-        this.PlayMovie ();
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
+        this.PlayMovie();
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
         this.fullCanvas.GetComponent<Renderer>().enabled = true;
         this.videoPlayer.Play();
-        yield return this.StartCoroutine (this.WaitForEndOfMovie ());
+        yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
-        yield return new WaitForSeconds (3.0f);
+        yield return new WaitForSeconds(3.0f);
         //yield return this.StartCoroutine (this.Fade ());
 
-        this.menu.OnIntroductionFinished ();
+        this.menu.OnIntroductionFinished();
     }
 
-    private IEnumerator PlaySound (float delay) {
-        yield return new WaitForSeconds (delay);
+    private IEnumerator PlaySound(float delay) {
+        yield return new WaitForSeconds(delay);
 
-        this.GetComponent<AudioSource>().clip = this.sounds [this.soundIndex ++];
-        this.GetComponent<AudioSource>().Play ();
+        this.GetComponent<AudioSource>().clip = this.sounds[this.soundIndex++];
+        this.GetComponent<AudioSource>().Play();
     }
 
-    private IEnumerator WaitForEndOfMovie () {
+    private IEnumerator WaitForEndOfMovie() {
         // VideoPlayer doesn't set isPlaying until it is finished preparing
-        while (videoPlayer.frame == 0 || this.videoPlayer.isPlaying) {
+        while (this.videoPlayer.frame == 0 || this.videoPlayer.isPlaying) {
             yield return null;
         }
     }

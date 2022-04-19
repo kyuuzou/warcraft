@@ -9,16 +9,16 @@ public enum PathfindingAlgorithmType {
 
 public static class PathfindingAlgorithmExtension {
 
-    private static Dictionary<PathfindingAlgorithmType, Type> classByType = new Dictionary<PathfindingAlgorithmType, Type> () {
+    private static Dictionary<PathfindingAlgorithmType, Type> classByType = new Dictionary<PathfindingAlgorithmType, Type>() {
         { PathfindingAlgorithmType.None, null },
         { PathfindingAlgorithmType.AStar, typeof (AStar) }
     };
 
-    public static PathfindingAlgorithm AddToGameObject (
+    public static PathfindingAlgorithm AddToGameObject(
         this PathfindingAlgorithmType algorithm,
         GameObject gameObject
     ) {
-        Type type = PathfindingAlgorithmExtension.classByType [algorithm];
-        return gameObject.AddComponent (type) as PathfindingAlgorithm;
+        Type type = PathfindingAlgorithmExtension.classByType[algorithm];
+        return gameObject.AddComponent(type) as PathfindingAlgorithm;
     }
 }

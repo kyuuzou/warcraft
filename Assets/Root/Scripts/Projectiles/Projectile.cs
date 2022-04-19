@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -16,40 +15,40 @@ public class Projectile : CustomAnimatedSprite {
     [SerializeField]
     private AudioIdentifier hitSound;
 
-    public override void Activate () {
-        this.InitializeExternals ();
+    public override void Activate() {
+        this.InitializeExternals();
 
-        base.Activate ();
+        base.Activate();
 
-        this.Transform.SetZ ((int) DepthLayer.Projectiles);
+        this.Transform.SetZ((int)DepthLayer.Projectiles);
 
-        this.Play (AnimationType.Idle);
+        this.Play(AnimationType.Idle);
 
         if (this.stayOnTile) {
-            this.StartCoroutine (this.StayOnTile ());
+            this.StartCoroutine(this.StayOnTile());
         }
 
         if (this.lifeSpan > 0) {
-            this.StartCoroutine (this.Expire ());
+            this.StartCoroutine(this.Expire());
         }
 
-        this.AudioManager.Play (this.launchSound);
+        this.AudioManager.Play(this.launchSound);
     }
 
-    private IEnumerator Expire () {
-        yield return new WaitForSeconds (this.lifeSpan);
+    private IEnumerator Expire() {
+        yield return new WaitForSeconds(this.lifeSpan);
 
-        this.ManualDestroy ();
+        this.ManualDestroy();
     }
 
-    public virtual void OnProjectileConnected (MapTile tile) {
-        this.AudioManager.Play (this.hitSound);
+    public virtual void OnProjectileConnected(MapTile tile) {
+        this.AudioManager.Play(this.hitSound);
     }
 
-    private IEnumerator StayOnTile () {
+    private IEnumerator StayOnTile() {
         do {
             this.Transform.position = this.Tile.RealPosition;
-            this.Transform.SetZ ((int) DepthLayer.Projectiles);
+            this.Transform.SetZ((int)DepthLayer.Projectiles);
 
             yield return null;
         } while (true);

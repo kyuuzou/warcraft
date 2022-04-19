@@ -10,51 +10,52 @@ using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
 
 public class WarcraftAssetImporter : EditorWindow {
-	
-	private const string ToolPath = "Tools";
-	private const string WindowTitle = "Warcraft Asset Importer";
+
+    private const string ToolPath = "Tools";
+    private const string WindowTitle = "Warcraft Asset Importer";
 
     private const string DataFile = "DATA.WAR";
-	private const string ToolsURL = "https://github.com/kyuuzou/warcraft/releases/download/war1tool_v3.2.1/";
-	private const string FFMpegFilename = "ffmpeg.exe";
-	private const string War1toolFilename = "war1tool.exe";
+    private const string ToolsURL = "https://github.com/kyuuzou/warcraft/releases/download/war1tool_v3.2.1/";
+    private const string FFMpegFilename = "ffmpeg.exe";
+    private const string War1toolFilename = "war1tool.exe";
 
-	private UnityWebRequest currentRequest = null;
-	private EditorCoroutine importingCoroutine = null;
+    private UnityWebRequest currentRequest = null;
+    private EditorCoroutine importingCoroutine = null;
 
     private string dataWarPath = string.Empty;
     private string lastOutputMessage = string.Empty;
 
     [MenuItem("Window/Warcraft Asset Importer _w", false, (int)'W')]
     private static void Init() {
-		// because the Inspector class is internal, we need to get it through reflection
-		Type inspectorType = Type.GetType("UnityEditor.InspectorWindow, UnityEditor.dll");
-		Type[] desiredDockNextTo = {inspectorType};
+        // because the Inspector class is internal, we need to get it through reflection
+        Type inspectorType = Type.GetType("UnityEditor.InspectorWindow, UnityEditor.dll");
+        Type[] desiredDockNextTo = { inspectorType };
 
-		WarcraftAssetImporter importer = EditorWindow.GetWindow<WarcraftAssetImporter>(
-			WarcraftAssetImporter.WindowTitle, true, desiredDockNextTo
-		);
-		
+        WarcraftAssetImporter importer = EditorWindow.GetWindow<WarcraftAssetImporter>(
+            WarcraftAssetImporter.WindowTitle, true, desiredDockNextTo
+        );
+
         importer.Show();
     }
 
     private void Abort() {
-	    if (this.currentRequest != null) {
-		    this.currentRequest.Abort();
-		    this.currentRequest = null;
-	    }
+        if (this.currentRequest != null) {
+            this.currentRequest.Abort();
+            this.currentRequest = null;
+        }
 
-	    if (this.importingCoroutine != null) {
-		    EditorUtility.ClearProgressBar();
-		    EditorCoroutineUtility.StopCoroutine(this.importingCoroutine);
-		    this.importingCoroutine = null;
-	    }
+        if (this.importingCoroutine != null) {
+            EditorUtility.ClearProgressBar();
+            EditorCoroutineUtility.StopCoroutine(this.importingCoroutine);
+            this.importingCoroutine = null;
+        }
 
         AssetDatabase.Refresh();
     }
 
     private IEnumerator Download(string url, int stepNumber, int totalSteps) {
-        string path = Path.Combine(Application.dataPath, WarcraftAssetImporter.ToolPath, Path.GetFileName(url)); this.currentRequest = new UnityWebRequest(url);
+        string path = Path.Combine(Application.dataPath, WarcraftAssetImporter.ToolPath, Path.GetFileName(url));
+        this.currentRequest = new UnityWebRequest(url);
 
         if (File.Exists(path)) {
             Debug.Log($"File exists! Skipping {Path.GetFileName(url)}");
@@ -128,7 +129,7 @@ public class WarcraftAssetImporter : EditorWindow {
             if (string.IsNullOrEmpty(this.dataWarPath)) {
                 throw new FileNotFoundException();
             }
-            
+
             if (!(File.Exists(this.dataWarPath) || Directory.Exists(this.dataWarPath))) {
                 throw new FileNotFoundException();
             }
@@ -157,7 +158,7 @@ public class WarcraftAssetImporter : EditorWindow {
             Debug.LogError($"Could not find {WarcraftAssetImporter.DataFile}. Please select it before importing.");
             this.Abort();
         }
-        
+
         return false;
     }
 
@@ -165,19 +166,19 @@ public class WarcraftAssetImporter : EditorWindow {
         EditorUtility.DisplayCancelableProgressBar(WindowTitle, "Preparing...", 0.0f);
 
         yield return this.DownloadTools();
-        
+
         if (!this.FindDataWarFile()) {
             yield break;
         }
-        
+
         this.ExtractAssets();
 
-	    EditorUtility.ClearProgressBar();
-	    AssetDatabase.Refresh();
-	    this.currentRequest = null;
-	    this.importingCoroutine = null;
-	    
-	    this.Repaint();
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.Refresh();
+        this.currentRequest = null;
+        this.importingCoroutine = null;
+
+        this.Repaint();
     }
 
     private void OnGUI() {

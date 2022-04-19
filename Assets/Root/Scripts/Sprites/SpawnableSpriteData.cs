@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class SpawnableSpriteData : ScriptableObject {
 
-    [Header ("Animations")]
+    [Header("Animations")]
 
     [SerializeField]
     private MeshAnimation[] animations;
@@ -13,14 +11,14 @@ public class SpawnableSpriteData : ScriptableObject {
         get { return this.animations; }
     }
 
-    [Header ("Sprite data")]
+    [Header("Sprite data")]
 
     [SerializeField]
     private Vector2Int tileSize = new Vector2Int(1, 1);
     public Vector2Int TileSize {
         get { return this.tileSize; }
     }
-   
+
     [SerializeField]
     private int armourPoints;
     public int ArmourPoints {
@@ -57,7 +55,7 @@ public class SpawnableSpriteData : ScriptableObject {
     [field: SerializeField]
     public int LumberCost { get; private set; }
 
-    [Header ("Context Menu data")]
+    [Header("Context Menu data")]
 
     [SerializeField]
     private GameButtonType portrait;
@@ -78,7 +76,7 @@ public class SpawnableSpriteData : ScriptableObject {
         get { return this.rootMenuNode; }
     }
 
-    [Header ("File data")]
+    [Header("File data")]
 
     /// <summary>
     /// The string that represents this sprite on a file.
@@ -89,7 +87,7 @@ public class SpawnableSpriteData : ScriptableObject {
         get { return this.nameOnFile; }
     }
 
-    [Header ("Sprite Sound")]
+    [Header("Sprite Sound")]
 
     [SerializeField]
     private AudioIdentifier selectionSound;

@@ -53,12 +53,12 @@ public class InteractionModeBuilding : InteractionMode {
 
     public override void Update() {
         base.Update();
-        
+
         Vector3 mousePosition = Input.mousePosition;
         Vector3 worldMousePosition = this.camera.ScreenToWorldPoint(mousePosition);
 
         if (this.viewport.Contains(worldMousePosition)) {
-            Vector3 mouseWorldPoint = camera.ScreenToWorldPoint (Input.mousePosition);
+            Vector3 mouseWorldPoint = this.camera.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPoint, Vector2.zero);
             RaycastHit2D hit = new RaycastHit2D();
 
@@ -100,10 +100,10 @@ public class InteractionModeBuilding : InteractionMode {
                     if (Input.GetMouseButtonDown(0)) {
                         this.building.Initialize(tile);
                         this.building.SetUpConstructionSite(this.builder, tile);
-                        
+
                         //this.builder.Build (this.building);
-                        
-                        InteractionHandler.Instance.SetMode (InteractionModeType.Regular);
+
+                        InteractionHandler.Instance.SetMode(InteractionModeType.Regular);
                         //this.builder.PressCancel ();
                     }
                 }

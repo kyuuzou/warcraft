@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class UnitTraitDataDecaying : UnitTraitData {
@@ -13,11 +12,11 @@ public class UnitTraitDataDecaying : UnitTraitData {
         get { return UnitTraitType.Decaying; }
     }
 
-    public override UnitTrait AddTrait (Unit unit) {
-        UnitTraitDecaying trait = unit.gameObject.AddComponent<UnitTraitDecaying> ();
-        trait.Initialize (unit, UnitTraitDataDecaying.Instantiate (this));
-        
-        unit.SetTrait<IUnitTraitDecaying> (trait);
+    public override UnitTrait AddTrait(Unit unit) {
+        UnitTraitDecaying trait = unit.gameObject.AddComponent<UnitTraitDecaying>();
+        trait.Initialize(unit, UnitTraitDataDecaying.Instantiate(this));
+
+        unit.SetTrait<IUnitTraitDecaying>(trait);
 
         return trait;
     }

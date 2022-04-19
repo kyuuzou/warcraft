@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MeshAnimation : CustomScriptableObject {
 
@@ -11,7 +10,7 @@ public class MeshAnimation : CustomScriptableObject {
 
     [SerializeField]
     private Material material;
-    
+
     private Material sharedMaterial;
 
     [SerializeField]
@@ -22,7 +21,7 @@ public class MeshAnimation : CustomScriptableObject {
         }
         set {
             this.texture = this.overrideTexture = value == null ? this.material.mainTexture : value;
-            this.RefreshTexture ();
+            this.RefreshTexture();
         }
     }
 
@@ -68,18 +67,18 @@ public class MeshAnimation : CustomScriptableObject {
 
             this.currentFrame = value;
 
-            this.OnFrameChanged ();
+            this.OnFrameChanged();
 
-            if (! this.Inverted) {
+            if (!this.Inverted) {
                 foreach (MeshAnimationTrigger trigger in this.triggers) {
                     if (trigger.FrameIndex == value) {
-                        this.owner.MeshAnimator.OnAnimationTrigger (this.Type, trigger.Type);
+                        this.owner.MeshAnimator.OnAnimationTrigger(this.Type, trigger.Type);
                     }
                 }
             }
         }
     }
-    
+
     [SerializeField]
     private float delay = 0.05f;
     public float Delay {
@@ -104,7 +103,7 @@ public class MeshAnimation : CustomScriptableObject {
             this.direction = value;
 
             if (update) {
-                this.Iterate ();
+                this.Iterate();
             }
         }
     }
@@ -114,124 +113,124 @@ public class MeshAnimation : CustomScriptableObject {
     private SceneObject owner;
     private Vector2 paddedRelativeSize;
 
-    public delegate void FrameChangedHandler (object sender, FrameChangedArgs args);
+    public delegate void FrameChangedHandler(object sender, FrameChangedArgs args);
     private event FrameChangedHandler FrameChanged;
 
-    public override void Activate () {
-        if (! this.Initialized) {
-            Debug.LogWarning ("Tried to play " + this + " on " + this.owner + " before initialization.");
+    public override void Activate() {
+        if (!this.Initialized) {
+            Debug.LogWarning("Tried to play " + this + " on " + this.owner + " before initialization.");
             return;
         }
 
-        base.Activate ();
+        base.Activate();
 
         this.CurrentFrame = this.Inverted ? this.frames.Length - 1 : 0;
 
         this.sharedMaterial = this.owner.Renderer.sharedMaterial = this.material;
         this.sharedMaterial.mainTextureScale = this.relativeTileSize;
-//        this.sharedMaterial.mainTextureScale = this.paddedRelativeSize;
+        //        this.sharedMaterial.mainTextureScale = this.paddedRelativeSize;
         this.sharedMaterial.mainTexture = this.texture;
 
         this.owner.MeshFilter.mesh = this.mesh;
     }
 
-    public void Initialize (SceneObject owner) {
-        this.Initialize ();
+    public void Initialize(SceneObject owner) {
+        this.Initialize();
 
         this.owner = owner;
 
-        this.RefreshTexture ();
-        this.InitializeMesh ();
+        this.RefreshTexture();
+        this.InitializeMesh();
     }
 
-    private void InitializeMesh () {
-        this.mesh = Mesh.Instantiate (this.mesh);
+    private void InitializeMesh() {
+        this.mesh = Mesh.Instantiate(this.mesh);
         this.originalUV = this.mesh.uv;
 
         Color32[] colors = new Color32[this.mesh.vertexCount];
-        
-        for (int i = 0; i < colors.Length; i ++) {
+
+        for (int i = 0; i < colors.Length; i++) {
             colors[i].r = colors[i].g = colors[i].b = colors[i].a = 255;
         }
-        
+
         this.mesh.colors32 = colors;
     }
 
-    public bool Iterate () {
+    public bool Iterate() {
         if (this.frames.Length == 0) {
             return false;
         }
 
         bool ended = false;
-        
+
         if (this.loop) {
-            this.CurrentFrame = this.CurrentFrame.RoundClamp (0, this.frames.Length - 1);
-        } else if (! this.Inverted && this.CurrentFrame >= this.frames.Length) {
+            this.CurrentFrame = this.CurrentFrame.RoundClamp(0, this.frames.Length - 1);
+        } else if (!this.Inverted && this.CurrentFrame >= this.frames.Length) {
             if (this.pingPong) {
                 this.Inverted = true;
-                this.CurrentFrame --;
+                this.CurrentFrame--;
             } else {
                 ended = true;
             }
         } else if (this.Inverted && this.CurrentFrame < 0) {
             ended = true;
         }
-        
+
         if (ended) {
-            this.owner.MeshAnimator.OnAnimationTrigger (this.Type, AnimationTriggerType.OnFinished);
+            this.owner.MeshAnimator.OnAnimationTrigger(this.Type, AnimationTriggerType.OnFinished);
 
             if (this.nextAnimation != AnimationType.None) {
-                this.owner.Play (this.nextAnimation);
+                this.owner.Play(this.nextAnimation);
             }
-            
+
             return false;
         }
 
-        this.UpdateUV ();
+        this.UpdateUV();
 
         this.CurrentFrame += this.Inverted ? -1 : 1;
 
         return true;
     }
 
-    private void OnFrameChanged () {
+    private void OnFrameChanged() {
         if (this.FrameChanged != null) {
-            this.FrameChanged (this, new FrameChangedArgs (this.CurrentFrame));
+            this.FrameChanged(this, new FrameChangedArgs(this.CurrentFrame));
         }
     }
 
-    private void RefreshTexture () {
+    private void RefreshTexture() {
         this.texture = this.overrideTexture == null ? this.material.mainTexture : this.overrideTexture;
-        
+
         if (this.texture == null) {
-            Debug.LogError (string.Format ("No texture found for {0} on {1}", this.owner.name, this.Type));
+            Debug.LogError(string.Format("No texture found for {0} on {1}", this.owner.name, this.Type));
         }
 
-        this.relativeTileSize = new Vector2 (
+        this.relativeTileSize = new Vector2(
             (this.texture.width / this.atlasSize.x) / this.texture.width,
             (this.texture.height / this.atlasSize.y) / this.texture.height
         );
-        
-        this.relativeOffset = new Vector2 (
+
+        this.relativeOffset = new Vector2(
             (this.offset.x / this.texture.width) / this.relativeTileSize.x,
             (this.offset.y / this.texture.height) / this.relativeTileSize.y
         );
-        
-        this.relativeMargin = new Vector2 (
+
+        this.relativeMargin = new Vector2(
             (this.margin.x / this.texture.width) / this.relativeTileSize.x,
             (this.margin.y / this.texture.height) / this.relativeTileSize.y
         );
     }
 
-    public void RegisterFrameChangedListener (FrameChangedHandler handler) {
+    public void RegisterFrameChangedListener(FrameChangedHandler handler) {
         this.FrameChanged += handler;
     }
 
-    public void SetFrameValue (int frameIndex, int atlasIndex) {
+    public void SetFrameValue(int frameIndex, int atlasIndex) {
         this.frames[frameIndex] = atlasIndex;
     }
 
-    private void UpdateUV () {
+    private void UpdateUV() {
         if (this.atlasSize == Vector2.zero) {
             Debug.LogError($"Atlas size not set at {this.owner?.transform.parent?.name}:{this}");
             return;
@@ -240,16 +239,16 @@ public class MeshAnimation : CustomScriptableObject {
         Vector2[] uvs = new Vector2[this.originalUV.Length];
         int i = 0;
 
-        DirectionData data = this.Direction.GetData ();
+        DirectionData data = this.Direction.GetData();
         int currentFrame = this.frames[this.CurrentFrame] + data.SpriteOffset;
 
-        this.owner.Transform.SetLocalScaleX (this.owner.DefaultTransformData.LocalScale.x * data.SpriteMultiplier);
+        this.owner.Transform.SetLocalScaleX(this.owner.DefaultTransformData.LocalScale.x * data.SpriteMultiplier);
 
-        int x = currentFrame % (int) this.atlasSize.x;
-        int y = currentFrame / (int) this.atlasSize.x;
+        int x = currentFrame % (int)this.atlasSize.x;
+        int y = currentFrame / (int)this.atlasSize.x;
 
         while (i < uvs.Length) {
-            uvs[i] = new Vector2 (
+            uvs[i] = new Vector2(
                 this.originalUV[i].x + x + x * this.relativeMargin.x + this.relativeOffset.x,
                 this.originalUV[i].y + (this.atlasSize.y - y - 1) - y * this.relativeMargin.y - this.relativeOffset.y
             );

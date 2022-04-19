@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BuildingTraitDataMinable : BuildingTraitData {
-    
+
     public override BuildingTraitType Type {
         get { return BuildingTraitType.Minable; }
     }
@@ -13,12 +12,12 @@ public class BuildingTraitDataMinable : BuildingTraitData {
         get { return this.remainingGold; }
     }
 
-    public override BuildingTrait AddTrait (Building building) {
-        BuildingTraitMinable trait = building.gameObject.AddComponent<BuildingTraitMinable> ();
-        trait.Initialize (building, BuildingTraitDataMinable.Instantiate (this));
-        
-        building.SetTrait<IBuildingTraitMinable> (trait);
-        
+    public override BuildingTrait AddTrait(Building building) {
+        BuildingTraitMinable trait = building.gameObject.AddComponent<BuildingTraitMinable>();
+        trait.Initialize(building, BuildingTraitDataMinable.Instantiate(this));
+
+        building.SetTrait<IBuildingTraitMinable>(trait);
+
         return trait;
     }
 }

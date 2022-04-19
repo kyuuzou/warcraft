@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Settings : Singleton<Settings> {
@@ -36,11 +35,11 @@ public class Settings : Singleton<Settings> {
         get { return this.skipIntro; }
     }
 
-    protected override void Start () {
-        base.Start ();
+    protected override void Start() {
+        base.Start();
 
         if (this.clearPreferences) {
-            PlayerPrefs.DeleteAll ();
+            PlayerPrefs.DeleteAll();
         }
     }
 }

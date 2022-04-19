@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TransformData {
 
@@ -12,17 +11,17 @@ public class TransformData {
 
     private Transform transform;
 
-    public TransformData (Transform transform) {
+    public TransformData(Transform transform) {
         this.transform = transform;
 
-        this.Save ();
+        this.Save();
     }
 
-    public void Save () {
+    public void Save() {
         this.LocalEulerAngles = this.transform.localEulerAngles;
         this.LocalPosition = this.transform.localPosition;
         this.LocalScale = this.transform.localScale;
-        
+
         this.EulerAngles = this.transform.eulerAngles;
         this.Position = this.transform.position;
     }

@@ -7,7 +7,7 @@ public enum MouseButton {
 
 public static class MouseButtonExtension {
 
-    public static int GetIndex (this MouseButton button) {
-        return ((int) button) - 1;
+    public static int GetIndex(this MouseButton button) {
+        return ((int)button) - 1;
     }
 }

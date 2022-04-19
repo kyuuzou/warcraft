@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Random = UnityEngine.Random;
-
 public class SpawnFactory : MonoBehaviour {
 
     [SerializeField]
@@ -17,7 +15,7 @@ public class SpawnFactory : MonoBehaviour {
 
     [SerializeField]
     private Decoration spriteDecorationPrefab;
-    
+
     [SerializeField]
     private DecorationData[] decorationDataPrefabs;
 
@@ -59,74 +57,74 @@ public class SpawnFactory : MonoBehaviour {
 
     private int spawnCount = 0;
 
-    private void Awake () {
+    private void Awake() {
         this.map = ServiceLocator.Instance.Map;
 
-        this.nameToBuildingType = new Dictionary<string, BuildingType> ();
-        this.nameToUnitType = new Dictionary<string, UnitType> ();
+        this.nameToBuildingType = new Dictionary<string, BuildingType>();
+        this.nameToUnitType = new Dictionary<string, UnitType>();
 
-        this.InitializeSpawnableDictionaries ();
-        this.InitializeTraitDictionary ();
+        this.InitializeSpawnableDictionaries();
+        this.InitializeTraitDictionary();
     }
 
-    private BuildingType GetBuildingType (string nameOnFile) {
-        if (this.nameToBuildingType.ContainsKey (nameOnFile)) {
+    private BuildingType GetBuildingType(string nameOnFile) {
+        if (this.nameToBuildingType.ContainsKey(nameOnFile)) {
             return this.nameToBuildingType[nameOnFile];
         }
 
         return BuildingType.None;
     }
 
-    public BuildingData GetData (BuildingType type) {
-        if (this.buildingData.ContainsKey (type)) {
-            return BuildingData.Instantiate (this.buildingData[type]);
+    public BuildingData GetData(BuildingType type) {
+        if (this.buildingData.ContainsKey(type)) {
+            return BuildingData.Instantiate(this.buildingData[type]);
         }
 
-        Debug.Log ("BuildingType not found: " + type);
+        Debug.Log("BuildingType not found: " + type);
         return null;
     }
 
-    public DecorationData GetData (DecorationType type) {
-        if (this.decorationData.ContainsKey (type)) {
-            return DecorationData.Instantiate (this.decorationData[type]);
-        }
-
-        return null;
-    }
-
-    public UnitData GetData (UnitType type) {
-        if (this.unitData.ContainsKey (type)) {
-            return UnitData.Instantiate (this.unitData[type]);
+    public DecorationData GetData(DecorationType type) {
+        if (this.decorationData.ContainsKey(type)) {
+            return DecorationData.Instantiate(this.decorationData[type]);
         }
 
         return null;
     }
 
-    public T GetData<T> () where T : TraitData {
-        return (T) this.traitByType[typeof (T)];
+    public UnitData GetData(UnitType type) {
+        if (this.unitData.ContainsKey(type)) {
+            return UnitData.Instantiate(this.unitData[type]);
+        }
+
+        return null;
     }
 
-    public DecorationType GetDecorationByTileType (TileType tileType) {
-        if (! this.decorationByTileType.ContainsKey (tileType)) {
+    public T GetData<T>() where T : TraitData {
+        return (T)this.traitByType[typeof(T)];
+    }
+
+    public DecorationType GetDecorationByTileType(TileType tileType) {
+        if (!this.decorationByTileType.ContainsKey(tileType)) {
             return DecorationType.None;
         }
 
         return this.decorationByTileType[tileType];
     }
 
-    private UnitType GetUnitType (string nameOnFile) {
-        if (this.nameToUnitType.ContainsKey (nameOnFile)) {
+    private UnitType GetUnitType(string nameOnFile) {
+        if (this.nameToUnitType.ContainsKey(nameOnFile)) {
             return this.nameToUnitType[nameOnFile];
         }
 
         return UnitType.None;
     }
 
-    private void InitializeSpawnableDictionaries () {
-        this.buildingData = new Dictionary<BuildingType, BuildingData> ();
-        this.decorationData = new Dictionary<DecorationType, DecorationData> ();
-        this.decorationByTileType = new Dictionary<TileType, DecorationType> ();
-        this.unitData = new Dictionary<UnitType, UnitData> ();
+    private void InitializeSpawnableDictionaries() {
+        this.buildingData = new Dictionary<BuildingType, BuildingData>();
+        this.decorationData = new Dictionary<DecorationType, DecorationData>();
+        this.decorationByTileType = new Dictionary<TileType, DecorationType>();
+        this.unitData = new Dictionary<UnitType, UnitData>();
 
         foreach (BuildingData building in this.buildingDataPrefabs) {
             if (building == null) {
@@ -166,58 +164,58 @@ public class SpawnFactory : MonoBehaviour {
         }
     }
 
-    private void InitializeTraitDictionary () {
-        this.traitByType = new Dictionary<Type, TraitData> ();
+    private void InitializeTraitDictionary() {
+        this.traitByType = new Dictionary<Type, TraitData>();
 
         foreach (TraitData data in this.nonTraitData) {
             if (data == null) {
                 continue;
             }
 
-            this.traitByType[data.GetType ()] = data;
+            this.traitByType[data.GetType()] = data;
         }
     }
 
-    public SpawnableSprite Spawn (string type, Faction faction, Vector2Int position) {
-        UnitType unitType = this.GetUnitType (type);
+    public SpawnableSprite Spawn(string type, Faction faction, Vector2Int position) {
+        UnitType unitType = this.GetUnitType(type);
 
         if (unitType != UnitType.None) {
-            return this.SpawnUnit (unitType, faction, position);
+            return this.SpawnUnit(unitType, faction, position);
         }
 
-        BuildingType buildingType = this.GetBuildingType (type);
-                
+        BuildingType buildingType = this.GetBuildingType(type);
+
         if (buildingType != BuildingType.None) {
-            return this.SpawnBuilding (buildingType, faction, position);
+            return this.SpawnBuilding(buildingType, faction, position);
         }
 
         return null;
     }
 
-    public Building SpawnBuilding (BuildingType buildingType, Faction faction) {
-        if (! this.buildingData.ContainsKey (buildingType)) {
+    public Building SpawnBuilding(BuildingType buildingType, Faction faction) {
+        if (!this.buildingData.ContainsKey(buildingType)) {
             return null;
         }
 
-        Building building = Transform.Instantiate (
+        Building building = Transform.Instantiate(
             this.buildingPrefab,
-            new Vector3 (0.0f, 0.0f, 5.0f),
+            new Vector3(0.0f, 0.0f, 5.0f),
             Quaternion.identity
         );
 
-        this.spawnCount ++;
+        this.spawnCount++;
         building.transform.parent = this.buildingParent;
-        building.name = string.Format ("{0} {1}", buildingType.ToString (), this.spawnCount);
+        building.name = string.Format("{0} {1}", buildingType.ToString(), this.spawnCount);
 
-        building.SetBuildingType (buildingType);
+        building.SetBuildingType(buildingType);
         building.Faction = faction;
-        faction.AddBuilding (building);
+        faction.AddBuilding(building);
 
         return building;
     }
-    
-    public Building SpawnBuilding (BuildingType type, Faction faction, Vector2Int position) {
-        Building building = this.SpawnBuilding (type, faction);
+
+    public Building SpawnBuilding(BuildingType type, Faction faction, Vector2Int position) {
+        Building building = this.SpawnBuilding(type, faction);
 
         if (building == null) {
             return building;
@@ -225,90 +223,90 @@ public class SpawnFactory : MonoBehaviour {
 
         //Exception for castles, which seem to be one tile to the right, for some reason
         if (type == BuildingType.HumanCastle || type == BuildingType.OrcCastle) {
-            position.x --;
+            position.x--;
         }
 
-        MapTile tile = this.map.GetTile (position.x, position.y);
-        building.Initialize (tile);
+        MapTile tile = this.map.GetTile(position.x, position.y);
+        building.Initialize(tile);
 
         return building;
     }
-    
-    public Decoration SpawnDecoration (DecorationType type, Faction faction) {
-        if (! this.GetData (type).Spawnable) {
+
+    public Decoration SpawnDecoration(DecorationType type, Faction faction) {
+        if (!this.GetData(type).Spawnable) {
             return null;
         }
 
-        Decoration decoration = GameObject.Instantiate (
+        Decoration decoration = GameObject.Instantiate(
             type == DecorationType.Unknown ? this.spriteDecorationPrefab : this.meshDecorationPrefab
         );
-        
-        this.spawnCount ++;
+
+        this.spawnCount++;
         decoration.transform.parent = this.decorationParent;
-        decoration.name = string.Format ("{0} {1}", type.ToString (), this.spawnCount);
-        
-        decoration.SetDecorationType (type);
+        decoration.name = string.Format("{0} {1}", type.ToString(), this.spawnCount);
+
+        decoration.SetDecorationType(type);
         decoration.Faction = faction;
 
         return decoration;
     }
-    
-    public Decoration SpawnDecoration (DecorationType type, Faction faction, Vector2Int position) {
-        if (this.GetData (type) == null) {
-            Debug.LogError ("No data found for: " + type);
+
+    public Decoration SpawnDecoration(DecorationType type, Faction faction, Vector2Int position) {
+        if (this.GetData(type) == null) {
+            Debug.LogError("No data found for: " + type);
             return null;
         }
 
-        Decoration decoration = this.SpawnDecoration (type, faction);
+        Decoration decoration = this.SpawnDecoration(type, faction);
 
         if (decoration == null) {
             return null;
         }
-        
-        MapTile tile = this.map.GetTile (position.x, position.y);
-        decoration.Initialize (tile);
+
+        MapTile tile = this.map.GetTile(position.x, position.y);
+        decoration.Initialize(tile);
 
         return decoration;
     }
-    
-    public Decoration SpawnDecoration (TileType type, Faction faction, Vector2Int position) {
-        if (this.decorationByTileType.ContainsKey (type)) {
-            return this.SpawnDecoration (this.decorationByTileType[type], faction, position);
+
+    public Decoration SpawnDecoration(TileType type, Faction faction, Vector2Int position) {
+        if (this.decorationByTileType.ContainsKey(type)) {
+            return this.SpawnDecoration(this.decorationByTileType[type], faction, position);
         }
 
         return null;
     }
 
-    public Unit SpawnUnit (UnitType unitType, Faction faction) {
-        Unit unit = GameObject.Instantiate (this.unitPrefab);
+    public Unit SpawnUnit(UnitType unitType, Faction faction) {
+        Unit unit = GameObject.Instantiate(this.unitPrefab);
 
-        this.spawnCount ++;
+        this.spawnCount++;
         unit.transform.parent = this.unitParent;
-        unit.name = string.Format ("{0} {1}", unitType.ToString (), this.spawnCount);
+        unit.name = string.Format("{0} {1}", unitType.ToString(), this.spawnCount);
 
         unit.Faction = faction;
-        unit.SetUnitType (unitType);
+        unit.SetUnitType(unitType);
 
-        faction.AddUnit (unit);
+        faction.AddUnit(unit);
 
         return unit;
     }
-    
-    public Unit SpawnUnit (UnitType type, Faction faction, Vector2Int position) {
-        if (this.GetData (type) == null) {
-            Debug.LogError ("No data found for: " + type);
+
+    public Unit SpawnUnit(UnitType type, Faction faction, Vector2Int position) {
+        if (this.GetData(type) == null) {
+            Debug.LogError("No data found for: " + type);
             return null;
         }
 
-        Unit unit = this.SpawnUnit (type, faction);
+        Unit unit = this.SpawnUnit(type, faction);
 
         if (unit == null) {
             return null;
         }
 
-        MapTile tile = this.map.GetTile (position.x, position.y);
-        unit.Initialize (tile);
-        this.map.AddUnit (unit);
+        MapTile tile = this.map.GetTile(position.x, position.y);
+        unit.Initialize(tile);
+        this.map.AddUnit(unit);
 
         return unit;
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,17 +9,17 @@ public interface IUnitTraitMoving : IUnitTrait, IMovementListener {
 
     Vector3 RelativePosition { get; set; }
 
-    void ChangePath (List<MapTile> waypoints);
+    void ChangePath(List<MapTile> waypoints);
 
-    void LateManualUpdate ();
+    void LateManualUpdate();
 
-    void ManualUpdate ();
+    void ManualUpdate();
 
-    void Move (
+    void Move(
         IMovementDestination destination, IMovementListener movementListener, bool overlapTarget, bool recalculation
     );
 
-    void OnGroupChanged ();
-    void RefreshPosition ();
-    void SetDestination (MapTile tile);
+    void OnGroupChanged();
+    void RefreshPosition();
+    void SetDestination(MapTile tile);
 }

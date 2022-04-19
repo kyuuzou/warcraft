@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class SpriteRendererExtension {
 
-    public static void SetOpacity (this SpriteRenderer spriteRenderer, float opacity) {
+    public static void SetOpacity(this SpriteRenderer spriteRenderer, float opacity) {
         Color color = spriteRenderer.color;
         color.a = opacity;
         spriteRenderer.color = color;

@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomAnimatedSprite: CustomSprite, IAnimationTriggerListener {
+public class CustomAnimatedSprite : CustomSprite, IAnimationTriggerListener {
 
     [SerializeField]
     private MeshAnimation[] animations;
@@ -11,26 +8,26 @@ public class CustomAnimatedSprite: CustomSprite, IAnimationTriggerListener {
         get { return this.animations; }
     }
 
-    public override void InitializeExternals () {
+    public override void InitializeExternals() {
         if (this.InitializedExternals) {
             return;
         }
 
-        base.InitializeExternals ();
+        base.InitializeExternals();
 
-        this.MeshAnimator.SetAnimations (this.Animations);
-        this.MeshAnimator.RegisterTriggerListener (this);
+        this.MeshAnimator.SetAnimations(this.Animations);
+        this.MeshAnimator.RegisterTriggerListener(this);
     }
 
-    public override void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType) {
+    public override void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType) {
         if (triggerType == AnimationTriggerType.OnDecomposed) {
-            this.ManualDestroy ();
+            this.ManualDestroy();
         }
     }
 
-    protected override void Start () {
-        base.Start ();
+    protected override void Start() {
+        base.Start();
 
-        this.InitializeExternals ();
+        this.InitializeExternals();
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿public interface IPhasedOutListener {
 
-public interface IPhasedOutListener {
-
-    void OnPhasedOut (SpawnableSprite sprite);
+    void OnPhasedOut(SpawnableSprite sprite);
 }

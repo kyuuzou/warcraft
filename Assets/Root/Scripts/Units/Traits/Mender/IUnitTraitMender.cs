@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿public interface IUnitTraitMender : IAnimationTriggerListener, IUnitTrait {
 
-public interface IUnitTraitMender : IAnimationTriggerListener, IUnitTrait {
+    void Mend(Building building);
 
-    void Mend (Building building);
+    void Mend(Decoration decoration);
 
-    void Mend (Decoration decoration);
+    void MendAfterCooldown();
 
-    void MendAfterCooldown ();
-
-    void OnMend ();
+    void OnMend();
 }

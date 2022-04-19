@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface IUnitTraitAttacker : IAnimationTriggerListener, IUnitTrait {
 
-    void Attack (SpawnableSprite sprite);
+    void Attack(SpawnableSprite sprite);
 
-    void Attack (MapTile tile);
+    void Attack(MapTile tile);
 
-    void AttackAfterCooldown ();
+    void AttackAfterCooldown();
 
-    void ManualUpdate ();
+    void ManualUpdate();
 
-    void OnAttack ();
+    void OnAttack();
 }

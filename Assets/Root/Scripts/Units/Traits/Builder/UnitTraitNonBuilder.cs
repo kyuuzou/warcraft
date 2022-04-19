@@ -1,6 +1,3 @@
-using System.Collections;
-using UnityEngine;
-
 public class UnitTraitNonBuilder : UnitTrait, IUnitTraitBuilder, IMovementListener {
 
     public UnitTraitDataNonBuilder Data { get; set; }
@@ -12,50 +9,50 @@ public class UnitTraitNonBuilder : UnitTrait, IUnitTraitBuilder, IMovementListen
     public override UnitTraitType Type {
         get { return UnitTraitType.Builder; }
     }
-    
-    public void ApproachingTarget () {
+
+    public void ApproachingTarget() {
 
     }
 
-    public void Build (BuildingType type) {
-        
+    public void Build(BuildingType type) {
+
     }
-    
-    public void Initialize (Unit unit, UnitTraitDataNonBuilder data) {
-        base.Initialize (unit);
-        
+
+    public void Initialize(Unit unit, UnitTraitDataNonBuilder data) {
+        base.Initialize(unit);
+
         this.Data = data;
     }
 
-    public bool IsTileTraversable (MapTile tile) {
+    public bool IsTileTraversable(MapTile tile) {
         return false;
     }
 
-    public void MoveToConstructionSite (Building building) {
+    public void MoveToConstructionSite(Building building) {
 
     }
 
-    public void OnOrderAccepted () {
-        
-    }
-
-    public void OnWorkComplete () {
+    public void OnOrderAccepted() {
 
     }
-    
-    public void ReachedTarget () {
-        
+
+    public void OnWorkComplete() {
+
     }
 
-    public void ShowAdvancedStructures () {
-        
-    }
-    
-    public void ShowBasicStructures () {
-        
+    public void ReachedTarget() {
+
     }
 
-    public void TileChanged () {
+    public void ShowAdvancedStructures() {
+
+    }
+
+    public void ShowBasicStructures() {
+
+    }
+
+    public void TileChanged() {
 
     }
 }

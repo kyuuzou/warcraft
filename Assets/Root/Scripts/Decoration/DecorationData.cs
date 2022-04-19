@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class DecorationData : SpawnableSpriteData {
 
-    [Header ("Decoration data")]
+    [Header("Decoration data")]
 
     [SerializeField]
     private DecorationType type = DecorationType.None;
@@ -26,7 +26,7 @@ public class DecorationData : SpawnableSpriteData {
     public bool Spawnable {
         get { return this.spawnable; }
     }
-    
+
     /// <summary>
     /// The tile type that should spawn this decoration, if applicable.
     /// </summary>
@@ -35,22 +35,22 @@ public class DecorationData : SpawnableSpriteData {
     public TileType TileType {
         get { return this.tileType; }
     }
-    
-    [Header ("Textures")]
+
+    [Header("Textures")]
 
     [SerializeField]
     private Texture dungeonTexture;
 
     [SerializeField]
     private Texture forestTexture;
-    
+
     [SerializeField]
     private Texture snowTexture;
-    
+
     [SerializeField]
     private Texture swampTexture;
-    
-    public Texture GetTexture (MapType type) {
+
+    public Texture GetTexture(MapType type) {
         Texture texture = null;
 
         switch (type) {
@@ -61,7 +61,7 @@ public class DecorationData : SpawnableSpriteData {
             case MapType.Forest:
                 texture = this.forestTexture;
                 break;
-        
+
             case MapType.Snow:
                 texture = this.snowTexture;
                 break;

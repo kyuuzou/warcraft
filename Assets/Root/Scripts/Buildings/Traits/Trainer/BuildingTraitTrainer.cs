@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class BuildingTraitTrainer : BuildingTrait, IBuildingTraitTrainer {
 
@@ -18,23 +16,23 @@ public class BuildingTraitTrainer : BuildingTrait, IBuildingTraitTrainer {
     private bool training = false;
     private Unit unit;
 
-    public override void Deactivate () {
-        base.Deactivate ();
+    public override void Deactivate() {
+        base.Deactivate();
 
         if (this.training) {
-            this.Building.StopCoroutine (this.trainEnumerator);
+            this.Building.StopCoroutine(this.trainEnumerator);
 
             this.gameController.IncreaseGold(this.unit.Data.GoldCost);
             this.gameController.IncreaseLumber(this.unit.Data.LumberCost);
 
             this.Building.StatusBackgroundIndex = 8;
-            this.statusPane.SetBackgroundIndex (this.Building.StatusBackgroundIndex);
+            this.statusPane.SetBackgroundIndex(this.Building.StatusBackgroundIndex);
         }
     }
 
-    public void Initialize (Building building, BuildingTraitDataTrainer data) {
-        base.Initialize (building);
-        
+    public void Initialize(Building building, BuildingTraitDataTrainer data) {
+        base.Initialize(building);
+
         this.Data = data;
 
         ServiceLocator serviceLocator = ServiceLocator.Instance;
@@ -47,19 +45,19 @@ public class BuildingTraitTrainer : BuildingTrait, IBuildingTraitTrainer {
         this.statusPane = serviceLocator.StatusPane;
     }
 
-    public void Train (UnitType type) {
+    public void Train(UnitType type) {
         if (this.trainEnumerator != null) {
-            this.Building.StopCoroutine (this.trainEnumerator);
+            this.Building.StopCoroutine(this.trainEnumerator);
         }
 
-        this.trainEnumerator = this.TrainCoroutine (type);
-        this.Building.StartCoroutine (this.trainEnumerator);
+        this.trainEnumerator = this.TrainCoroutine(type);
+        this.Building.StartCoroutine(this.trainEnumerator);
     }
 
-    private IEnumerator TrainCoroutine (UnitType type) {
+    private IEnumerator TrainCoroutine(UnitType type) {
         this.training = true;
 
-        this.unit = this.spawnFactory.SpawnUnit (type, this.Building.Faction);
+        this.unit = this.spawnFactory.SpawnUnit(type, this.Building.Faction);
         this.unit.Collider.enabled = false;
         this.unit.Renderer.enabled = false;
 
@@ -67,29 +65,29 @@ public class BuildingTraitTrainer : BuildingTrait, IBuildingTraitTrainer {
         this.gameController.DecreaseLumber(this.unit.Data.LumberCost);
 
         if (this.Building.Selected) {
-            this.contextMenu.SetNode (this.contextMenu.CancelNode);
+            this.contextMenu.SetNode(this.contextMenu.CancelNode);
         }
 
-        this.trainEnumerator = this.Building.Progress (this.unit.Data.TimeToBuild);
-        yield return this.Building.StartCoroutine (this.trainEnumerator);
+        this.trainEnumerator = this.Building.Progress(this.unit.Data.TimeToBuild);
+        yield return this.Building.StartCoroutine(this.trainEnumerator);
 
         this.Building.StatusBackgroundIndex = 8;
-        
-        if (this.Building.Selected) {
-            this.statusPane.SetBackgroundIndex (this.Building.StatusBackgroundIndex);
-            this.contextMenu.SetNode (this.Building.Data.RootMenuNode);
-        }
-        
-        this.training = false;
-        
-        this.unit.Initialize (this.Building.Tile);
-        this.unit.ClaimTile (this.Building.Tile);
-        this.map.AddUnit (this.unit);
 
-        this.audioManager.Play (this.Data.TrainedSound);
-        yield return this.Building.StartCoroutine (this.Building.EjectUnitCoroutine (this.unit));
+        if (this.Building.Selected) {
+            this.statusPane.SetBackgroundIndex(this.Building.StatusBackgroundIndex);
+            this.contextMenu.SetNode(this.Building.Data.RootMenuNode);
+        }
+
+        this.training = false;
+
+        this.unit.Initialize(this.Building.Tile);
+        this.unit.ClaimTile(this.Building.Tile);
+        this.map.AddUnit(this.unit);
+
+        this.audioManager.Play(this.Data.TrainedSound);
+        yield return this.Building.StartCoroutine(this.Building.EjectUnitCoroutine(this.unit));
 
         this.missionStatistics.Score += 20;
-        this.missionStatistics.UnitsYouTrained ++;
+        this.missionStatistics.UnitsYouTrained++;
     }
 }

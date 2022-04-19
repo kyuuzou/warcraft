@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public abstract class UnitTrait : SpawnableTrait {
+﻿public abstract class UnitTrait : SpawnableTrait {
 
     public virtual bool IsNullObject {
         get { return false; }
@@ -11,7 +8,7 @@ public abstract class UnitTrait : SpawnableTrait {
 
     public abstract UnitTraitType Type { get; }
 
-    protected void Initialize (Unit unit) {
+    protected void Initialize(Unit unit) {
         this.Unit = unit;
     }
 }

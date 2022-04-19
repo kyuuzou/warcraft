@@ -5,15 +5,15 @@ public abstract class SpawnableTrait : MonoBehaviour {
 
     public bool Active { get; private set; }
 
-    public virtual void Activate () {
+    public virtual void Activate() {
         this.Active = true;
     }
-    
-    public virtual void Deactivate () {
+
+    public virtual void Deactivate() {
         this.Active = false;
     }
 
-    public virtual void FilterButtons (ref List<GameButtonType> buttons) {
+    public virtual void FilterButtons(ref List<GameButtonType> buttons) {
 
     }
 }

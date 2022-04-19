@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class UnitTraitNonInteractive : UnitTrait, IUnitTraitInteractive {
@@ -12,22 +11,22 @@ public class UnitTraitNonInteractive : UnitTrait, IUnitTraitInteractive {
     public override UnitTraitType Type {
         get { return UnitTraitType.Interactive; }
     }
-    
-    public void Initialize (Unit unit, UnitTraitDataNonInteractive data) {
-        base.Initialize (unit);
-        
+
+    public void Initialize(Unit unit, UnitTraitDataNonInteractive data) {
+        base.Initialize(unit);
+
         this.Data = data;
     }
 
-    public void Interact (IUnitTraitInteractive trait) {
-        Debug.Log ("Trying to attack without an interactive trait: " + this.Unit.Type);
+    public void Interact(IUnitTraitInteractive trait) {
+        Debug.Log("Trying to attack without an interactive trait: " + this.Unit.Type);
     }
 
-    public void Interact (MapTile tile) {
-        Debug.Log ("Trying to attack without an interactive trait: " + this.Unit.Type);
+    public void Interact(MapTile tile) {
+        Debug.Log("Trying to attack without an interactive trait: " + this.Unit.Type);
     }
 
-    public void OnOrderAccepted () {
+    public void OnOrderAccepted() {
 
     }
 }

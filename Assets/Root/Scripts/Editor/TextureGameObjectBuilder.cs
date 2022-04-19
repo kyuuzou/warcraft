@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -14,7 +12,7 @@ public class TextureGameObjectBuilder : Editor {
         object[] selectedTextures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.Assets);
 
         foreach (Texture2D texture in selectedTextures) {
-     
+
             Mesh mesh = CreatePlaneMeshFromTexture(texture);
             Material material = CreateMaterialFromTexture(texture);
 
@@ -84,19 +82,19 @@ public class TextureGameObjectBuilder : Editor {
         int textureWidth = 0;
         int textureHeight = 0;
 
-        var mesh            = new Mesh();
-        var meshVertices    = new Vector3[4];
-        var meshTriangles   = new int[6];
-        var meshNormals     = new Vector3[4];
-        var meshUVs         = new Vector2[4];
+        var mesh = new Mesh();
+        var meshVertices = new Vector3[4];
+        var meshTriangles = new int[6];
+        var meshNormals = new Vector3[4];
+        var meshUVs = new Vector2[4];
 
         TextureGameObjectBuilder.GetImageSize(texture, out textureWidth, out textureHeight);
 
         //Set up vertices, with the mesh center at (0, 0)
         meshVertices[0] = new Vector3(-textureWidth / 2, -textureHeight / 2, 0);    //lower left vertex
-        meshVertices[1] = new Vector3( textureWidth / 2, -textureHeight / 2, 0);    //lower right vertex
-        meshVertices[2] = new Vector3(-textureWidth / 2,  textureHeight / 2, 0);    //upper left vertex
-        meshVertices[3] = new Vector3( textureWidth / 2,  textureHeight / 2, 0);    //upper right vertex
+        meshVertices[1] = new Vector3(textureWidth / 2, -textureHeight / 2, 0);    //lower right vertex
+        meshVertices[2] = new Vector3(-textureWidth / 2, textureHeight / 2, 0);    //upper left vertex
+        meshVertices[3] = new Vector3(textureWidth / 2, textureHeight / 2, 0);    //upper right vertex
         mesh.vertices = meshVertices;
 
         //Set up texture coordinates

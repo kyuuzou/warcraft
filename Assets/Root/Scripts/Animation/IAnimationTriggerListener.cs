@@ -1,8 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿public interface IAnimationTriggerListener {
 
-public interface IAnimationTriggerListener {
-
-    void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType);
+    void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType);
 
 }

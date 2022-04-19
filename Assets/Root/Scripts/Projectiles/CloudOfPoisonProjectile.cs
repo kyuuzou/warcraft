@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,47 +10,47 @@ public class CloudOfPoisonProjectile : Projectile {
 
     private Vector2 offset;
 
-    public override void Activate () {
-        base.Activate ();
+    public override void Activate() {
+        base.Activate();
 
-        this.StartCoroutine (this.Wander ());
-        this.StartCoroutine (this.Poison ());
+        this.StartCoroutine(this.Wander());
+        this.StartCoroutine(this.Poison());
     }
 
-    public override void Initialize (MapTile tile) {
-        this.InitializeExternals ();
+    public override void Initialize(MapTile tile) {
+        this.InitializeExternals();
 
         this.Tile = tile;
-        this.Transform.SetZ ((int) DepthLayer.Projectiles);
+        this.Transform.SetZ((int)DepthLayer.Projectiles);
     }
 
-    private IEnumerator Poison () {
+    private IEnumerator Poison() {
         do {
-            MapTile center = this.Map.GetNearestTile (this.Tile.RealPosition.Add (offset));
+            MapTile center = this.Map.GetNearestTile(this.Tile.RealPosition.Add(this.offset));
 
-            this.Map.DamageArea (center, 2, this.damage);
+            this.Map.DamageArea(center, 2, this.damage);
 
-            yield return new WaitForSeconds (1.0f);
+            yield return new WaitForSeconds(1.0f);
         } while (true);
     }
 
-    private IEnumerator Wander () {
-        this.Play (AnimationType.Idle);
-        
+    private IEnumerator Wander() {
+        this.Play(AnimationType.Idle);
+
         Vector2 target = Vector2.zero;
         this.offset = Vector2.zero;
-        
+
         do {
-            if (Vector2.Distance (target, offset) == 0.0f) {
-                target.x = Random.Range (50.0f, 100.0f) * (Random.Range (0, 2) == 1 ? 1 : -1);
-                target.y = Random.Range (50.0f, 100.0f) * (Random.Range (0, 2) == 1 ? 1 : -1);
+            if (Vector2.Distance(target, this.offset) == 0.0f) {
+                target.x = Random.Range(50.0f, 100.0f) * (Random.Range(0, 2) == 1 ? 1 : -1);
+                target.y = Random.Range(50.0f, 100.0f) * (Random.Range(0, 2) == 1 ? 1 : -1);
             }
-            
-            offset = Vector2.MoveTowards (offset, target, Time.deltaTime * 10.0f);
-            
-            this.Transform.position = this.Tile.RealPosition.Add (offset);
-            this.Transform.SetZ ((int) DepthLayer.Projectiles);
-            
+
+            this.offset = Vector2.MoveTowards(this.offset, target, Time.deltaTime * 10.0f);
+
+            this.Transform.position = this.Tile.RealPosition.Add(this.offset);
+            this.Transform.SetZ((int)DepthLayer.Projectiles);
+
             yield return null;
         } while (true);
     }

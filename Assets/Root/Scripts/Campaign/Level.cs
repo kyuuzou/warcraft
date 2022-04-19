@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -16,13 +14,13 @@ public class Level : CustomScriptableObject {
     public TextAsset MapLayout {
         get { return this.mapLayout; }
     }
-    
+
     [SerializeField]
     private TextAsset mapObjectives;
     public TextAsset MapObjectives {
         get { return this.mapObjectives; }
     }
-    
+
     [SerializeField]
     private TextAsset mapPresentation;
     public TextAsset MapPresentation {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 [Serializable]
@@ -9,7 +8,7 @@ public class KeyboardInputController {
 
     private InputController inputController;
 
-    static KeyboardInputController () {
+    static KeyboardInputController() {
         KeyboardInputController.GroupKeyCodes = new KeyCode[] {
             KeyCode.Alpha0,
             KeyCode.Alpha1,
@@ -23,26 +22,26 @@ public class KeyboardInputController {
             KeyCode.Alpha9
         };
     }
-    
-    public void Initialize () {
+
+    public void Initialize() {
         this.inputController = ServiceLocator.Instance.InputController;
     }
-    
-    public void Update () {
-        this.UpdateKey (InputType.Left, KeyCode.LeftArrow);
-        this.UpdateKey (InputType.Right, KeyCode.RightArrow);
+
+    public void Update() {
+        this.UpdateKey(InputType.Left, KeyCode.LeftArrow);
+        this.UpdateKey(InputType.Right, KeyCode.RightArrow);
 
         if (Settings.Instance.AlternateControls) {
-            this.UpdateKey (InputType.Down, KeyCode.DownArrow);
-            this.UpdateKey (InputType.Up, KeyCode.UpArrow);
+            this.UpdateKey(InputType.Down, KeyCode.DownArrow);
+            this.UpdateKey(InputType.Up, KeyCode.UpArrow);
         }
     }
 
-    private void UpdateKey (InputType type, KeyCode code) {
-        if (Input.GetKeyDown (code)) {
-            this.inputController.SetInputStatus (InputSource.Keyboard, type, true);
-        } else if (Input.GetKeyUp (code)) {
-            this.inputController.SetInputStatus (InputSource.Keyboard, type, false);
+    private void UpdateKey(InputType type, KeyCode code) {
+        if (Input.GetKeyDown(code)) {
+            this.inputController.SetInputStatus(InputSource.Keyboard, type, true);
+        } else if (Input.GetKeyUp(code)) {
+            this.inputController.SetInputStatus(InputSource.Keyboard, type, false);
         }
     }
 }

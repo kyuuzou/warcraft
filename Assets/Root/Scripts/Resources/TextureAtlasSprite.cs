@@ -24,8 +24,8 @@ public class TextureAtlasSprite {
     [XmlAttribute("pY")]
     public string pY;
 
-    public override string ToString () {
-        return string.Format (
+    public override string ToString() {
+        return string.Format(
             "n: {0}; x: {1}; y: {2}; w: {3}; h: {4}; pX: {5}; pY: {6};",
             this.n,
             this.x,

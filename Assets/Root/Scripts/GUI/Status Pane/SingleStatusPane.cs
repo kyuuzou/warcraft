@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class SingleStatusPane : SceneObject {
 
@@ -8,7 +7,7 @@ public class SingleStatusPane : SceneObject {
 
     [SerializeField]
     private MapTypeTexture portraitTexture;
-    
+
     [SerializeField]
     private Color[] hitPointColors;
 
@@ -22,7 +21,7 @@ public class SingleStatusPane : SceneObject {
 
     [SerializeField]
     private Transform manaPointsRoot;
-    
+
     [SerializeField]
     private SpriteRenderer manaPoints;
 
@@ -31,31 +30,31 @@ public class SingleStatusPane : SceneObject {
         get { return this.owner; }
         set {
             this.owner = value;
-            this.portrait.SetCurrentTileY ((int) owner.Portrait);
+            this.portrait.SetCurrentTileY((int)this.owner.Portrait);
 
-            this.SetPoints (this.hitPointsRoot, this.hitPoints, owner.HitPointPercentage);
+            this.SetPoints(this.hitPointsRoot, this.hitPoints, this.owner.HitPointPercentage);
 
             if (this.manaPointsRoot != null) {
-                this.SetPoints (this.manaPointsRoot, this.manaPoints, owner.ManaPointPercentage);
+                this.SetPoints(this.manaPointsRoot, this.manaPoints, this.owner.ManaPointPercentage);
             }
         }
     }
-    
-    protected override void Awake () {
-        base.Awake ();
+
+    protected override void Awake() {
+        base.Awake();
 
         this.defaultHitPointsScale = this.hitPointsRoot.localScale.x;
     }
 
-    private void SetPoints (Transform root, SpriteRenderer sprite, float percentage) {
-        percentage = Mathf.Max (percentage, 0.0f);
-        
-        root.SetLocalScaleX (percentage * this.defaultHitPointsScale);
-        sprite.color = this.hitPointColors[Mathf.Min (2, (int) (3 * percentage))];
+    private void SetPoints(Transform root, SpriteRenderer sprite, float percentage) {
+        percentage = Mathf.Max(percentage, 0.0f);
+
+        root.SetLocalScaleX(percentage * this.defaultHitPointsScale);
+        sprite.color = this.hitPointColors[Mathf.Min(2, (int)(3 * percentage))];
     }
 
-    protected override void Start () {
+    protected override void Start() {
         MapType mapType = ServiceLocator.Instance.GameController.CurrentLevel.MapType;
-        this.portrait.SetTexture (this.portraitTexture.GetTexture (mapType));
+        this.portrait.SetTexture(this.portraitTexture.GetTexture(mapType));
     }
 }

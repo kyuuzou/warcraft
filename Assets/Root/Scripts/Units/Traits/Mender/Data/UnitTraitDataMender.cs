@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class UnitTraitDataMender : UnitTraitData {
@@ -8,19 +7,19 @@ public class UnitTraitDataMender : UnitTraitData {
     public float MendCooldown {
         get { return this.mendCooldown; }
     }
-    
+
     [SerializeField]
     private int mendRange;
     public int MendRange {
         get { return this.mendRange; }
     }
-    
+
     [SerializeField]
     private int minimumMendAmount;
     public int MinimumMendAmount {
         get { return this.minimumMendAmount; }
     }
-    
+
     [SerializeField]
     private int randomMendAmount;
     public int RandomMendAmount {
@@ -31,11 +30,11 @@ public class UnitTraitDataMender : UnitTraitData {
         get { return UnitTraitType.Mender; }
     }
 
-    public override UnitTrait AddTrait (Unit unit) {
-        UnitTraitMender trait = unit.gameObject.AddComponent<UnitTraitMender> ();
-        trait.Initialize (unit, UnitTraitDataMender.Instantiate (this));
-        
-        unit.SetTrait<IUnitTraitMender> (trait);
+    public override UnitTrait AddTrait(Unit unit) {
+        UnitTraitMender trait = unit.gameObject.AddComponent<UnitTraitMender>();
+        trait.Initialize(unit, UnitTraitDataMender.Instantiate(this));
+
+        unit.SetTrait<IUnitTraitMender>(trait);
 
         return trait;
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +14,8 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
 
     private static Dictionary<GameButtonType, BuildingType> buildingByButtonType;
 
-    static UnitTraitBuilder () {
-        UnitTraitBuilder.buildingByButtonType = new Dictionary<GameButtonType, BuildingType> () {
+    static UnitTraitBuilder() {
+        UnitTraitBuilder.buildingByButtonType = new Dictionary<GameButtonType, BuildingType>() {
             { GameButtonType.HumanTownHall, BuildingType.HumanTownHall },
             { GameButtonType.OrcTownHall,   BuildingType.OrcTownHall }
         };
@@ -26,20 +25,20 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         get { return UnitTraitType.Builder; }
     }
 
-    public void ApproachingTarget () {
+    public void ApproachingTarget() {
         this.Unit.Collider.enabled = false;
-        this.Unit.Selection.SetVisible (false);
-        
+        this.Unit.Selection.SetVisible(false);
+
         if (this.Unit.Selected) {
-            this.Unit.SetSelected (false);
-            this.gameController.ClearSelection ();
+            this.Unit.SetSelected(false);
+            this.gameController.ClearSelection();
             //this.statusWindow.SetVisible (false);
-            this.contextMenu.SetVisible (false);
+            this.contextMenu.SetVisible(false);
         }
     }
 
-    public void Build (BuildingType type) {
-        this.Activate ();
+    public void Build(BuildingType type) {
+        this.Activate();
 
         int gold = this.gameController.GetGold();
         int lumber = this.gameController.GetLumber();
@@ -49,40 +48,40 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
             return;
         }
 
-        if (data.Unique && this.Unit.Faction.GetBuildings (type).Count > 0) {
-            Debug.LogWarning ("Tried to build more than one unique building: " + type);
+        if (data.Unique && this.Unit.Faction.GetBuildings(type).Count > 0) {
+            Debug.LogWarning("Tried to build more than one unique building: " + type);
             return;
         }
 
-        this.building = this.spawnFactory.SpawnBuilding (type, this.Unit.Faction);
+        this.building = this.spawnFactory.SpawnBuilding(type, this.Unit.Faction);
         this.building.Sprite.Renderer.enabled = false;
-        this.building.AddDeathListener (this);
-        
+        this.building.AddDeathListener(this);
+
         this.gameController.DecreaseGold(data.GoldCost);
         this.gameController.DecreaseLumber(data.LumberCost);
-        this.contextMenu.SetNode (this.contextMenu.CancelNode);
+        this.contextMenu.SetNode(this.contextMenu.CancelNode);
 
         bool build = true;
 
         if (data.Rooted) {
-            Vector2Int position = this.Unit.Faction.GetRootedPosition (type);
+            Vector2Int position = this.Unit.Faction.GetRootedPosition(type);
 
             build = false;
-            this.building.SetUpConstructionSite (this.Unit, this.map.GetTile (position));
+            this.building.SetUpConstructionSite(this.Unit, this.map.GetTile(position));
         }
 
         if (build) {
             InteractionHandler interactionHandler = ServiceLocator.Instance.InteractionHandler;
-            
-            interactionHandler.SetMode (
+
+            interactionHandler.SetMode(
                 InteractionModeType.Building,
-                new InteractionModeBuildingArgs (this.building, this.Unit)
+                new InteractionModeBuildingArgs(this.building, this.Unit)
             );
         }
     }
 
-    public override void Deactivate () {
-        base.Deactivate ();
+    public override void Deactivate() {
+        base.Deactivate();
 
         if (GameFlags.building && this.building != null) {
             BuildingData buildingData = this.building.Data;
@@ -93,21 +92,21 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         }
     }
 
-    public override void FilterButtons (ref List<GameButtonType> buttons) {
-        for (int i = 0; i < buttons.Count; i ++) {
-            if (UnitTraitBuilder.buildingByButtonType.ContainsKey (buttons[i])) {
+    public override void FilterButtons(ref List<GameButtonType> buttons) {
+        for (int i = 0; i < buttons.Count; i++) {
+            if (UnitTraitBuilder.buildingByButtonType.ContainsKey(buttons[i])) {
                 BuildingType type = UnitTraitBuilder.buildingByButtonType[buttons[i]];
 
-                if (this.Unit.Faction.GetBuildings (type).Count > 0) {
+                if (this.Unit.Faction.GetBuildings(type).Count > 0) {
                     buttons[i] = GameButtonType.None;
                 }
             }
         }
     }
 
-    public void Initialize (Unit unit, UnitTraitDataBuilder data) {
-        base.Initialize (unit);
-        
+    public void Initialize(Unit unit, UnitTraitDataBuilder data) {
+        base.Initialize(unit);
+
         this.Data = data;
 
         ServiceLocator serviceLocator = ServiceLocator.Instance;
@@ -117,67 +116,67 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         this.map = serviceLocator.Map;
         this.spawnFactory = serviceLocator.SpawnFactory;
     }
-    
-    public bool IsTileTraversable (MapTile tile) {
-        if (tile.GetInhabitant<Building> () == this.building) {
+
+    public bool IsTileTraversable(MapTile tile) {
+        if (tile.GetInhabitant<Building>() == this.building) {
             return true;
         }
 
-        return tile.IsTraversable (this.Unit.GetTrait<IUnitTraitMoving> ().MovementType, this.Unit);
+        return tile.IsTraversable(this.Unit.GetTrait<IUnitTraitMoving>().MovementType, this.Unit);
     }
 
-    public void MoveToConstructionSite (Building building) {
-        this.Activate ();
+    public void MoveToConstructionSite(Building building) {
+        this.Activate();
 
         this.building = building;
 
-        this.Unit.Move (this.building, this, true, false);
+        this.Unit.Move(this.building, this, true, false);
     }
 
-    public void OnDeathNotification (SpawnableSprite sprite) {
+    public void OnDeathNotification(SpawnableSprite sprite) {
         if (sprite == this.building) {
-            this.Deactivate ();
-            this.Unit.Stop ();
+            this.Deactivate();
+            this.Unit.Stop();
         }
     }
 
-    public void OnOrderAccepted () {
-        
+    public void OnOrderAccepted() {
+
     }
 
-    public void OnWorkComplete () {
-        this.audioManager.Play (this.Data.WorkCompleteSound);
+    public void OnWorkComplete() {
+        this.audioManager.Play(this.Data.WorkCompleteSound);
     }
-    
-    public void ReachedTarget () {
+
+    public void ReachedTarget() {
         if (this.Active) {
             this.Unit.Renderer.enabled = false;
-            this.building.Build (this.Unit);
+            this.building.Build(this.Unit);
         } else {
             this.Unit.Collider.enabled = true;
         }
 
-        this.Unit.Play (AnimationType.Idle);
+        this.Unit.Play(AnimationType.Idle);
     }
 
-    public void ShowAdvancedStructures () {
-        this.contextMenu.SetNode (this.Unit.Data.RootMenuNode.GetLinkedNode (GameButtonType.BuildAdvancedStructure));
-    }
-    
-    public void ShowBasicStructures () {
-        this.contextMenu.SetNode (this.Unit.Data.RootMenuNode.GetLinkedNode (GameButtonType.BuildBasicStructure));
+    public void ShowAdvancedStructures() {
+        this.contextMenu.SetNode(this.Unit.Data.RootMenuNode.GetLinkedNode(GameButtonType.BuildAdvancedStructure));
     }
 
-    public void TileChanged () {
+    public void ShowBasicStructures() {
+        this.contextMenu.SetNode(this.Unit.Data.RootMenuNode.GetLinkedNode(GameButtonType.BuildBasicStructure));
+    }
+
+    public void TileChanged() {
         if (this.Unit.Tile == this.building.Tile) {
             return;
         }
 
-        Building building = this.Unit.Tile.GetInhabitant<Building> ();
+        Building building = this.Unit.Tile.GetInhabitant<Building>();
 
         if (building != null) {
-            this.ApproachingTarget ();
-            this.Unit.Stop ();
+            this.ApproachingTarget();
+            this.Unit.Stop();
         }
     }
 }

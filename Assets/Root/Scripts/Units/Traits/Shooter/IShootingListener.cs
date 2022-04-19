@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿public interface IShootingListener {
 
-public interface IShootingListener {
-
-    void OnProjectileConnected ();
+    void OnProjectileConnected();
 }

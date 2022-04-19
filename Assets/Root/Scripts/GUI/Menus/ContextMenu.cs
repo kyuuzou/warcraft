@@ -1,11 +1,11 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ContextMenu : SceneObject {
-    
+
     [SerializeField]
     private GameObject buttonRoot;
-    
+
     [SerializeField]
     private TextMesh caption;
 
@@ -27,31 +27,31 @@ public class ContextMenu : SceneObject {
         GameButtonType.None,
         GameButtonType.Cancel
     };
-    
-    protected override void Awake () {
-        base.Awake ();
+
+    protected override void Awake() {
+        base.Awake();
 
         this.gameController = ServiceLocator.Instance.GameController;
 
-        this.InitializeExternals ();
+        this.InitializeExternals();
     }
 
-    public override void InitializeExternals () {
+    public override void InitializeExternals() {
         if (this.InitializedExternals) {
             return;
         }
 
-        base.InitializeExternals ();
+        base.InitializeExternals();
 
-        this.buttons = this.buttonRoot.GetComponentsInChildren<GameButton> (true, true);
+        this.buttons = this.buttonRoot.GetComponentsInChildren<GameButton>(true, true);
 
         foreach (GameButton button in this.buttons) {
-            button.InitializeExternals ();
+            button.InitializeExternals();
         }
     }
 
-    public void ManualUpdate () {
-        if (! this.gameObject.activeInHierarchy) {
+    public void ManualUpdate() {
+        if (!this.gameObject.activeInHierarchy) {
             return;
         }
 
@@ -59,32 +59,32 @@ public class ContextMenu : SceneObject {
 
         switch (units.Count) {
             case 0:
-                this.SetVisible (false);
+                this.SetVisible(false);
                 break;
 
             case 1:
-                this.SetNode (units[0].Data.RootMenuNode);
+                this.SetNode(units[0].Data.RootMenuNode);
                 break;
 
             default:
-                GameButtonType[] buttons = this.MergeButtons (units);
-                this.SetButtons (buttons);
+                GameButtonType[] buttons = this.MergeButtons(units);
+                this.SetButtons(buttons);
 
                 break;
 
         }
 
-        this.SetCaption (string.Empty);
+        this.SetCaption(string.Empty);
     }
 
-    private GameButtonType[] MergeButtons (IList<SpawnableSprite> units) {
+    private GameButtonType[] MergeButtons(IList<SpawnableSprite> units) {
         GameButtonType[] buttons = new GameButtonType[6];
-        
+
         foreach (SpawnableSprite sprite in units) {
             int i = 0;
             ContextMenuNode node = sprite.Data.RootMenuNode;
-            
-            foreach (GameButtonType button in node.GetButtons ()) {
+
+            foreach (GameButtonType button in node.GetButtons()) {
                 if (buttons[i] == GameButtonType.Invalid || buttons[i] == button) {
 
                 } else if (buttons[i] == GameButtonType.None) {
@@ -93,10 +93,10 @@ public class ContextMenu : SceneObject {
                     buttons[i] = GameButtonType.Invalid;
                 }
 
-                i ++;
+                i++;
             }
-            
-            for (; i < buttons.Length; i ++) {
+
+            for (; i < buttons.Length; i++) {
                 buttons[i] = GameButtonType.Invalid;
             }
         }
@@ -104,59 +104,59 @@ public class ContextMenu : SceneObject {
         return buttons;
     }
 
-    public void RefreshButtons () {
-        this.SetNode (this.lastNode);
+    public void RefreshButtons() {
+        this.SetNode(this.lastNode);
     }
 
-    private void SetButtons (params GameButtonType[] buttons) {
-        this.SetButtons (new List<GameButtonType> (buttons));
+    private void SetButtons(params GameButtonType[] buttons) {
+        this.SetButtons(new List<GameButtonType>(buttons));
     }
 
-    private void SetButtons (List<GameButtonType> buttons) {
-        if (! this.buttonRoot.activeSelf) {
-            this.buttonRoot.SetActive (true);
+    private void SetButtons(List<GameButtonType> buttons) {
+        if (!this.buttonRoot.activeSelf) {
+            this.buttonRoot.SetActive(true);
         }
-        
+
         IList<SpawnableSprite> sprites = this.gameController.CurrentGroup.Sprites;
 
         foreach (SpawnableSprite sprite in sprites) {
-            sprite.FilterButtons (ref buttons);
+            sprite.FilterButtons(ref buttons);
         }
-        
+
         int index = 0;
-        
+
         foreach (GameButtonType button in buttons) {
-            this.buttons[index].SetAction (button);
-            index ++;
+            this.buttons[index].SetAction(button);
+            index++;
         }
-        
+
         for (int i = index; i < this.buttons.Length; i++) {
-            this.buttons[i].SetAction (GameButtonType.None);
+            this.buttons[i].SetAction(GameButtonType.None);
         }
     }
 
-    public void SetCaption (string text) {
+    public void SetCaption(string text) {
         this.caption.text = text;
     }
 
-    public void SetNode (ContextMenuNode node) {
+    public void SetNode(ContextMenuNode node) {
         if (node == null) {
             return;
         }
 
         this.lastNode = node;
 
-        this.SetButtons (node.GetButtons ());
+        this.SetButtons(node.GetButtons());
     }
 
-    public override void SetVisible (bool visible) {
-        this.InitializeExternals ();
+    public override void SetVisible(bool visible) {
+        this.InitializeExternals();
 
-        this.buttonRoot.SetActive (visible);
+        this.buttonRoot.SetActive(visible);
 
-        if (! visible) {
+        if (!visible) {
             foreach (GameButton button in this.buttons) {
-                button.SetVisible (visible);
+                button.SetVisible(visible);
             }
         }
     }

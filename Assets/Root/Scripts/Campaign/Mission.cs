@@ -11,31 +11,31 @@ public class Mission : SceneObject {
     private GameController gameController;
     private List<MissionRequirement> requirements;
 
-    public override void Activate () {
-        base.Activate ();
+    public override void Activate() {
+        base.Activate();
 
-        this.InitializeExternals ();
-        this.InitializeRequirements ();
+        this.InitializeExternals();
+        this.InitializeRequirements();
     }
 
     // The mission is only won if the requirements are still satisfied after 5 seconds
-    private IEnumerator CompleteMission () {
-        yield return new WaitForSeconds (5.0f);
+    private IEnumerator CompleteMission() {
+        yield return new WaitForSeconds(5.0f);
 
-        if (this.EvaluateRequirements ()) {
-            this.gameController.Pause ();
-            this.missionCompleteMenu.SetActive (true);
+        if (this.EvaluateRequirements()) {
+            this.gameController.Pause();
+            this.missionCompleteMenu.SetActive(true);
 
-            Faction faction = this.gameController.GetMainPlayer ().Factions[0];
-            FactionTypeData data = FactionTypeDictionary.Instance.GetValue (faction.Data.Type);
+            Faction faction = this.gameController.GetMainPlayer().Factions[0];
+            FactionTypeData data = FactionTypeDictionary.Instance.GetValue(faction.Data.Type);
 
-            this.audioManager.Play (data.VictorySound);
+            this.audioManager.Play(data.VictorySound);
         }
     }
 
-    private bool EvaluateRequirements () {
+    private bool EvaluateRequirements() {
         foreach (MissionRequirement requirement in this.requirements) {
-            if (! requirement.Satisfied) {
+            if (!requirement.Satisfied) {
                 return false;
             }
         }
@@ -43,34 +43,34 @@ public class Mission : SceneObject {
         return true;
     }
 
-    public override void InitializeExternals () {
+    public override void InitializeExternals() {
         if (this.InitializedExternals) {
             return;
         }
 
-        base.InitializeExternals ();
+        base.InitializeExternals();
 
         ServiceLocator serviceLocator = ServiceLocator.Instance;
         this.audioManager = serviceLocator.AudioManager;
         this.gameController = serviceLocator.GameController;
     }
 
-    private void InitializeRequirements () {
-        this.requirements = new List<MissionRequirement> ();
+    private void InitializeRequirements() {
+        this.requirements = new List<MissionRequirement>();
 
         Level currentLevel = this.gameController.CurrentLevel;
 
         foreach (MissionRequirement requirement in currentLevel.Requirements) {
-            MissionRequirement requirementCopy = requirement.GetInstance<MissionRequirement> ();
-            requirementCopy.Initialize (this);
+            MissionRequirement requirementCopy = requirement.GetInstance<MissionRequirement>();
+            requirementCopy.Initialize(this);
 
-            this.requirements.Add (requirementCopy);
+            this.requirements.Add(requirementCopy);
         }
     }
 
-    public void OnRequirementSatisfied () {
-        if (this.EvaluateRequirements ()) {
-            this.StartCoroutine (this.CompleteMission ());
+    public void OnRequirementSatisfied() {
+        if (this.EvaluateRequirements()) {
+            this.StartCoroutine(this.CompleteMission());
         }
     }
 }

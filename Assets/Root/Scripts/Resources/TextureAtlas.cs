@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 [XmlRoot("TextureAtlas")]
 public class TextureAtlas {
-    
+
     [XmlAttribute("imagePath")]
     public string imagePath;
 
@@ -16,15 +16,15 @@ public class TextureAtlas {
     public int height;
 
     [XmlElement("sprite")]
-    public List<TextureAtlasSprite> Sprites = new List<TextureAtlasSprite> ();
+    public List<TextureAtlasSprite> Sprites = new List<TextureAtlasSprite>();
 
-    public static TextureAtlas ParseFromFile (string text) {
-        XmlSerializer serializer = new XmlSerializer (typeof (TextureAtlas));
-        return serializer.Deserialize (new StringReader (text)) as TextureAtlas;
+    public static TextureAtlas ParseFromFile(string text) {
+        XmlSerializer serializer = new XmlSerializer(typeof(TextureAtlas));
+        return serializer.Deserialize(new StringReader(text)) as TextureAtlas;
     }
 
-    public override string ToString () {
-        return string.Format (
+    public override string ToString() {
+        return string.Format(
             "imagePath: {0}; width: {1}; height: {2};",
             this.imagePath,
             this.width,

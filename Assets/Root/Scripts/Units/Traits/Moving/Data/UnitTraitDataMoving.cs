@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class UnitTraitDataMoving : UnitTraitData {
@@ -24,13 +23,13 @@ public class UnitTraitDataMoving : UnitTraitData {
     public override UnitTraitType Type {
         get { return UnitTraitType.Moving; }
     }
-    
-    public override UnitTrait AddTrait (Unit unit) {
-        UnitTraitMoving trait = unit.gameObject.AddComponent<UnitTraitMoving> ();
-        trait.Initialize (unit, UnitTraitDataMoving.Instantiate (this));
-        
-        unit.SetTrait<IUnitTraitMoving> (trait);
-        
+
+    public override UnitTrait AddTrait(Unit unit) {
+        UnitTraitMoving trait = unit.gameObject.AddComponent<UnitTraitMoving>();
+        trait.Initialize(unit, UnitTraitDataMoving.Instantiate(this));
+
+        unit.SetTrait<IUnitTraitMoving>(trait);
+
         return trait;
     }
 }

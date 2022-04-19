@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FactionData : CustomScriptableObject {
 
@@ -27,11 +26,11 @@ public class FactionData : CustomScriptableObject {
         get { return this.type; }
     }
 
-    [Header ("Diplomacy")]
+    [Header("Diplomacy")]
     [SerializeField]
     private FactionStanding[] standings;
 
-    public bool IsEnemy (FactionIdentifier identifier) {
+    public bool IsEnemy(FactionIdentifier identifier) {
         foreach (FactionStanding standing in this.standings) {
             if (standing.Identifier == identifier) {
                 return standing.Relationship == FactionRelationship.Enemy;

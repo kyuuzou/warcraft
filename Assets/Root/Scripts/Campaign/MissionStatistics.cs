@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class MissionStatistics : MonoBehaviour {
 
@@ -94,7 +93,7 @@ public class MissionStatistics : MonoBehaviour {
         set { this.lumberEnemyHarvested = value; }
     }
 
-    public int CalculateScore () {
+    public int CalculateScore() {
         return this.Score;
     }
 }

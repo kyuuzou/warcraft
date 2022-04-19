@@ -5,5 +5,5 @@ public interface IUnitTrait : ISpawnableTrait {
     UnitTraitType Type { get; }
     Unit Unit { get; }
 
-    void OnOrderAccepted ();
+    void OnOrderAccepted();
 }

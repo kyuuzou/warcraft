@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public interface IMovementDestination {
@@ -10,9 +9,9 @@ public interface IMovementDestination {
 
     Vector2Int TileSize { get; }
 
-    Vector2Int[] GetBoundaries ();
+    Vector2Int[] GetBoundaries();
 
-    bool IsAdjacent (IMovementDestination destination);
-    
-    bool Overlaps (IMovementDestination destination);
+    bool IsAdjacent(IMovementDestination destination);
+
+    bool Overlaps(IMovementDestination destination);
 }

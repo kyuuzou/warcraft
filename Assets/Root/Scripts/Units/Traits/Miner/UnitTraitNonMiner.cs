@@ -1,6 +1,3 @@
-using System.Collections;
-using UnityEngine;
-
 public class UnitTraitNonMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
 
     public UnitTraitDataNonMiner Data { get; set; }
@@ -13,33 +10,33 @@ public class UnitTraitNonMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
         get { return UnitTraitType.Miner; }
     }
 
-    public void ApproachingTarget () {
+    public void ApproachingTarget() {
 
     }
 
-    public void Initialize (Unit unit, UnitTraitDataNonMiner data) {
-        base.Initialize (unit);
-        
+    public void Initialize(Unit unit, UnitTraitDataNonMiner data) {
+        base.Initialize(unit);
+
         this.Data = data;
     }
 
-    public bool IsTileTraversable (MapTile tile) {
+    public bool IsTileTraversable(MapTile tile) {
         return false;
     }
 
-    public void Mine (Building building) {
-        
+    public void Mine(Building building) {
+
     }
 
-    public void OnOrderAccepted () {
-        
-    }
-    
-    public void ReachedTarget () {
-        
+    public void OnOrderAccepted() {
+
     }
 
-    public void TileChanged () {
+    public void ReachedTarget() {
+
+    }
+
+    public void TileChanged() {
 
     }
 }

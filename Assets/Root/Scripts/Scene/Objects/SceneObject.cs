@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SceneObject : MonoBehaviour {
 
@@ -14,7 +14,7 @@ public class SceneObject : MonoBehaviour {
     public Rigidbody2D Rigidbody { get; private set; }
     public SpriteRenderer SpriteRenderer { get; protected set; }
     public Transform Transform { get; private set; }
-   
+
     private Mesh mesh;
     public Mesh Mesh {
         get { return this.mesh; }
@@ -37,161 +37,161 @@ public class SceneObject : MonoBehaviour {
     public bool InitializedExternals { get; private set; }
     protected bool InitializedInternals { get; private set; }
 
-    protected virtual void Awake () {
-        this.InitializeInternals ();
+    protected virtual void Awake() {
+        this.InitializeInternals();
     }
 
-    public virtual void Activate () {
+    public virtual void Activate() {
         this.Active = true;
 
-        this.InitializeInternals ();
+        this.InitializeInternals();
 
-        this.GameObject.SetActive (true);
+        this.GameObject.SetActive(true);
         this.LockedAnimations = false;
     }
 
-    public virtual void Deactivate () {
+    public virtual void Deactivate() {
         this.Active = false;
 
-        this.GameObject.SetActive (false);
+        this.GameObject.SetActive(false);
     }
 
-    public T GetCollider<T> () where T : Collider2D {
-        return (T) this.Collider;
+    public T GetCollider<T>() where T : Collider2D {
+        return (T)this.Collider;
     }
 
-    public virtual void InitializeExternals () {
-        this.InitializeInternals ();
+    public virtual void InitializeExternals() {
+        this.InitializeInternals();
 
         this.InitializedExternals = true;
     }
 
-    protected virtual void InitializeInternals () {
+    protected virtual void InitializeInternals() {
         if (this.InitializedInternals) {
             return;
         }
 
         this.InitializedInternals = true;
 
-        this.Animator = this.GetComponent<Animator> ();
+        this.Animator = this.GetComponent<Animator>();
         this.Camera = this.GetComponent<Camera>();
         this.Collider = this.GetComponent<Collider2D>();
         this.GameObject = this.gameObject;
-        this.MeshAnimator = this.GetComponent<MeshAnimator> ();
-        this.MeshFilter = this.GetComponent<MeshFilter> ();
-        this.MeshRenderer = this.GetComponent<MeshRenderer> ();
+        this.MeshAnimator = this.GetComponent<MeshAnimator>();
+        this.MeshFilter = this.GetComponent<MeshFilter>();
+        this.MeshRenderer = this.GetComponent<MeshRenderer>();
         this.Renderer = this.GetComponent<Renderer>();
         this.Rigidbody = this.GetComponent<Rigidbody2D>();
-        this.SpriteRenderer = this.GetComponent<SpriteRenderer> ();
+        this.SpriteRenderer = this.GetComponent<SpriteRenderer>();
         this.Transform = this.transform;
 
-        this.DefaultTransformData = new TransformData (this.Transform);
+        this.DefaultTransformData = new TransformData(this.Transform);
 
         this.Mesh = this.MeshFilter == null ? null : this.MeshFilter.sharedMesh;
-        this.DefaultMeshData = this.Mesh == null ? null : new MeshData (this.Mesh);
+        this.DefaultMeshData = this.Mesh == null ? null : new MeshData(this.Mesh);
     }
 
-    public virtual void ManualReset () {
-
-    }
-
-    public virtual void OnInputChanged (InputSource source, InputType type, bool status) {
+    public virtual void ManualReset() {
 
     }
 
-    public virtual bool OnManualMouseDown () {
+    public virtual void OnInputChanged(InputSource source, InputType type, bool status) {
+
+    }
+
+    public virtual bool OnManualMouseDown() {
         return true;
     }
 
-    public virtual void OnManualMouseEnter () {
+    public virtual void OnManualMouseEnter() {
         this.MouseIsOver = true;
     }
-    
-    public virtual void OnManualMouseExit () {
+
+    public virtual void OnManualMouseExit() {
         this.MouseIsOver = false;
     }
-    
-    public virtual void OnManualMouseUp () {
-        
-    }
-    
-    public virtual void Pause () {
-        
+
+    public virtual void OnManualMouseUp() {
+
     }
 
-    public virtual void Play (AnimationType animationType, bool inverted = false) {
+    public virtual void Pause() {
+
+    }
+
+    public virtual void Play(AnimationType animationType, bool inverted = false) {
         if (this.LockedAnimations) {
             return;
         }
 
         if (this.Animator != null) {
-            this.Animator.Play (animationType.ToString ());
+            this.Animator.Play(animationType.ToString());
         } else if (this.MeshAnimator != null) {
-            this.MeshAnimator.Play (animationType, inverted);
+            this.MeshAnimator.Play(animationType, inverted);
         } else {
-            Debug.LogWarning (this + " has no animator, but is trying to play animation: " + animationType);
+            Debug.LogWarning(this + " has no animator, but is trying to play animation: " + animationType);
         }
     }
 
-    protected void ResetLocalTransform () {
+    protected void ResetLocalTransform() {
         this.Transform.localPosition = this.DefaultTransformData.LocalPosition;
         this.Transform.localEulerAngles = this.DefaultTransformData.LocalEulerAngles;
         this.Transform.localScale = this.DefaultTransformData.LocalScale;
     }
 
-    public void ResetMesh () {
+    public void ResetMesh() {
         this.Mesh.vertices = this.DefaultMeshData.Vertices;
         this.Mesh.uv = this.DefaultMeshData.TextureCoordinates;
     }
 
-    public void ResetTransform () {
+    public void ResetTransform() {
         this.Transform.position = this.DefaultTransformData.Position;
         this.Transform.eulerAngles = this.DefaultTransformData.EulerAngles;
         this.Transform.localScale = this.DefaultTransformData.LocalScale;
     }
 
-    public virtual void Resume () {
-        
+    public virtual void Resume() {
+
     }
 
-    public void SeparateMesh () {
-        this.Mesh = (Mesh) GameObject.Instantiate (this.MeshFilter.sharedMesh);
+    public void SeparateMesh() {
+        this.Mesh = (Mesh)GameObject.Instantiate(this.MeshFilter.sharedMesh);
         this.MeshFilter.mesh = this.Mesh;
     }
 
-    public virtual void SetOpacity (float opacity) {
+    public virtual void SetOpacity(float opacity) {
         Color32[] colors = this.Mesh.colors32;
-        byte opacityByte = (byte) (Mathf.Clamp (opacity, 0.0f, 1.0f) * 255.0f);
+        byte opacityByte = (byte)(Mathf.Clamp(opacity, 0.0f, 1.0f) * 255.0f);
 
         if (colors.Length == 0) {
-            Debug.LogWarning ("Color array is empty, on : " + this);
+            Debug.LogWarning("Color array is empty, on : " + this);
             return;
         }
-        
-        for (int i = 0 ; i < this.DefaultMeshData.VertexCount; i ++) {
+
+        for (int i = 0; i < this.DefaultMeshData.VertexCount; i++) {
             colors[i].a = opacityByte;
         }
-        
+
         this.Mesh.colors32 = colors;
     }
 
-    public virtual void SetVisible (bool visible) {
+    public virtual void SetVisible(bool visible) {
         this.Renderer.enabled = visible;
     }
 
-    protected virtual void Start () {
-        this.InitializeExternals ();
+    protected virtual void Start() {
+        this.InitializeExternals();
     }
 
-    public virtual IEnumerator YieldPlay (AnimationType animationType, bool inverted = false) {
+    public virtual IEnumerator YieldPlay(AnimationType animationType, bool inverted = false) {
         if (this.LockedAnimations) {
             yield break;
         }
-        
+
         if (this.MeshAnimator != null) {
-            yield return this.StartCoroutine (this.MeshAnimator.YieldPlay (animationType, inverted));
+            yield return this.StartCoroutine(this.MeshAnimator.YieldPlay(animationType, inverted));
         } else {
-            Debug.LogWarning (this + " has no animator, but is trying to play animation: " + animationType);
+            Debug.LogWarning(this + " has no animator, but is trying to play animation: " + animationType);
         }
     }
 }

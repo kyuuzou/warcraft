@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿public interface IDeathListener {
 
-public interface IDeathListener {
-
-    void OnDeathNotification (SpawnableSprite sprite);
+    void OnDeathNotification(SpawnableSprite sprite);
 }

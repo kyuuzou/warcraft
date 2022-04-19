@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class UnitTraitNonMender : UnitTrait, IUnitTraitMender {
@@ -12,40 +11,40 @@ public class UnitTraitNonMender : UnitTrait, IUnitTraitMender {
     public override UnitTraitType Type {
         get { return UnitTraitType.Mender; }
     }
-    
-    public void Initialize (Unit unit, UnitTraitDataNonMender data) {
-        base.Initialize (unit);
-        
+
+    public void Initialize(Unit unit, UnitTraitDataNonMender data) {
+        base.Initialize(unit);
+
         this.Data = data;
     }
 
-    public void Mend (Building building) {
-        this.Warning ();
+    public void Mend(Building building) {
+        this.Warning();
     }
-    
-    public void Mend (Decoration decoration) {
-        this.Warning ();
+
+    public void Mend(Decoration decoration) {
+        this.Warning();
     }
-    
-    public void MendAfterCooldown () {
-        
-    }
-    
-    public void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType) {
+
+    public void MendAfterCooldown() {
 
     }
 
-    public void OnMend () {
+    public void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType) {
 
     }
 
-    public void OnOrderAccepted () {
-        
+    public void OnMend() {
+
     }
-    
-    private void Warning () {
-        Debug.LogWarning (
-            string.Format (
+
+    public void OnOrderAccepted() {
+
+    }
+
+    private void Warning() {
+        Debug.LogWarning(
+            string.Format(
                 "Trying to mend on '{0}', but it does not have the Mender trait.",
                 this.Unit.Type
             )

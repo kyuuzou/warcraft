@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitTraitDataSpellcaster : UnitTraitData {
@@ -15,11 +12,11 @@ public class UnitTraitDataSpellcaster : UnitTraitData {
         get { return UnitTraitType.Spellcaster; }
     }
 
-    public override UnitTrait AddTrait (Unit unit) {
-        UnitTraitSpellcaster trait = unit.gameObject.AddComponent<UnitTraitSpellcaster> ();
-        trait.Initialize (unit, UnitTraitDataSpellcaster.Instantiate (this));
-        
-        unit.SetTrait<IUnitTraitSpellcaster> (trait);
+    public override UnitTrait AddTrait(Unit unit) {
+        UnitTraitSpellcaster trait = unit.gameObject.AddComponent<UnitTraitSpellcaster>();
+        trait.Initialize(unit, UnitTraitDataSpellcaster.Instantiate(this));
+
+        unit.SetTrait<IUnitTraitSpellcaster>(trait);
 
         return trait;
     }

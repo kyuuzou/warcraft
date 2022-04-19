@@ -20,10 +20,10 @@ public class AudioSample : ScriptableObject, IInspectorDictionaryEntry<AudioIden
     }
 
     [SerializeField]
-	private AudioClip[] clips;
-	public AudioClip[] Clips {
-		get { return this.clips; }
-	}
+    private AudioClip[] clips;
+    public AudioClip[] Clips {
+        get { return this.clips; }
+    }
 
     [SerializeField]
     private bool loop = false;
@@ -53,24 +53,24 @@ public class AudioSample : ScriptableObject, IInspectorDictionaryEntry<AudioIden
         get { return this.Clips[this.CurrentClipIndex]; }
     }
 
-    public void Initialize () {
+    public void Initialize() {
         this.clipCount = this.clips.Length;
-        this.CurrentClipIndex = Random.Range (0, this.clipCount);
+        this.CurrentClipIndex = Random.Range(0, this.clipCount);
 
         this.PlayedTime = 0.0f;
     }
 
-    public void RandomizeClip () {
+    public void RandomizeClip() {
         if (this.clipCount == 1) {
             return;
         }
 
-        int index = Random.Range (0, this.clipCount - 1);
-        
+        int index = Random.Range(0, this.clipCount - 1);
+
         if (index >= this.CurrentClipIndex) {
-            index ++;
+            index++;
         }
-        
+
         this.CurrentClipIndex = index;
     }
 }

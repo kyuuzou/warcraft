@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ContextMenuNode : CustomScriptableObject {
@@ -9,16 +8,16 @@ public class ContextMenuNode : CustomScriptableObject {
 
     private Dictionary<GameButtonType, ContextMenuLink> linkByNode;
 
-    public override void Initialize () {
-        base.Initialize ();
+    public override void Initialize() {
+        base.Initialize();
 
-        this.linkByNode = new Dictionary<GameButtonType, ContextMenuLink> ();
+        this.linkByNode = new Dictionary<GameButtonType, ContextMenuLink>();
 
         foreach (ContextMenuLink link in this.links) {
             this.linkByNode[link.Button] = link;
 
             if (link.Node != null) {
-                link.Node.Initialize ();
+                link.Node.Initialize();
             }
         }
     }
@@ -28,11 +27,11 @@ public class ContextMenuNode : CustomScriptableObject {
     /// This method can't just return "this.linkByNode.Keys", because there's repeated buttons with the same key: 
     /// GameButtonType.None
     /// </summary>
-    public List<GameButtonType> GetButtons () {
-        List<GameButtonType> buttons = new List<GameButtonType> ();
+    public List<GameButtonType> GetButtons() {
+        List<GameButtonType> buttons = new List<GameButtonType>();
 
         foreach (ContextMenuLink link in this.links) {
-            buttons.Add (link.Button);
+            buttons.Add(link.Button);
         }
 
         return buttons;
@@ -41,7 +40,7 @@ public class ContextMenuNode : CustomScriptableObject {
     /// <summary>
     /// Returns the node this button links to.
     /// </summary>
-    public ContextMenuNode GetLinkedNode (GameButtonType button) {
+    public ContextMenuNode GetLinkedNode(GameButtonType button) {
         foreach (ContextMenuLink link in this.links) {
             if (link.Button == button) {
                 return link.Node;

@@ -1,32 +1,32 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class MapTile : ITarget {
 
-    public static readonly Color UndiscoveredColor = new Color (0.2f, 0.2f, 0.2f, 1.0f);
+    public static readonly Color UndiscoveredColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
     public TileType Type { get; private set; }
     public TileData Data { get; private set; }
 
-    public Vector2Int        AtlasCoordinates { get; private set; }
-    public string            Caption          { get; set; }
-    public bool              Dirty            { get; set; }
-    public Vector2Int        MapPosition      { get; private set; }
-    public MapTile[]         Neighbours       { get; set; }
-    public float             Offset           { get; set; }
-    public Vector3           RealPosition     { get; set; }
-    public TileSlot          Slot             { get; set; }
-    public float             TargetDepth      { get; set; }
-    public bool              Visible          { get; set; }
+    public Vector2Int AtlasCoordinates { get; private set; }
+    public string Caption { get; set; }
+    public bool Dirty { get; set; }
+    public Vector2Int MapPosition { get; private set; }
+    public MapTile[] Neighbours { get; set; }
+    public float Offset { get; set; }
+    public Vector3 RealPosition { get; set; }
+    public TileSlot Slot { get; set; }
+    public float TargetDepth { get; set; }
+    public bool Visible { get; set; }
 
     private int atlasIndex;
     public int AtlasIndex {
         get { return this.atlasIndex; }
         set {
             this.atlasIndex = value;
-            this.AtlasCoordinates = new Vector2Int (value % 16, value / 16);
+            this.AtlasCoordinates = new Vector2Int(value % 16, value / 16);
         }
     }
 
@@ -50,7 +50,7 @@ public class MapTile : ITarget {
         get { return this.discovered; }
         set {
             this.discovered = value;
-            this.RefreshTargetColor ();
+            this.RefreshTargetColor();
 
             this.Dirty = true;
         }
@@ -86,7 +86,7 @@ public class MapTile : ITarget {
     /// Tiles that are in range of the inhabitant get coloured differently.
     /// </summary>
     private Dictionary<IInhabitant, Color> colorByInhabitant;
-    
+
     private Dictionary<Type, List<IInhabitant>> inhabitants;
     private Dictionary<int, MapTileLayer> layers;
 
@@ -97,90 +97,90 @@ public class MapTile : ITarget {
     private Color targetColor;
     private IEnumerator refreshColorEnumerator;
 
-    public MapTile (TileType type, int variation, int column, int row) {
+    public MapTile(TileType type, int variation, int column, int row) {
         ServiceLocator serviceLocator = ServiceLocator.Instance;
         this.gameController = serviceLocator.GameController;
         this.grid = serviceLocator.Grid;
         this.map = serviceLocator.Map;
 
-        this.InitializeInhabitants ();
-        this.InitializeLayers ();
+        this.InitializeInhabitants();
+        this.InitializeLayers();
 
-        this.MapPosition = new Vector2Int (column, row);
-        this.mapData = this.gameController.CurrentLevel.MapType.GetData ();
+        this.MapPosition = new Vector2Int(column, row);
+        this.mapData = this.gameController.CurrentLevel.MapType.GetData();
 
-        this.SetType (type, variation);
+        this.SetType(type, variation);
 
         this.Color = MapTile.UndiscoveredColor;
-        this.Discovered = ! Settings.Instance.FogOfWar;
-        
-        this.RefreshTargetColor ();
+        this.Discovered = !Settings.Instance.FogOfWar;
+
+        this.RefreshTargetColor();
 
         this.Dirty = true;
     }
 
     /// <param name="typeFilter">If set, the tile will only adapt if it is of the specified type.</param>
-    public void AdaptToNeighbours (TileType typeFilter = TileType.None) {
+    public void AdaptToNeighbours(TileType typeFilter = TileType.None) {
         if (typeFilter != TileType.None && typeFilter != this.Type) {
             return;
         }
 
-        string pattern = this.GetNeighbourPattern (true, false, typeFilter);
-        TileData data = this.mapData.GetTileDataForPattern (this.Type, pattern);
+        string pattern = this.GetNeighbourPattern(true, false, typeFilter);
+        TileData data = this.mapData.GetTileDataForPattern(this.Type, pattern);
 
         if (data == null) {
-            pattern = this.GetNeighbourPattern (false, false, typeFilter);
-            data = this.mapData.GetTileDataForPattern (this.Type, pattern);
+            pattern = this.GetNeighbourPattern(false, false, typeFilter);
+            data = this.mapData.GetTileDataForPattern(this.Type, pattern);
         }
 
         if (data == null) {
-            Debug.LogError (string.Format ("No {0} data found for pattern: {1}", this.Type, pattern));
+            Debug.LogError(string.Format("No {0} data found for pattern: {1}", this.Type, pattern));
             return;
         }
-        
-        this.SetType (this.Type, data.Variation);
+
+        this.SetType(this.Type, data.Variation);
     }
 
-    public void AddColor (IInhabitant inhabitant, Color color) {
+    public void AddColor(IInhabitant inhabitant, Color color) {
         this.colorByInhabitant[inhabitant] = color;
     }
 
-    public void AddInhabitant (IInhabitant inhabitant) {
-        Type type = inhabitant.GetType ();
+    public void AddInhabitant(IInhabitant inhabitant) {
+        Type type = inhabitant.GetType();
 
-        if (! this.inhabitants.ContainsKey (type)) {
-            this.inhabitants[type] = new List<IInhabitant> ();
+        if (!this.inhabitants.ContainsKey(type)) {
+            this.inhabitants[type] = new List<IInhabitant>();
         }
 
-        this.inhabitants[type].Add (inhabitant);
+        this.inhabitants[type].Add(inhabitant);
     }
 
-    public void AddDeathListener (IDeathListener listener) {
+    public void AddDeathListener(IDeathListener listener) {
 
     }
-    
-    public void AddPhasedOutListener (IPhasedOutListener listener) {
-        
-    }
 
-    public void Damage (int damage) {
+    public void AddPhasedOutListener(IPhasedOutListener listener) {
 
     }
-    
-    public void Discover () {
-		Vector2Int position = this.MapPosition;
+
+    public void Damage(int damage) {
+
+    }
+
+    public void Discover() {
+        Vector2Int position = this.MapPosition;
         int column = position.x;
         int row = position.y;
 
         MapTile tile;
 
-		this.Discovered = true;
+        this.Discovered = true;
 
         int range = 6;
 
-        for (int x = -1 - range; x < 2 + range; x ++) {
-            for (int y = -2 - range; y < 3 + range; y ++) {
-                tile = this.map.GetTile (column + x, row + y);
+        for (int x = -1 - range; x < 2 + range; x++) {
+            for (int y = -2 - range; y < 3 + range; y++) {
+                tile = this.map.GetTile(column + x, row + y);
 
                 if (tile != null) {
                     tile.Discovered = true;
@@ -188,58 +188,58 @@ public class MapTile : ITarget {
             }
         }
 
-		for (int y = -1 - range; y < 2 + range; y ++) {
-			tile = this.map.GetTile (column - 2, row + y);
+        for (int y = -1 - range; y < 2 + range; y++) {
+            tile = this.map.GetTile(column - 2, row + y);
 
             if (tile != null) {
                 tile.Discovered = true;
             }
 
-			tile = this.map.GetTile (column + 2, row + y);
+            tile = this.map.GetTile(column + 2, row + y);
 
             if (tile != null) {
                 tile.Discovered = true;
             }
-		}
-	}
+        }
+    }
 
-    public Vector2Int[] GetBoundaries () {
+    public Vector2Int[] GetBoundaries() {
         return new Vector2Int[] { this.MapPosition };
     }
 
-    public MapTile GetClosestTile () {
+    public MapTile GetClosestTile() {
         return this;
     }
 
-    public List<Color> GetColors () {
-        return new List<Color> (this.colorByInhabitant.Values);
+    public List<Color> GetColors() {
+        return new List<Color>(this.colorByInhabitant.Values);
     }
 
-    public T GetInhabitant<T> () where T : IInhabitant {
-        Type type = typeof (T);
+    public T GetInhabitant<T>() where T : IInhabitant {
+        Type type = typeof(T);
 
-        if (this.inhabitants.ContainsKey (type)) {
+        if (this.inhabitants.ContainsKey(type)) {
             if (this.inhabitants[type].Count > 0) {
-                return (T) this.inhabitants[type][0];
+                return (T)this.inhabitants[type][0];
             }
         }
 
-        return default (T);
+        return default(T);
     }
 
-    public MapTileLayer GetLayer (int layerIndex) {
+    public MapTileLayer GetLayer(int layerIndex) {
         return this.layers[layerIndex];
     }
 
-    public MapTile GetNeighbour (Direction direction) {
-        return this.Neighbours[(int) direction - 1];
+    public MapTile GetNeighbour(Direction direction) {
+        return this.Neighbours[(int)direction - 1];
     }
 
-    public string GetNeighbourPattern (bool includeDiagonals, bool valueIfNull, params TileType[] types) {
-        bool[] matches = this.GetNeighbourTypes (includeDiagonals, valueIfNull, this.Type);
-        
+    public string GetNeighbourPattern(bool includeDiagonals, bool valueIfNull, params TileType[] types) {
+        bool[] matches = this.GetNeighbourTypes(includeDiagonals, valueIfNull, this.Type);
+
         string pattern = string.Empty;
-        
+
         foreach (bool match in matches) {
             pattern += match ? 1 : 0;
         }
@@ -247,7 +247,7 @@ public class MapTile : ITarget {
         return pattern;
     }
 
-    public MapTile[] GetNeighbours (bool includeDiagonals = true) {
+    public MapTile[] GetNeighbours(bool includeDiagonals = true) {
         if (includeDiagonals) {
             return this.Neighbours;
         }
@@ -257,10 +257,10 @@ public class MapTile : ITarget {
         };
     }
 
-    public MapTile[] GetNeighboursOfData (params TileData[] data) {
-        List<MapTile> neighbours = new List<MapTile> (this.Neighbours);
-        
-        for (int i = neighbours.Count - 1; i >= 0; i --) {
+    public MapTile[] GetNeighboursOfData(params TileData[] data) {
+        List<MapTile> neighbours = new List<MapTile>(this.Neighbours);
+
+        for (int i = neighbours.Count - 1; i >= 0; i--) {
             TileData neighbourData = neighbours[i].Data;
 
             bool remove = true;
@@ -273,31 +273,31 @@ public class MapTile : ITarget {
             }
 
             if (remove) {
-                neighbours.RemoveAt (i);
+                neighbours.RemoveAt(i);
             }
         }
-        
-        return neighbours.ToArray ();
+
+        return neighbours.ToArray();
     }
 
-    public MapTile[] GetNeighboursOfType (params TileType[] types) {
-        List<MapTile> neighbours = new List<MapTile> (this.Neighbours);
+    public MapTile[] GetNeighboursOfType(params TileType[] types) {
+        List<MapTile> neighbours = new List<MapTile>(this.Neighbours);
 
-        for (int i = neighbours.Count - 1; i >= 0; i --) {
+        for (int i = neighbours.Count - 1; i >= 0; i--) {
             TileType neighbourType = neighbours[i].Type;
 
             foreach (TileType type in types) {
                 if (type == neighbourType) {
-                    neighbours.RemoveAt (i);
+                    neighbours.RemoveAt(i);
                     break;
                 }
             }
         }
 
-        return neighbours.ToArray ();
+        return neighbours.ToArray();
     }
 
-    public bool[] GetNeighbourTypes (bool includeDiagonals, bool valueIfNull, params TileType[] types) {
+    public bool[] GetNeighbourTypes(bool includeDiagonals, bool valueIfNull, params TileType[] types) {
         bool[] neighbourTypes = new bool[8];
         int i = 0;
 
@@ -315,13 +315,13 @@ public class MapTile : ITarget {
                 }
             }
 
-            i ++;
+            i++;
         }
 
-        if (! includeDiagonals) {
+        if (!includeDiagonals) {
             bool[] filteredTypes = new bool[4];
 
-            for (i = 0; i < 4; i ++) {
+            for (i = 0; i < 4; i++) {
                 filteredTypes[i] = neighbourTypes[i * 2];
             }
 
@@ -331,33 +331,33 @@ public class MapTile : ITarget {
         return neighbourTypes;
     }
 
-    public MapTile GetRealTile () {
+    public MapTile GetRealTile() {
         return this;
     }
 
-    private void InitializeInhabitants () {
-        this.inhabitants = new Dictionary<Type, List<IInhabitant>> ();
-        this.colorByInhabitant = new Dictionary<IInhabitant, Color> ();
+    private void InitializeInhabitants() {
+        this.inhabitants = new Dictionary<Type, List<IInhabitant>>();
+        this.colorByInhabitant = new Dictionary<IInhabitant, Color>();
     }
 
-    private void InitializeLayers () {
-        this.layers = new Dictionary<int, MapTileLayer> ();
+    private void InitializeLayers() {
+        this.layers = new Dictionary<int, MapTileLayer>();
 
-        for (int i = 0; i < 4; i ++) {
-            this.layers[i] = new MapTileLayer ();
+        for (int i = 0; i < 4; i++) {
+            this.layers[i] = new MapTileLayer();
         }
     }
-    
-    public bool IsAdjacent (IMovementDestination destination) {
-        return this.Overlaps (destination, 1);
+
+    public bool IsAdjacent(IMovementDestination destination) {
+        return this.Overlaps(destination, 1);
     }
 
-    public bool IsDead () {
+    public bool IsDead() {
         return false;
     }
 
     /// <param name="exception">Ignores this inhabitant when determining whether the tile is traversable.</param>
-    public bool IsTraversable (MovementType movementType, params IInhabitant[] exceptions) {
+    public bool IsTraversable(MovementType movementType, params IInhabitant[] exceptions) {
         if (this.Type == TileType.None) {
             return false;
         }
@@ -368,7 +368,7 @@ public class MapTile : ITarget {
                     continue;
                 }
 
-                if (! Array.Exists<IInhabitant> (exceptions, element => element == inhabitant)) {
+                if (!Array.Exists<IInhabitant>(exceptions, element => element == inhabitant)) {
                     return false;
                 }
             }
@@ -377,77 +377,77 @@ public class MapTile : ITarget {
         return this.Data.Traversable;
     }
 
-    public bool Overlaps (IMovementDestination destination) {
-        return this.Overlaps (destination, 0);
+    public bool Overlaps(IMovementDestination destination) {
+        return this.Overlaps(destination, 0);
     }
-    
+
     /// <param name="padding">
     ///     Width, in tiles, around the destination, that are still considered as tolerance for overlapping.
     /// </param>
-    public bool Overlaps (IMovementDestination destination, int padding) {
+    public bool Overlaps(IMovementDestination destination, int padding) {
         Vector2Int radiusA = Vector2Int.one;
         Vector2Int radiusB = destination.TileSize.Multiply(0.5f);
-        
+
         radiusA.x += padding;
         radiusA.y += padding;
-        
+
         Vector2Int centerA = this.MapPosition + radiusA;
         Vector2Int centerB = destination.Pivot.MapPosition + radiusB;
-        
+
         centerA.x -= padding;
         centerA.y -= padding;
-        
+
         bool intersects = false;
-        
-        if (Mathf.Abs (centerA.x - centerB.x) < (radiusA.x + radiusB.x)) {
-            if (Mathf.Abs (centerA.y - centerB.y) < (radiusA.y + radiusB.y)) {
+
+        if (Mathf.Abs(centerA.x - centerB.x) < (radiusA.x + radiusB.x)) {
+            if (Mathf.Abs(centerA.y - centerB.y) < (radiusA.y + radiusB.y)) {
                 intersects = true;
             }
         }
-        
+
         return intersects;
     }
 
-    public void PrintNeighbours () {
+    public void PrintNeighbours() {
         string neighbours = "";
-        Direction[] directions = (Direction[]) Enum.GetValues (typeof (Direction));
-        
+        Direction[] directions = (Direction[])Enum.GetValues(typeof(Direction));
+
         for (int i = 0; i < directions.Length - 1; i++) {
             Direction direction = directions[i];
-            
-            neighbours += " " + direction.ToString () + ": " + this.Neighbours[(int) direction];
+
+            neighbours += " " + direction.ToString() + ": " + this.Neighbours[(int)direction];
         }
-        
-        Debug.Log (neighbours);
+
+        Debug.Log(neighbours);
     }
 
-    public void RefreshNeighbours (TileType typeFilter = TileType.None) {
+    public void RefreshNeighbours(TileType typeFilter = TileType.None) {
         if (typeFilter == TileType.None) {
             typeFilter = this.Type;
         }
 
-        this.AdaptToNeighbours (typeFilter);
+        this.AdaptToNeighbours(typeFilter);
 
         foreach (MapTile neighbour in this.Neighbours) {
             if (neighbour != null) {
-                neighbour.AdaptToNeighbours (typeFilter);
+                neighbour.AdaptToNeighbours(typeFilter);
             }
         }
     }
 
-    private IEnumerator RefreshColor () {
+    private IEnumerator RefreshColor() {
         do {
             if (this.targetColor == this.color) {
                 yield break;
             }
 
-            this.color = this.color.MoveTowards (this.targetColor, 0.25f * Time.deltaTime);
+            this.color = this.color.MoveTowards(this.targetColor, 0.25f * Time.deltaTime);
 
             yield return null;
         } while (true);
     }
 
-    private void RefreshTargetColor () {
+    private void RefreshTargetColor() {
         this.targetColor = this.Discovered ? Color.white : MapTile.UndiscoveredColor;
 
         if (this.targetColor == this.Color) {
@@ -455,27 +455,27 @@ public class MapTile : ITarget {
         }
     }
 
-    public void RemoveColor (IInhabitant inhabitant) {
-        this.colorByInhabitant.Remove (inhabitant);
+    public void RemoveColor(IInhabitant inhabitant) {
+        this.colorByInhabitant.Remove(inhabitant);
     }
 
-    public void RemoveDeathListener (IDeathListener listener) {
+    public void RemoveDeathListener(IDeathListener listener) {
 
     }
 
-    public void RemoveInhabitant (IInhabitant inhabitant) {
-        Type type = inhabitant.GetType ();
-        
-        if (this.inhabitants.ContainsKey (type)) {
-            this.inhabitants[type].Remove (inhabitant);
+    public void RemoveInhabitant(IInhabitant inhabitant) {
+        Type type = inhabitant.GetType();
+
+        if (this.inhabitants.ContainsKey(type)) {
+            this.inhabitants[type].Remove(inhabitant);
         }
     }
-    
-    public void RemovePhasedOutListener (IPhasedOutListener listener) {
-        
+
+    public void RemovePhasedOutListener(IPhasedOutListener listener) {
+
     }
 
-    public void SetData (TileData data) {
+    public void SetData(TileData data) {
         this.Data = data;
         this.Type = data.Type;
 
@@ -487,26 +487,26 @@ public class MapTile : ITarget {
         */
 
         if (this.Data == null) {
-            Debug.LogError (string.Format ("No data found for {0}, variation {1}.", data.Type, data.Variation));
+            Debug.LogError(string.Format("No data found for {0}, variation {1}.", data.Type, data.Variation));
             return;
         }
-        
+
         if (this.Data.AtlasIndex > 0) {
             this.AtlasIndex = this.Data.AtlasIndex - 1;
         }
 
-        Decoration decoration = this.GetInhabitant<Decoration> ();
+        Decoration decoration = this.GetInhabitant<Decoration>();
 
         if (decoration != null) {
             decoration.TileData = this.Data;
         }
     }
 
-    public void SetType (TileType type, int variation = 0) {
-        this.SetData (type.GetData (variation));
+    public void SetType(TileType type, int variation = 0) {
+        this.SetData(type.GetData(variation));
     }
 
-    public override string ToString () {
-        return string.Concat (this.Type, this.MapPosition);
+    public override string ToString() {
+        return string.Concat(this.Type, this.MapPosition);
     }
 }

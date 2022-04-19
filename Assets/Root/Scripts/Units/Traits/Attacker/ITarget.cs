@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public interface ITarget : IMovementDestination {
+﻿public interface ITarget : IMovementDestination {
 
     bool PhasedOut { get; }
 
@@ -9,19 +6,19 @@ public interface ITarget : IMovementDestination {
 
     MapTile Tile { get; }
 
-    void AddDeathListener (IDeathListener listener);
+    void AddDeathListener(IDeathListener listener);
 
-    void AddPhasedOutListener (IPhasedOutListener listener);
+    void AddPhasedOutListener(IPhasedOutListener listener);
 
-    void Damage (int damage);
+    void Damage(int damage);
 
-    MapTile GetClosestTile ();
+    MapTile GetClosestTile();
 
-    MapTile GetRealTile ();
+    MapTile GetRealTile();
 
-    bool IsDead ();
+    bool IsDead();
 
-    void RemoveDeathListener (IDeathListener listener);
+    void RemoveDeathListener(IDeathListener listener);
 
-    void RemovePhasedOutListener (IPhasedOutListener listener);
+    void RemovePhasedOutListener(IPhasedOutListener listener);
 }

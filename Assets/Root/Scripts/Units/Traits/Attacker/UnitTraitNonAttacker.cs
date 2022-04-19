@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,46 +16,46 @@ public class UnitTraitNonAttacker : UnitTrait, IUnitTraitAttacker {
     public override UnitTraitType Type {
         get { return UnitTraitType.Attacker; }
     }
-    
-    public void Attack (SpawnableSprite target) {
-        Debug.Log ("Trying to attack without an attacker trait: " + this.Unit.Type);
+
+    public void Attack(SpawnableSprite target) {
+        Debug.Log("Trying to attack without an attacker trait: " + this.Unit.Type);
     }
-    
-    public void Attack (MapTile target) {
-        Debug.Log ("Trying to attack without an attacker trait: " + this.Unit.Type);
+
+    public void Attack(MapTile target) {
+        Debug.Log("Trying to attack without an attacker trait: " + this.Unit.Type);
     }
-    
-    public void AttackAfterCooldown () {
+
+    public void AttackAfterCooldown() {
 
     }
 
-    public List<MapTile> GetExtendedTilesInRange () {
-        return new List<MapTile> ();
+    public List<MapTile> GetExtendedTilesInRange() {
+        return new List<MapTile>();
     }
 
-    public List<MapTile> GetTilesInRange () {
-        return new List<MapTile> ();
+    public List<MapTile> GetTilesInRange() {
+        return new List<MapTile>();
     }
-    
-    public void Initialize (Unit unit, UnitTraitDataNonAttacker data) {
-        base.Initialize (unit);
-        
+
+    public void Initialize(Unit unit, UnitTraitDataNonAttacker data) {
+        base.Initialize(unit);
+
         this.Data = data;
     }
 
-    public void ManualUpdate () {
-        
-    }
-    
-    public void OnAnimationTrigger (AnimationType animationType, AnimationTriggerType triggerType) {
+    public void ManualUpdate() {
 
     }
 
-    public void OnAttack () {
+    public void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType) {
 
     }
 
-    public void OnOrderAccepted () {
-        
+    public void OnAttack() {
+
+    }
+
+    public void OnOrderAccepted() {
+
     }
 }

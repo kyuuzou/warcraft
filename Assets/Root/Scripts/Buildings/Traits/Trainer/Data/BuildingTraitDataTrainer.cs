@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BuildingTraitDataTrainer : BuildingTraitData {
 
@@ -13,12 +12,12 @@ public class BuildingTraitDataTrainer : BuildingTraitData {
         get { return BuildingTraitType.Trainer; }
     }
 
-    public override BuildingTrait AddTrait (Building building) {
-        BuildingTraitTrainer trait = building.gameObject.AddComponent<BuildingTraitTrainer> ();
-        trait.Initialize (building, BuildingTraitDataTrainer.Instantiate (this));
-        
-        building.SetTrait<IBuildingTraitTrainer> (trait);
-        
+    public override BuildingTrait AddTrait(Building building) {
+        BuildingTraitTrainer trait = building.gameObject.AddComponent<BuildingTraitTrainer>();
+        trait.Initialize(building, BuildingTraitDataTrainer.Instantiate(this));
+
+        building.SetTrait<IBuildingTraitTrainer>(trait);
+
         return trait;
     }
 }

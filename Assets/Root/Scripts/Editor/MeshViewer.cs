@@ -3,111 +3,110 @@ using UnityEditor;
 using UnityEngine;
 
 public class MeshViewer : EditorWindow {
-    const int MAX_DISPLAY = 100;
-    const int DEFAULT_MIN = 20;
-    Mesh mesh;
-    GameObject obj;
-    bool linkScroll, showVerts, showNorm, showTangents, showIndices, showUVs, showUV2s, showColors, showBoneWeights, showBindPoses, showBones;
-    Vector2 vertScroll, normScroll, tangentScroll, triScroll, UVScroll, UV2Scroll, colorScroll, boneWeightScroll, bindPoseScroll, boneScroll;
-
-    Vector3[] vertices;
-    Vector3[] normals;
-    Vector4[] tangents;
-    Vector2[] uv, uv2;
+    private const int MAX_DISPLAY = 100;
+    private const int DEFAULT_MIN = 20;
+    private Mesh mesh;
+    private GameObject obj;
+    private bool linkScroll, showVerts, showNorm, showTangents, showIndices, showUVs, showUV2s, showColors, showBoneWeights, showBindPoses, showBones;
+    private Vector2 vertScroll, normScroll, tangentScroll, triScroll, UVScroll, UV2Scroll, colorScroll, boneWeightScroll, bindPoseScroll, boneScroll;
+    private Vector3[] vertices;
+    private Vector3[] normals;
+    private Vector4[] tangents;
+    private Vector2[] uv, uv2;
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 	Color[] colors;
 #else
-    Color32[] colors;
+    private Color32[] colors;
 #endif
-    BoneWeight[] boneWeights;
-    Matrix4x4[] bindPoses;
-    Transform[] bones;
-    int[] triangles;
-    int subMesh, oldSubMesh;
-    string[] subMeshStrings;
-    int[] subMeshIndices;
-
-    SkinnedMeshRenderer SMR;
+    private BoneWeight[] boneWeights;
+    private Matrix4x4[] bindPoses;
+    private Transform[] bones;
+    private int[] triangles;
+    private int subMesh, oldSubMesh;
+    private string[] subMeshStrings;
+    private int[] subMeshIndices;
+    private SkinnedMeshRenderer SMR;
 
     [MenuItem("Window/MeshViewer")]
-    static void Init() {
+    private static void Init() {
         // Get existing open window or if none, make a new one:
         EditorWindow.GetWindow(typeof(MeshViewer));
     }
-    GameObject oldObject;
+
+    private GameObject oldObject;
 
 #if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-    MeshTopology topo;
+    private MeshTopology topo;
 #endif
 
-    int min, max;
-    float minSlider, maxSlider;
-    int idxMin, idxMax;
-    float idxMinSlider, idxMaxSlider;
+    private int min, max;
+    private float minSlider, maxSlider;
+    private int idxMin, idxMax;
+    private float idxMinSlider, idxMaxSlider;
 
-    void OnGUI() {
+    private void OnGUI() {
         GUILayout.BeginHorizontal();
         {
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 			obj = (GameObject)EditorGUILayout.ObjectField(obj, typeof(GameObject));
 #else
-            obj = (GameObject)EditorGUILayout.ObjectField(obj, typeof(GameObject), true);
+            this.obj = (GameObject)EditorGUILayout.ObjectField(this.obj, typeof(GameObject), true);
 #endif
-            if (obj == null) {
-                mesh = null;
-                SMR = null;
-            } else if (obj.GetComponent<MeshFilter>() && (mesh == null || obj != oldObject)) {
-                SMR = null;
-                InitMesh(obj.GetComponent<MeshFilter>().sharedMesh);
-            } else if (obj.GetComponent<SkinnedMeshRenderer>() && (mesh == null || obj != oldObject)) {
-                SMR = obj.GetComponent<SkinnedMeshRenderer>();
-                InitMesh(SMR.sharedMesh);
-            } else if (obj.GetComponent<MeshCollider>() && (mesh == null || obj != oldObject)) {
-                SMR = null;
-                InitMesh(obj.GetComponent<MeshCollider>().sharedMesh);
+            if (this.obj == null) {
+                this.mesh = null;
+                this.SMR = null;
+            } else if (this.obj.GetComponent<MeshFilter>() && (this.mesh == null || this.obj != this.oldObject)) {
+                this.SMR = null;
+                this.InitMesh(this.obj.GetComponent<MeshFilter>().sharedMesh);
+            } else if (this.obj.GetComponent<SkinnedMeshRenderer>() && (this.mesh == null || this.obj != this.oldObject)) {
+                this.SMR = this.obj.GetComponent<SkinnedMeshRenderer>();
+                this.InitMesh(this.SMR.sharedMesh);
+            } else if (this.obj.GetComponent<MeshCollider>() && (this.mesh == null || this.obj != this.oldObject)) {
+                this.SMR = null;
+                this.InitMesh(this.obj.GetComponent<MeshCollider>().sharedMesh);
             }
-            GUI.enabled = mesh;
-            oldObject = obj;
-            linkScroll = GUILayout.Toggle(linkScroll, "Link scroll bars");
+            GUI.enabled = this.mesh;
+            this.oldObject = this.obj;
+            this.linkScroll = GUILayout.Toggle(this.linkScroll, "Link scroll bars");
         }
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
         {
-            showVerts = GUILayout.Toggle(showVerts, "Show Vertices");
-            showNorm = GUILayout.Toggle(showNorm, "Show Normals");
-            showTangents = GUILayout.Toggle(showTangents, "Show Tangents");
-            showIndices = GUILayout.Toggle(showIndices, "Show Indices");
-            showUVs = GUILayout.Toggle(showUVs, "Show UVs");
-            if (mesh && mesh.uv2.Length > 0) {
-                showUV2s = GUILayout.Toggle(showUV2s, "Show UV2s");
+            this.showVerts = GUILayout.Toggle(this.showVerts, "Show Vertices");
+            this.showNorm = GUILayout.Toggle(this.showNorm, "Show Normals");
+            this.showTangents = GUILayout.Toggle(this.showTangents, "Show Tangents");
+            this.showIndices = GUILayout.Toggle(this.showIndices, "Show Indices");
+            this.showUVs = GUILayout.Toggle(this.showUVs, "Show UVs");
+            if (this.mesh && this.mesh.uv2.Length > 0) {
+                this.showUV2s = GUILayout.Toggle(this.showUV2s, "Show UV2s");
             }
-            if (mesh && mesh.colors.Length > 0) {
-                showColors = GUILayout.Toggle(showColors, "Show Colors");
+            if (this.mesh && this.mesh.colors.Length > 0) {
+                this.showColors = GUILayout.Toggle(this.showColors, "Show Colors");
             }
-            showBoneWeights = GUILayout.Toggle(showBoneWeights, "Show BoneWeights");
-            showBindPoses = GUILayout.Toggle(showBindPoses, "Show BindPoses");
+            this.showBoneWeights = GUILayout.Toggle(this.showBoneWeights, "Show BoneWeights");
+            this.showBindPoses = GUILayout.Toggle(this.showBindPoses, "Show BindPoses");
 
-            if (SMR) {
-                showBones = GUILayout.Toggle(showBones, "Show Bones");
+            if (this.SMR) {
+                this.showBones = GUILayout.Toggle(this.showBones, "Show Bones");
             }
         }
         GUILayout.EndHorizontal();
-        if (mesh) {
+        if (this.mesh) {
             //Vertex range slider
-            GUILayout.Label("Vertex Range: " + min + " - " + max + " (" + (max - min) + ")");
-            if (maxSlider >= mesh.vertexCount) {
-                maxSlider = mesh.vertexCount;
+            GUILayout.Label("Vertex Range: " + this.min + " - " + this.max + " (" + (this.max - this.min) + ")");
+            if (this.maxSlider >= this.mesh.vertexCount) {
+                this.maxSlider = this.mesh.vertexCount;
             }
 
-            if (minSlider >= maxSlider) {
-                minSlider = 0;
+            if (this.minSlider >= this.maxSlider) {
+                this.minSlider = 0;
             }
 
-            EditorGUILayout.MinMaxSlider(ref minSlider, ref maxSlider, 0, mesh.vertexCount);
-            minSlider = min = (int)minSlider;
-            maxSlider = max = (int)maxSlider;
+            EditorGUILayout.MinMaxSlider(ref this.minSlider, ref this.maxSlider, 0, this.mesh.vertexCount);
+            this.minSlider = this.min = (int)this.minSlider;
+            this.maxSlider = this.max = (int)this.maxSlider;
             //Index range slider
-            GUILayout.Label("Face Range: " + idxMin + " - " + idxMax + " (" + (idxMax - idxMin) + ")");
+            GUILayout.Label("Face Range: " + this.idxMin + " - " + this.idxMax + " (" + (this.idxMax - this.idxMin) + ")");
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 			if(idxMaxSlider >= mesh.GetTriangles(subMesh).Length / 3)
 				idxMaxSlider = mesh.GetTriangles(subMesh).Length / 3;
@@ -116,75 +115,75 @@ public class MeshViewer : EditorWindow {
 			}
 			EditorGUILayout.MinMaxSlider(ref idxMinSlider, ref idxMaxSlider, 0, mesh.GetTriangles(subMesh).Length / 3);
 #else
-            if (idxMaxSlider >= mesh.GetIndices(subMesh).Length / TopologyToNum(topo)) {
-                idxMaxSlider = mesh.GetIndices(subMesh).Length / TopologyToNum(topo);
+            if (this.idxMaxSlider >= this.mesh.GetIndices(this.subMesh).Length / TopologyToNum(this.topo)) {
+                this.idxMaxSlider = this.mesh.GetIndices(this.subMesh).Length / TopologyToNum(this.topo);
             }
 
-            if (idxMinSlider >= idxMaxSlider) {
-                idxMinSlider = 0;
+            if (this.idxMinSlider >= this.idxMaxSlider) {
+                this.idxMinSlider = 0;
             }
 
-            EditorGUILayout.MinMaxSlider(ref idxMinSlider, ref idxMaxSlider, 0, mesh.GetIndices(subMesh).Length / TopologyToNum(topo));
+            EditorGUILayout.MinMaxSlider(ref this.idxMinSlider, ref this.idxMaxSlider, 0, this.mesh.GetIndices(this.subMesh).Length / TopologyToNum(this.topo));
 #endif
-            idxMinSlider = idxMin = (int)idxMinSlider;
-            idxMaxSlider = idxMax = (int)idxMaxSlider;
+            this.idxMinSlider = this.idxMin = (int)this.idxMinSlider;
+            this.idxMaxSlider = this.idxMax = (int)this.idxMaxSlider;
             //startOffset = (int)GUILayout.HorizontalSlider(startOffset, 0, mesh.vertexCount - MAX_DISPLAY > 0 ? mesh.vertexCount - MAX_DISPLAY : 0);
             GUILayout.BeginHorizontal();
             {
-                if (showVerts) {
+                if (this.showVerts) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Vertices");
-                    BeginScroll(ref vertScroll);
-                    vertices = mesh.vertices;
-                    for (int i = min; i < max && i < min + MAX_DISPLAY; i++) {
-                        vertices[i] = EditorGUILayout.Vector3Field(i + ":", vertices[i]);
+                    this.BeginScroll(ref this.vertScroll);
+                    this.vertices = this.mesh.vertices;
+                    for (int i = this.min; i < this.max && i < this.min + MAX_DISPLAY; i++) {
+                        this.vertices[i] = EditorGUILayout.Vector3Field(i + ":", this.vertices[i]);
                     }
-                    mesh.vertices = vertices;
+                    this.mesh.vertices = this.vertices;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showNorm) {
+                if (this.showNorm) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Normals");
-                    BeginScroll(ref normScroll);
-                    normals = mesh.normals;
-                    for (int i = min; i < max && i < min + MAX_DISPLAY; i++) {
-                        normals[i] = EditorGUILayout.Vector3Field(i + ":", normals[i]);
+                    this.BeginScroll(ref this.normScroll);
+                    this.normals = this.mesh.normals;
+                    for (int i = this.min; i < this.max && i < this.min + MAX_DISPLAY; i++) {
+                        this.normals[i] = EditorGUILayout.Vector3Field(i + ":", this.normals[i]);
                     }
-                    mesh.normals = normals;
+                    this.mesh.normals = this.normals;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showTangents) {
+                if (this.showTangents) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Tangents");
-                    BeginScroll(ref tangentScroll);
-                    tangents = mesh.tangents;
+                    this.BeginScroll(ref this.tangentScroll);
+                    this.tangents = this.mesh.tangents;
 
-                    for (int i = min; i < max && i < min + MAX_DISPLAY && i < tangents.Length - 1; i++) {
-                        tangents[i] = EditorGUILayout.Vector3Field(i + ":", tangents[i]);
+                    for (int i = this.min; i < this.max && i < this.min + MAX_DISPLAY && i < this.tangents.Length - 1; i++) {
+                        this.tangents[i] = EditorGUILayout.Vector3Field(i + ":", this.tangents[i]);
                     }
 
-                    mesh.tangents = tangents;
+                    this.mesh.tangents = this.tangents;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showIndices) {
+                if (this.showIndices) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Indices (Faces)");
                     GUILayout.BeginHorizontal();
-                    subMesh = EditorGUILayout.IntPopup("SubMesh:", subMesh, subMeshStrings, subMeshIndices);
+                    this.subMesh = EditorGUILayout.IntPopup("SubMesh:", this.subMesh, this.subMeshStrings, this.subMeshIndices);
 #if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-                    if (subMesh != oldSubMesh) {
-                        topo = mesh.GetTopology(subMesh);
+                    if (this.subMesh != this.oldSubMesh) {
+                        this.topo = this.mesh.GetTopology(this.subMesh);
                     }
 
-                    oldSubMesh = subMesh;
+                    this.oldSubMesh = this.subMesh;
                     GUILayout.Label("Mesh Topology: ", GUILayout.Width(92));
-                    topo = (MeshTopology)EditorGUILayout.EnumPopup(topo);
+                    this.topo = (MeshTopology)EditorGUILayout.EnumPopup(this.topo);
 #endif
                     GUILayout.EndHorizontal();
-                    triScroll = GUILayout.BeginScrollView(triScroll);
+                    this.triScroll = GUILayout.BeginScrollView(this.triScroll);
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 					triangles = mesh.GetTriangles(subMesh);
 					for(int i = idxMin; i < idxMax; i++) {
@@ -199,122 +198,122 @@ public class MeshViewer : EditorWindow {
 					}
 					mesh.SetTriangles(triangles, subMesh);
 #else
-                    triangles = mesh.GetIndices(subMesh);
-                    for (int i = idxMin; i < idxMax; i++) {
+                    this.triangles = this.mesh.GetIndices(this.subMesh);
+                    for (int i = this.idxMin; i < this.idxMax; i++) {
                         GUILayout.BeginHorizontal();
                         {
-                            int start = i * TopologyToNum(topo);
-                            triangles[start] = EditorGUILayout.IntField(start + ":", triangles[start]);
+                            int start = i * TopologyToNum(this.topo);
+                            this.triangles[start] = EditorGUILayout.IntField(start + ":", this.triangles[start]);
 
-                            if (topo == MeshTopology.LineStrip || topo == MeshTopology.Lines || topo == MeshTopology.Triangles || topo == MeshTopology.Quads) {
-                                triangles[start + 1] = EditorGUILayout.IntField(start + 1 + ":", triangles[start + 1]);
+                            if (this.topo == MeshTopology.LineStrip || this.topo == MeshTopology.Lines || this.topo == MeshTopology.Triangles || this.topo == MeshTopology.Quads) {
+                                this.triangles[start + 1] = EditorGUILayout.IntField(start + 1 + ":", this.triangles[start + 1]);
                             }
 
-                            if (topo == MeshTopology.Triangles || topo == MeshTopology.Quads) {
-                                triangles[start + 2] = EditorGUILayout.IntField(start + 2 + ":", triangles[start + 2]);
+                            if (this.topo == MeshTopology.Triangles || this.topo == MeshTopology.Quads) {
+                                this.triangles[start + 2] = EditorGUILayout.IntField(start + 2 + ":", this.triangles[start + 2]);
                             }
 
-                            if (topo == MeshTopology.Quads) {
-                                triangles[start + 3] = EditorGUILayout.IntField(start + 3 + ":", triangles[start + 3]);
+                            if (this.topo == MeshTopology.Quads) {
+                                this.triangles[start + 3] = EditorGUILayout.IntField(start + 3 + ":", this.triangles[start + 3]);
                             }
                         }
                         GUILayout.EndHorizontal();
 
                     }
-                    mesh.SetIndices(triangles, topo, subMesh);
+                    this.mesh.SetIndices(this.triangles, this.topo, this.subMesh);
 #endif
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showUVs) {
+                if (this.showUVs) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("UVs");
-                    BeginScroll(ref UVScroll);
-                    uv = mesh.uv;
-                    for (int start = min; start < max && start < min + MAX_DISPLAY; start++) {
-                        uv[start] = EditorGUILayout.Vector2Field(start + ":", uv[start]);
+                    this.BeginScroll(ref this.UVScroll);
+                    this.uv = this.mesh.uv;
+                    for (int start = this.min; start < this.max && start < this.min + MAX_DISPLAY; start++) {
+                        this.uv[start] = EditorGUILayout.Vector2Field(start + ":", this.uv[start]);
                     }
-                    mesh.uv = uv;
+                    this.mesh.uv = this.uv;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showUV2s && mesh.uv2.Length > 0) {
+                if (this.showUV2s && this.mesh.uv2.Length > 0) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("UV2s");
-                    BeginScroll(ref UV2Scroll);
-                    uv2 = mesh.uv2;
-                    for (int start = min; start < max && start < min + MAX_DISPLAY; start++) {
-                        uv2[start] = EditorGUILayout.Vector2Field(start + ":", uv2[start]);
+                    this.BeginScroll(ref this.UV2Scroll);
+                    this.uv2 = this.mesh.uv2;
+                    for (int start = this.min; start < this.max && start < this.min + MAX_DISPLAY; start++) {
+                        this.uv2[start] = EditorGUILayout.Vector2Field(start + ":", this.uv2[start]);
                     }
-                    mesh.uv2 = uv2;
+                    this.mesh.uv2 = this.uv2;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showColors && mesh.colors.Length > 0) {
+                if (this.showColors && this.mesh.colors.Length > 0) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Vertex Colors");
-                    BeginScroll(ref colorScroll);
+                    this.BeginScroll(ref this.colorScroll);
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 					colors = mesh.colors;
 #else
-                    colors = mesh.colors32;
+                    this.colors = this.mesh.colors32;
 #endif
-                    for (int start = min; start < max && start < min + MAX_DISPLAY; start++) {
-                        colors[start] = EditorGUILayout.ColorField(start + ":", colors[start]);
+                    for (int start = this.min; start < this.max && start < this.min + MAX_DISPLAY; start++) {
+                        this.colors[start] = EditorGUILayout.ColorField(start + ":", this.colors[start]);
                     }
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 					mesh.colors = colors;
 #else
-                    mesh.colors32 = colors;
+                    this.mesh.colors32 = this.colors;
 #endif
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showBoneWeights) {
+                if (this.showBoneWeights) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Bone Weights");
-                    boneWeightScroll = GUILayout.BeginScrollView(boneWeightScroll);
-                    boneWeights = mesh.boneWeights;
-                    for (int start = min; start < boneWeights.Length; start++) {
+                    this.boneWeightScroll = GUILayout.BeginScrollView(this.boneWeightScroll);
+                    this.boneWeights = this.mesh.boneWeights;
+                    for (int start = this.min; start < this.boneWeights.Length; start++) {
                         GUILayout.Label(start + ":");
-                        boneWeights[start].boneIndex0 = EditorGUILayout.IntField("Bone 0 idx: ", boneWeights[start].boneIndex0);
-                        boneWeights[start].boneIndex1 = EditorGUILayout.IntField("Bone 1 idx: ", boneWeights[start].boneIndex1);
-                        boneWeights[start].boneIndex2 = EditorGUILayout.IntField("Bone 2 idx: ", boneWeights[start].boneIndex2);
-                        boneWeights[start].boneIndex3 = EditorGUILayout.IntField("Bone 3 idx: ", boneWeights[start].boneIndex3);
-                        boneWeights[start].weight0 = EditorGUILayout.FloatField("Bone 0 Weight: ", boneWeights[start].weight0);
-                        boneWeights[start].weight1 = EditorGUILayout.FloatField("Bone 1 Weight: ", boneWeights[start].weight1);
-                        boneWeights[start].weight2 = EditorGUILayout.FloatField("Bone 2 Weight: ", boneWeights[start].weight2);
-                        boneWeights[start].weight3 = EditorGUILayout.FloatField("Bone 3 Weight: ", boneWeights[start].weight3);
+                        this.boneWeights[start].boneIndex0 = EditorGUILayout.IntField("Bone 0 idx: ", this.boneWeights[start].boneIndex0);
+                        this.boneWeights[start].boneIndex1 = EditorGUILayout.IntField("Bone 1 idx: ", this.boneWeights[start].boneIndex1);
+                        this.boneWeights[start].boneIndex2 = EditorGUILayout.IntField("Bone 2 idx: ", this.boneWeights[start].boneIndex2);
+                        this.boneWeights[start].boneIndex3 = EditorGUILayout.IntField("Bone 3 idx: ", this.boneWeights[start].boneIndex3);
+                        this.boneWeights[start].weight0 = EditorGUILayout.FloatField("Bone 0 Weight: ", this.boneWeights[start].weight0);
+                        this.boneWeights[start].weight1 = EditorGUILayout.FloatField("Bone 1 Weight: ", this.boneWeights[start].weight1);
+                        this.boneWeights[start].weight2 = EditorGUILayout.FloatField("Bone 2 Weight: ", this.boneWeights[start].weight2);
+                        this.boneWeights[start].weight3 = EditorGUILayout.FloatField("Bone 3 Weight: ", this.boneWeights[start].weight3);
                     }
-                    mesh.boneWeights = boneWeights;
+                    this.mesh.boneWeights = this.boneWeights;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (showBindPoses) {
+                if (this.showBindPoses) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Bind Poses");
-                    bindPoseScroll = GUILayout.BeginScrollView(bindPoseScroll);
-                    bindPoses = mesh.bindposes;
-                    for (int start = 0; start < bindPoses.Length; start++) {
-                        Matrix4x4Field(start + ":", ref bindPoses[start]);
+                    this.bindPoseScroll = GUILayout.BeginScrollView(this.bindPoseScroll);
+                    this.bindPoses = this.mesh.bindposes;
+                    for (int start = 0; start < this.bindPoses.Length; start++) {
+                        Matrix4x4Field(start + ":", ref this.bindPoses[start]);
                     }
-                    mesh.bindposes = bindPoses;
+                    this.mesh.bindposes = this.bindPoses;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
-                if (SMR && showBones) {
+                if (this.SMR && this.showBones) {
                     GUILayout.BeginVertical();
                     GUILayout.Label("Bones");
-                    boneScroll = GUILayout.BeginScrollView(boneScroll);
-                    bones = SMR.bones;
-                    for (int start = 0; start < bones.Length; start++) {
+                    this.boneScroll = GUILayout.BeginScrollView(this.boneScroll);
+                    this.bones = this.SMR.bones;
+                    for (int start = 0; start < this.bones.Length; start++) {
 #if UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 						bones[start] = EditorGUILayout.ObjectField(bones[start], typeof(Transform)) as Transform;
 #else
-                        bones[start] = EditorGUILayout.ObjectField(bones[start], typeof(Transform), true) as Transform;
+                        this.bones[start] = EditorGUILayout.ObjectField(this.bones[start], typeof(Transform), true) as Transform;
 #endif
                     }
-                    SMR.bones = bones;
+                    this.SMR.bones = this.bones;
                     GUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
@@ -322,38 +321,40 @@ public class MeshViewer : EditorWindow {
             GUILayout.EndHorizontal();
         }
     }
-    void InitMesh(Mesh mesh) {
+
+    private void InitMesh(Mesh mesh) {
         this.mesh = mesh;
         if (mesh) {
-            subMesh = 0;
+            this.subMesh = 0;
 #if (UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
 			
 			idxMaxSlider = Mathf.Min((DEFAULT_MIN - 2) * 2, mesh.GetTriangles(subMesh).Length / 3);
 #else
-            topo = mesh.GetTopology(subMesh);
-            idxMaxSlider = Mathf.Min(DEFAULT_MIN * 2 - 1, mesh.GetIndices(subMesh).Length / TopologyToNum(topo));
+            this.topo = mesh.GetTopology(this.subMesh);
+            this.idxMaxSlider = Mathf.Min(DEFAULT_MIN * 2 - 1, mesh.GetIndices(this.subMesh).Length / TopologyToNum(this.topo));
 #endif
-            maxSlider = Mathf.Min(DEFAULT_MIN, mesh.vertexCount);
-            subMeshIndices = new int[mesh.subMeshCount];
-            subMeshStrings = new string[mesh.subMeshCount];
+            this.maxSlider = Mathf.Min(DEFAULT_MIN, mesh.vertexCount);
+            this.subMeshIndices = new int[mesh.subMeshCount];
+            this.subMeshStrings = new string[mesh.subMeshCount];
             for (int start = 0; start < mesh.subMeshCount; start++) {
-                subMeshIndices[start] = start;
-                subMeshStrings[start] = start + "";
+                this.subMeshIndices[start] = start;
+                this.subMeshStrings[start] = start + "";
             }
 
-            showVerts = true;
-            showIndices = true;
+            this.showVerts = true;
+            this.showIndices = true;
         }
     }
-    void BeginScroll(ref Vector2 input) {
-        if (linkScroll) {
-            vertScroll = GUILayout.BeginScrollView(vertScroll);
-        } else { 
+
+    private void BeginScroll(ref Vector2 input) {
+        if (this.linkScroll) {
+            this.vertScroll = GUILayout.BeginScrollView(this.vertScroll);
+        } else {
             input = GUILayout.BeginScrollView(input);
         }
     }
 #if !(UNITY_3_0 || UNITY_3_0_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5)
-    static int TopologyToNum(MeshTopology topo) {
+    private static int TopologyToNum(MeshTopology topo) {
         switch (topo) {
             case MeshTopology.Lines:
                 return 2;
@@ -371,7 +372,7 @@ public class MeshViewer : EditorWindow {
         return 1;
     }
 #endif
-    static void Matrix4x4Field(string label, ref Matrix4x4 mat) {
+    private static void Matrix4x4Field(string label, ref Matrix4x4 mat) {
         GUILayout.Label(label);
         mat.SetRow(0, EditorGUILayout.Vector4Field("0", mat.GetRow(0)));
         mat.SetRow(1, EditorGUILayout.Vector4Field("1", mat.GetRow(1)));

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Upgrade : CustomScriptableObject {
@@ -43,27 +42,27 @@ public class Upgrade : CustomScriptableObject {
         }
     }
 
-    public bool AppliesTo (UnitType type) {
-        return this.units.Contains (type);
+    public bool AppliesTo(UnitType type) {
+        return this.units.Contains(type);
     }
 
-    public UpgradeRank GetRank (int rank) {
+    public UpgradeRank GetRank(int rank) {
         if (rank < this.ranks.Length) {
             return this.ranks[rank];
         }
 
-        Debug.LogError ("Upgrade does not have rank: " + rank);
+        Debug.LogError("Upgrade does not have rank: " + rank);
 
         return null;
     }
 
-    public override void Initialize () {
-        base.Initialize ();
+    public override void Initialize() {
+        base.Initialize();
 
         this.currentRankIndex = 0;
     }
 
-    public void SetRankIndex (int currentRankIndex) {
-        this.currentRankIndex = Mathf.Clamp (currentRankIndex, 0, this.ranks.Length);
+    public void SetRankIndex(int currentRankIndex) {
+        this.currentRankIndex = Mathf.Clamp(currentRankIndex, 0, this.ranks.Length);
     }
 }

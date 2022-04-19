@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pool<TPool, TElement> : PoolBase
     where TPool : Pool<TPool, TElement>
-    where TElement : Component
-{
+    where TElement : Component {
 
     public override Type PoolType {
-        get { return typeof (TPool); }
+        get { return typeof(TPool); }
     }
 
     [SerializeField]
@@ -17,35 +15,35 @@ public class Pool<TPool, TElement> : PoolBase
 
     private List<TElement> instances;
 
-    public void AddInstance (TElement instance) {
-        this.instances.Add (instance);
+    public void AddInstance(TElement instance) {
+        this.instances.Add(instance);
 
         instance.transform.parent = this.transform;
-        instance.gameObject.SetActive (false);
+        instance.gameObject.SetActive(false);
     }
 
-    public virtual TElement GetInstance () {
+    public virtual TElement GetInstance() {
         TElement instance;
 
         if (this.instances.Count == 0) {
-            instance = MonoBehaviour.Instantiate<TElement> (this.prefab);
+            instance = MonoBehaviour.Instantiate<TElement>(this.prefab);
         } else {
             instance = this.instances[0];
-            this.instances.RemoveAt (0);
+            this.instances.RemoveAt(0);
 
-            instance.gameObject.SetActive (true);
+            instance.gameObject.SetActive(true);
         }
 
         return instance;
     }
 
-    protected override void InitializeInternals () {
+    protected override void InitializeInternals() {
         if (this.InitializedInternals) {
             return;
         }
 
-        base.InitializeInternals ();
+        base.InitializeInternals();
 
-        this.instances = new List<TElement> ();
+        this.instances = new List<TElement>();
     }
 }

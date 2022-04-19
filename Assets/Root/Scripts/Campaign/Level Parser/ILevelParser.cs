@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿public interface ILevelParser {
 
-public interface ILevelParser {
-
-    void Parse ();
+    void Parse();
 }

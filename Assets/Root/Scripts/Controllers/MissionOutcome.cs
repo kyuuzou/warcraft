@@ -69,7 +69,7 @@ public class MissionOutcome : MonoBehaviour {
 
     private MissionStatistics statistics;
 
-    private void Start () {
+    private void Start() {
         this.statistics = ServiceLocator.Instance.MissionStatistics;
 
         this.videoPlayer.playOnAwake = false;
@@ -81,86 +81,86 @@ public class MissionOutcome : MonoBehaviour {
         this.videoPlayer.SetTargetAudioSource(0, this.audioSource);
         this.videoPlayer.Play();
 
-        int score = this.statistics.CalculateScore ();
-        this.rankText.text = Rank.GetHumanRank (score).ToString ();
+        int score = this.statistics.CalculateScore();
+        this.rankText.text = Rank.GetHumanRank(score).ToString();
     }
 
-    private void Update () {
-        Utils.ScrollResourceNumber (
+    private void Update() {
+        Utils.ScrollResourceNumber(
             ref this.visibleScore,
             this.statistics.Score,
             this.scoreText
         );
 
-        Utils.ScrollResourceNumber (
+        Utils.ScrollResourceNumber(
             ref this.visibleUnitsYouDestroyed,
             this.statistics.UnitsYouDestroyed,
             this.unitsYouDestroyedText
         );
 
-        Utils.ScrollResourceNumber (
+        Utils.ScrollResourceNumber(
             ref this.visibleUnitsEnemyDestroyed,
             this.statistics.UnitsEnemyDestroyed,
             this.unitsEnemyDestroyedText
         );
 
-        Utils.ScrollResourceNumber (
+        Utils.ScrollResourceNumber(
             ref this.visibleStructuresYouDestroyed,
             this.statistics.StructuresYouDestroyed,
             this.structuresYouDestroyedText
         );
 
-        Utils.ScrollResourceNumber (
+        Utils.ScrollResourceNumber(
             ref this.visibleStructuresEnemyDestroyed,
             this.statistics.StructuresEnemyDestroyed,
             this.structuresEnemyDestroyedText
         );
 
-        Utils.ScrollResourceNumber (
+        Utils.ScrollResourceNumber(
             ref this.visibleGoldYouMined,
             this.statistics.GoldYouMined,
             this.goldYouMinedText
         );
 
-        Utils.ScrollResourceNumber (
-            ref this.visibleGoldEnemyMined, 
-            this.statistics.GoldEnemyMined, 
+        Utils.ScrollResourceNumber(
+            ref this.visibleGoldEnemyMined,
+            this.statistics.GoldEnemyMined,
             this.goldEnemyMinedText
         );
 
-        Utils.ScrollResourceNumber (
-            ref this.visibleUnitsYouTrained, 
-            this.statistics.UnitsYouTrained, 
+        Utils.ScrollResourceNumber(
+            ref this.visibleUnitsYouTrained,
+            this.statistics.UnitsYouTrained,
             this.unitsYouTrainedText
         );
 
-        Utils.ScrollResourceNumber (
-            ref this.visibleUnitsEnemyTrained, 
-            this.statistics.UnitsEnemyTrained, 
+        Utils.ScrollResourceNumber(
+            ref this.visibleUnitsEnemyTrained,
+            this.statistics.UnitsEnemyTrained,
             this.unitsEnemyTrainedText
         );
 
-        Utils.ScrollResourceNumber (
-            ref this.visibleStructuresYouBuilt, 
-            this.statistics.StructuresYouBuilt, 
+        Utils.ScrollResourceNumber(
+            ref this.visibleStructuresYouBuilt,
+            this.statistics.StructuresYouBuilt,
             this.structuresYouBuiltText
         );
 
-        Utils.ScrollResourceNumber (
+        Utils.ScrollResourceNumber(
             ref this.visibleStructuresEnemyBuilt,
-            this.statistics.StructuresEnemyBuilt, 
+            this.statistics.StructuresEnemyBuilt,
             this.structuresEnemyBuiltText
         );
 
-        Utils.ScrollResourceNumber (
-            ref this.visibleLumberYouHarvested, 
-            this.statistics.LumberYouHarvested, 
+        Utils.ScrollResourceNumber(
+            ref this.visibleLumberYouHarvested,
+            this.statistics.LumberYouHarvested,
             this.lumberYouHarvestedText
         );
 
-        Utils.ScrollResourceNumber (
-            ref this.visibleLumberEnemyHarvested, 
-            this.statistics.LumberEnemyHarvested, 
+        Utils.ScrollResourceNumber(
+            ref this.visibleLumberEnemyHarvested,
+            this.statistics.LumberEnemyHarvested,
             this.lumberEnemyHarvestedText
         );
     }

@@ -10,18 +10,18 @@ public class DelayVisualizer : MonoBehaviour {
     private int number = 0;
     private Text textField;
 
-	private void Start () {
-        this.textField = this.GetComponent<Text> ();
+    private void Start() {
+        this.textField = this.GetComponent<Text>();
 
-        this.StartCoroutine (this.Tick ());
-	}
+        this.StartCoroutine(this.Tick());
+    }
 
-    private IEnumerator Tick () {
+    private IEnumerator Tick() {
         do {
-            this.number ++;
-            this.textField.text = this.number.ToString ();
-            
-            yield return new WaitForSeconds (this.delay);
+            this.number++;
+            this.textField.text = this.number.ToString();
+
+            yield return new WaitForSeconds(this.delay);
         } while (true);
     }
 }

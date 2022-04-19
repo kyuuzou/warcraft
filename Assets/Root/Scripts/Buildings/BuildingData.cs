@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class BuildingData : SpawnableSpriteData {
 
-    [Header ("Building data")]
+    [Header("Building data")]
 
     [SerializeField]
     private BuildingType type = BuildingType.None;
@@ -27,7 +27,7 @@ public class BuildingData : SpawnableSpriteData {
         get { return this.unique; }
     }
 
-    [Header ("Traits")]
+    [Header("Traits")]
 
     [SerializeField]
     private BuildingTraitData minableTrait;
@@ -40,14 +40,14 @@ public class BuildingData : SpawnableSpriteData {
     public BuildingTraitData ResearcherTrait {
         get { return this.researcherTrait; }
     }
-    
+
     [SerializeField]
     private BuildingTraitData trainerTrait;
     public BuildingTraitData TrainerTrait {
         get { return this.trainerTrait; }
     }
 
-    [Header ("Textures")]
+    [Header("Textures")]
 
     [SerializeField]
     private Texture forestTexture;
@@ -57,11 +57,11 @@ public class BuildingData : SpawnableSpriteData {
 
     [SerializeField]
     private Texture swampTexture;
-    
+
     [SerializeField]
     private Texture swampInConstruction;
 
-    public Texture GetTexture (MapType type, bool construction) {
+    public Texture GetTexture(MapType type, bool construction) {
         if (type == MapType.Forest) {
             return construction ? this.forestInConstruction : this.forestTexture;
         } else {

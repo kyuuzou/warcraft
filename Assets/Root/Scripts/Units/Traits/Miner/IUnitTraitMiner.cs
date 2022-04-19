@@ -1,6 +1,6 @@
 ﻿
 public interface IUnitTraitMiner : IUnitTrait {
 
-    void Mine (Building building);
+    void Mine(Building building);
 
 }

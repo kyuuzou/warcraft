@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class UnitTraitNonDecaying : UnitTrait, IUnitTraitDecaying {
 
     public UnitTraitDataNonDecaying Data { get; private set; }
@@ -12,13 +10,13 @@ public class UnitTraitNonDecaying : UnitTrait, IUnitTraitDecaying {
         get { return UnitTraitType.Decaying; }
     }
 
-    public void Initialize (Unit unit, UnitTraitDataNonDecaying data) {
-        base.Initialize (unit);
-        
+    public void Initialize(Unit unit, UnitTraitDataNonDecaying data) {
+        base.Initialize(unit);
+
         this.Data = data;
     }
 
-    public void OnOrderAccepted () {
-        
+    public void OnOrderAccepted() {
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CustomScriptableObject : ScriptableObject {
 
@@ -17,32 +16,32 @@ public class CustomScriptableObject : ScriptableObject {
         private set { this.initialized = value; }
     }
 
-    public virtual void Activate () {
-        
-    }
-    
-    public virtual void Deactivate () {
-        
+    public virtual void Activate() {
+
     }
 
-    public T GetInstance<T> () where T : CustomScriptableObject {
-        return (T) CustomScriptableObject.Instantiate (this);
+    public virtual void Deactivate() {
+
     }
 
-    public virtual void Initialize () {
+    public T GetInstance<T>() where T : CustomScriptableObject {
+        return (T)CustomScriptableObject.Instantiate(this);
+    }
+
+    public virtual void Initialize() {
         this.Surrogate = CoroutineSurrogate.Instance;
         this.Initialized = true;
     }
-    
-    public virtual void ManualReset () {
-        
+
+    public virtual void ManualReset() {
+
     }
-    
-    public virtual void Pause () {
-        
+
+    public virtual void Pause() {
+
     }
-    
-    public virtual void Resume () {
-        
+
+    public virtual void Resume() {
+
     }
 }

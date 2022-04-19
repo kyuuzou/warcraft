@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public abstract class Spell : CustomScriptableObject {
@@ -31,15 +30,15 @@ public abstract class Spell : CustomScriptableObject {
 
     public abstract SpellType Type { get; }
 
-    public virtual void Cast (Unit caster, Building target, MapTile tile) {
-        
-    }
-
-    public virtual void Cast (Unit caster, Unit target, MapTile tile) {
+    public virtual void Cast(Unit caster, Building target, MapTile tile) {
 
     }
 
-    public virtual void Cast (Unit caster, MapTile target) {
-        
+    public virtual void Cast(Unit caster, Unit target, MapTile tile) {
+
+    }
+
+    public virtual void Cast(Unit caster, MapTile target) {
+
     }
 }

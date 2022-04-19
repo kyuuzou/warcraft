@@ -11,7 +11,7 @@ public class Campaign : CustomScriptableObject {
     [SerializeField]
     private Level[] levels;
 
-    public Level GetLevel (int index) {
+    public Level GetLevel(int index) {
         return this.levels[index];
     }
 }

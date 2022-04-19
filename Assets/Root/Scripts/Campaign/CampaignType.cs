@@ -1,6 +1,6 @@
 
 public enum CampaignType {
     None,
-    Human       = 1,
-    Orc         = 2
+    Human = 1,
+    Orc = 2
 }

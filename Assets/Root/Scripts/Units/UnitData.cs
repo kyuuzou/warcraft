@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class UnitData : SpawnableSpriteData {
 
-    [Header ("Unit data")]
+    [Header("Unit data")]
 
     [SerializeField]
     private UnitType type = UnitType.None;
@@ -20,13 +18,13 @@ public class UnitData : SpawnableSpriteData {
     }
 
     [SerializeField]
-    private Vector2Int selectionSize = new Vector2Int (1, 1);
+    private Vector2Int selectionSize = new Vector2Int(1, 1);
     public Vector2Int SelectionSize {
         get { return this.selectionSize; }
     }
 
-    [Header ("Unit Sound")]
-    
+    [Header("Unit Sound")]
+
     [SerializeField]
     private AudioIdentifier acknowledgeSound;
     public AudioIdentifier AcknowledgeSound {
@@ -51,7 +49,7 @@ public class UnitData : SpawnableSpriteData {
         get { return this.readySound; }
     }
 
-    [Header ("Traits")]
+    [Header("Traits")]
 
     [SerializeField]
     private UnitTraitData attackerTrait;
@@ -94,7 +92,7 @@ public class UnitData : SpawnableSpriteData {
     public UnitTraitData MenderTrait {
         get { return this.menderTrait; }
     }
-    
+
     [SerializeField]
     private UnitTraitData minerTrait;
     public UnitTraitData MinerTrait {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class ObjectExtension {
@@ -9,13 +7,13 @@ public static class ObjectExtension {
             Debug.LogError("Null reference error at ObjectExtension.In<T>(this T, params T[])");
             return false;
         }
-        
+
         foreach (T objectReference in items) {
             if (item.Equals(objectReference)) {
                 return true;
             }
         }
-        
+
         return false;
     }
 }

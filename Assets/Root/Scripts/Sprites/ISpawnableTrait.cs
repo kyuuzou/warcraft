@@ -4,9 +4,9 @@ public interface ISpawnableTrait {
 
     bool Active { get; }
 
-    void Activate ();
-    
-    void Deactivate ();
+    void Activate();
 
-    void FilterButtons (ref List<GameButtonType> buttons);
+    void Deactivate();
+
+    void FilterButtons(ref List<GameButtonType> buttons);
 }

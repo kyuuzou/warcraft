@@ -21,16 +21,16 @@ public class UnitTraitMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
         set {
             if (value == 0) {
                 if (this.gold > 0) {
-                    this.Unit.SetAnimatorLayer (0);
+                    this.Unit.SetAnimatorLayer(0);
                 }
             } else {
                 //this.Unit.Lumber = 0;
-                
+
                 if (this.gold == 0) {
-                    this.Unit.SetAnimatorLayer (this.carryingGoldLayer);
+                    this.Unit.SetAnimatorLayer(this.carryingGoldLayer);
                 }
             }
-            
+
             this.gold = value;
         }
     }
@@ -38,50 +38,50 @@ public class UnitTraitMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
     public override UnitTraitType Type {
         get { return UnitTraitType.Miner; }
     }
-    
-    public void ApproachingTarget () {
-        this.Unit.ApproachBuilding ();
+
+    public void ApproachingTarget() {
+        this.Unit.ApproachBuilding();
     }
 
-    private IEnumerator DropGold () {
+    private IEnumerator DropGold() {
         this.goingToMine = true;
 
-        this.gameController.IncreaseGold (this.Gold);
+        this.gameController.IncreaseGold(this.Gold);
         this.Gold = 0;
-        
-        yield return new WaitForSeconds (1.0f);
 
-        this.Unit.LeaveBuilding ();
+        yield return new WaitForSeconds(1.0f);
 
-        if (this.minable.IsMinable ()) {
-            yield return this.Unit.StartCoroutine (this.townHall.EjectUnitCoroutine (this.Unit, false));
-            
-            this.Unit.Move (this.minable, this, true, false);
+        this.Unit.LeaveBuilding();
+
+        if (this.minable.IsMinable()) {
+            yield return this.Unit.StartCoroutine(this.townHall.EjectUnitCoroutine(this.Unit, false));
+
+            this.Unit.Move(this.minable, this, true, false);
         } else {
-            yield return this.Unit.StartCoroutine (this.townHall.EjectUnitCoroutine (this.Unit));
+            yield return this.Unit.StartCoroutine(this.townHall.EjectUnitCoroutine(this.Unit));
         }
-        
-        this.missionStatistics.Score ++;
+
+        this.missionStatistics.Score++;
         this.missionStatistics.GoldYouMined += this.Gold;
     }
 
-    private IEnumerator GatherGold () {
+    private IEnumerator GatherGold() {
         this.goingToMine = false;
 
-        this.Gold = this.minable.Mine (this.Unit.GetTrait<IUnitTraitMiner> ());
+        this.Gold = this.minable.Mine(this.Unit.GetTrait<IUnitTraitMiner>());
 
-        if (! this.minable.IsDead ()) {
-            yield return new WaitForSeconds (2.0f);
+        if (!this.minable.IsDead()) {
+            yield return new WaitForSeconds(2.0f);
         }
-        
-        yield return this.Unit.StartCoroutine (this.minable.EjectUnitCoroutine (this.Unit, false));
-        
-        this.Unit.Move (this.townHall, this, true, false);
+
+        yield return this.Unit.StartCoroutine(this.minable.EjectUnitCoroutine(this.Unit, false));
+
+        this.Unit.Move(this.townHall, this, true, false);
     }
 
-    public void Initialize (Unit unit, UnitTraitDataMiner data) {
-        base.Initialize (unit);
-        
+    public void Initialize(Unit unit, UnitTraitDataMiner data) {
+        base.Initialize(unit);
+
         this.Data = data;
 
         ServiceLocator serviceLocator = ServiceLocator.Instance;
@@ -90,56 +90,56 @@ public class UnitTraitMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
         this.missionStatistics = serviceLocator.MissionStatistics;
     }
 
-    public bool IsTileTraversable (MapTile tile) {
+    public bool IsTileTraversable(MapTile tile) {
         return true;
     }
 
-    public void Mine (Building building) {
-        if (building.IsMinable ()) {
+    public void Mine(Building building) {
+        if (building.IsMinable()) {
             this.minable = building;
-            this.townHall = this.map.GetNearestBuilding (BuildingType.HumanTownHall, this.Unit.Tile);
+            this.townHall = this.map.GetNearestBuilding(BuildingType.HumanTownHall, this.Unit.Tile);
 
             this.goingToMine = true;
 
-            this.Unit.Move (building, this, true, false);
+            this.Unit.Move(building, this, true, false);
         }
     }
 
-    public void OnOrderAccepted () {
-        
+    public void OnOrderAccepted() {
+
     }
-    
-    public void ReachedTarget () {
-        if (this.goingToMine && this.minable.Overlaps (this.Unit)) {
-            this.Unit.EnterBuilding ();
-            this.Unit.StartCoroutine (this.GatherGold ());
-        } else if (! this.goingToMine && this.townHall.Overlaps (this.Unit)) {
-            this.Unit.EnterBuilding ();
-            this.Unit.StartCoroutine (this.DropGold ());
+
+    public void ReachedTarget() {
+        if (this.goingToMine && this.minable.Overlaps(this.Unit)) {
+            this.Unit.EnterBuilding();
+            this.Unit.StartCoroutine(this.GatherGold());
+        } else if (!this.goingToMine && this.townHall.Overlaps(this.Unit)) {
+            this.Unit.EnterBuilding();
+            this.Unit.StartCoroutine(this.DropGold());
         } else {
-            this.RecalculatePath ();
+            this.RecalculatePath();
         }
     }
 
-    public void RecalculatePath () {
+    public void RecalculatePath() {
         /*
         if (this.Unit.CurrentAnimationType == AnimationType.Walking) {
             this.Unit.Play (AnimationType.Idle);
         }
         */
-        
+
         if (this.goingToMine) {
-            this.Unit.Move (this.minable, this, true, true);
+            this.Unit.Move(this.minable, this, true, true);
         } else {
-            this.ReturnToTownHall ();
+            this.ReturnToTownHall();
         }
     }
 
-    private void ReturnToTownHall () {
-        this.Unit.Move (this.townHall, this, true, true);
+    private void ReturnToTownHall() {
+        this.Unit.Move(this.townHall, this, true, true);
     }
 
-    public void TileChanged () {
+    public void TileChanged() {
 
     }
 }

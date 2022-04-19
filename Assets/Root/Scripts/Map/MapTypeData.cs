@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MapTypeData : CustomScriptableObject, IInspectorDictionaryEntry<MapType> {
@@ -32,94 +31,94 @@ public class MapTypeData : CustomScriptableObject, IInspectorDictionaryEntry<Map
         get { return this.Type; }
     }
 
-    public List<int> GetIndexesOfType (TileType type) {
-        List<int> indexes = new List<int> ();
-        
+    public List<int> GetIndexesOfType(TileType type) {
+        List<int> indexes = new List<int>();
+
         foreach (int key in this.tileDataByIndex.Keys) {
             TileData data = this.tileDataByIndex[key];
 
             TileType tileType = data.Type;
-            
+
             if (tileType == type) {
-                indexes.Add (key);
+                indexes.Add(key);
             }
         }
 
         return indexes;
     }
 
-    public TileData GetTileData (TileType type, int variation) {
-        if (! this.dataByTileType.ContainsKey (type)) {
+    public TileData GetTileData(TileType type, int variation) {
+        if (!this.dataByTileType.ContainsKey(type)) {
             return null;
         }
 
         Dictionary<int, TileData> variations = this.dataByTileType[type];
 
-        if (variations.ContainsKey (variation)) {
+        if (variations.ContainsKey(variation)) {
             return variations[variation];
         }
 
         return null;
     }
 
-    public TileData GetTileDataForIndex (int index) {
-        if (this.tileDataByIndex == null || ! this.tileDataByIndex.ContainsKey (index)) {
+    public TileData GetTileDataForIndex(int index) {
+        if (this.tileDataByIndex == null || !this.tileDataByIndex.ContainsKey(index)) {
 #if WARNING
             Debug.LogWarning (string.Format ("No tile data set for {0}", index));
 #endif
             return null;
         }
-        
+
         return this.tileDataByIndex[index];
     }
-    
-    public TileData GetTileDataForPattern (TileType type, string pattern) {
-        if (! this.dataByTileType.ContainsKey (type)) {
+
+    public TileData GetTileDataForPattern(TileType type, string pattern) {
+        if (!this.dataByTileType.ContainsKey(type)) {
             return null;
         }
 
         Dictionary<int, TileData> variations = this.dataByTileType[type];
 
         foreach (TileData data in variations.Values) {
-            if (data.Pattern.Contains (pattern)) {
+            if (data.Pattern.Contains(pattern)) {
                 return data;
             }
         }
 
         return null;
     }
-                                           
-    public override void Initialize () {
-        base.Initialize ();
 
-        this.tileDataByIndex = new Dictionary<int, TileData> ();
+    public override void Initialize() {
+        base.Initialize();
 
-        this.InitializeTileData ();
+        this.tileDataByIndex = new Dictionary<int, TileData>();
+
+        this.InitializeTileData();
     }
 
-    private void InitializeTileData () {
-        this.dataByTileType = new Dictionary<TileType, Dictionary<int, TileData>> ();
-        
+    private void InitializeTileData() {
+        this.dataByTileType = new Dictionary<TileType, Dictionary<int, TileData>>();
+
         foreach (TileData data in this.tileData) {
             if (data == null) {
                 continue;
             }
 
-            if (! this.dataByTileType.ContainsKey (data.Type)) {
-                this.dataByTileType[data.Type] = new Dictionary<int, TileData> ();
+            if (!this.dataByTileType.ContainsKey(data.Type)) {
+                this.dataByTileType[data.Type] = new Dictionary<int, TileData>();
             }
 
             this.dataByTileType[data.Type][data.Variation] = data;
-            data.Initialize ();
+            data.Initialize();
         }
     }
-    
-    public void SetTileDataForIndex (int index, TileData data) {
+
+    public void SetTileDataForIndex(int index, TileData data) {
         this.tileDataByIndex[index] = data;
 
         //TODO: check if the code below has unexpected adverse effects
-        if (! this.dataByTileType.ContainsKey (data.Type)) {
-            this.dataByTileType[data.Type] = new Dictionary<int, TileData> ();
+        if (!this.dataByTileType.ContainsKey(data.Type)) {
+            this.dataByTileType[data.Type] = new Dictionary<int, TileData>();
         }
 
         this.dataByTileType[data.Type][index] = data;

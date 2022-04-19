@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class UnitTraitDataShooter : UnitTraitData {
@@ -14,11 +12,11 @@ public class UnitTraitDataShooter : UnitTraitData {
         get { return UnitTraitType.Shooter; }
     }
 
-    public override UnitTrait AddTrait (Unit unit) {
-        UnitTraitShooter trait = unit.gameObject.AddComponent<UnitTraitShooter> ();
-        trait.Initialize (unit, UnitTraitDataShooter.Instantiate (this));
-        
-        unit.SetTrait<IUnitTraitShooter> (trait);
+    public override UnitTrait AddTrait(Unit unit) {
+        UnitTraitShooter trait = unit.gameObject.AddComponent<UnitTraitShooter>();
+        trait.Initialize(unit, UnitTraitDataShooter.Instantiate(this));
+
+        unit.SetTrait<IUnitTraitShooter>(trait);
 
         return trait;
     }

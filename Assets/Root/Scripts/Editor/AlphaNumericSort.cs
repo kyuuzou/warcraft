@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-/*
+﻿/*
 public class AlphaNumericSort : BaseHierarchySort {
     
     public override int Compare (GameObject lhs, GameObject rhs) {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceManager : SceneObject {
@@ -9,34 +8,34 @@ public class ResourceManager : SceneObject {
 
     private Dictionary<string, Atlas> atlasByImagePath;
 
-    public Atlas GetAtlas (string key) {
-        if (this.atlasByImagePath.ContainsKey (key)) {
+    public Atlas GetAtlas(string key) {
+        if (this.atlasByImagePath.ContainsKey(key)) {
             return this.atlasByImagePath[key];
         }
 
         if (key.Length > 0) {
-            Debug.LogError ("Atlas not found: " + key);
+            Debug.LogError("Atlas not found: " + key);
         }
 
         return null;
     }
 
-    protected override void InitializeInternals () {
+    protected override void InitializeInternals() {
         if (this.InitializedInternals) {
             return;
         }
 
-        base.InitializeInternals ();
+        base.InitializeInternals();
 
-        this.InitializeAtlases ();
+        this.InitializeAtlases();
     }
 
-    private void InitializeAtlases () {
-        this.atlasByImagePath = new Dictionary<string, Atlas> ();
+    private void InitializeAtlases() {
+        this.atlasByImagePath = new Dictionary<string, Atlas>();
 
         foreach (Atlas atlas in this.atlases) {
-            atlas.Initialize ();
-            this.atlasByImagePath[atlas.TextureAtlas.imagePath.RemoveFileExtension ()] = atlas;
+            atlas.Initialize();
+            this.atlasByImagePath[atlas.TextureAtlas.imagePath.RemoveFileExtension()] = atlas;
         }
     }
 }
