@@ -71,7 +71,7 @@ public class UnitTraitMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
         this.Gold = this.minable.Mine (this.Unit.GetTrait<IUnitTraitMiner> ());
 
         if (! this.minable.IsDead ()) {
-            yield return new WaitForSeconds (10.0f);
+            yield return new WaitForSeconds (2.0f);
         }
         
         yield return this.Unit.StartCoroutine (this.minable.EjectUnitCoroutine (this.Unit, false));
