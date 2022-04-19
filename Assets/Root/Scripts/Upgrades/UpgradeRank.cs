@@ -13,11 +13,11 @@ public class UpgradeRank {
         get { return this.strength; }
     }
 
-    [SerializeField]
-    private int cost;
-    public int Cost {
-        get { return this.cost; }
-    }
+    [field: SerializeField]
+    public int GoldCost { get; private set; }
+
+    [field: SerializeField]
+    public int LumberCost { get; private set; }
 
     [SerializeField]
     private int researchTime;

@@ -24,7 +24,8 @@ public class BuildingTraitResearcher : BuildingTrait, IBuildingTraitResearcher {
 
             UpgradeRank upgradeRank = this.upgrade.GetRank (this.rank);
 
-            this.gameController.IncreaseGold (upgradeRank.Cost);
+            this.gameController.IncreaseGold(upgradeRank.GoldCost);
+            this.gameController.IncreaseLumber(upgradeRank.LumberCost);
 
             this.Building.StatusBackgroundIndex = 8;
             this.statusPane.SetBackgroundIndex (this.Building.StatusBackgroundIndex);
@@ -63,8 +64,9 @@ public class BuildingTraitResearcher : BuildingTrait, IBuildingTraitResearcher {
 
         UpgradeRank upgradeRank = upgrade.GetRank (rank);
 
-        this.gameController.DecreaseGold (upgradeRank.Cost);
-
+        this.gameController.DecreaseGold (upgradeRank.GoldCost);
+        this.gameController.DecreaseLumber(upgradeRank.LumberCost);
+        
         if (this.Building.Selected) {
             this.contextMenu.SetNode (this.contextMenu.CancelNode);
         }
