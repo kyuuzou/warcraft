@@ -320,6 +320,7 @@ public class GameController : SceneObject {
     private void Update () {
         this.map.ManualUpdate ();
 
-        //Utils.ScrollResourceNumber (ref this.visibleCurrency, this.currency, this.currencyText);
+        Utils.ScrollResourceNumber (ref this.visibleGold, this.gold, this.goldText);
+        Utils.ScrollResourceNumber (ref this.visibleLumber, this.lumber, this.lumberText);
     }
 }

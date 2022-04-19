@@ -51,11 +51,11 @@ public class SpawnableSpriteData : ScriptableObject {
         get { return this.timeToBuild; }
     }
 
-    [SerializeField]
-    private int cost;
-    public int Cost {
-        get { return this.cost; }
-    }
+    [field: SerializeField]
+    public int GoldCost { get; private set; }
+
+    [field: SerializeField]
+    public int LumberCost { get; private set; }
 
     [Header ("Context Menu data")]
 

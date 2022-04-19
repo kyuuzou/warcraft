@@ -41,10 +41,11 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
     public void Build (BuildingType type) {
         this.Activate ();
 
-        int currency = this.gameController.GetGold ();
-        BuildingData data = this.spawnFactory.GetData (type);
+        int gold = this.gameController.GetGold();
+        int lumber = this.gameController.GetLumber();
+        BuildingData data = this.spawnFactory.GetData(type);
 
-        if (currency < data.Cost) {
+        if (gold < data.GoldCost || lumber < data.LumberCost) {
             return;
         }
 
@@ -57,7 +58,8 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         this.building.Sprite.Renderer.enabled = false;
         this.building.AddDeathListener (this);
         
-        this.gameController.DecreaseGold (data.Cost);
+        this.gameController.DecreaseGold(data.GoldCost);
+        this.gameController.DecreaseLumber(data.LumberCost);
         this.contextMenu.SetNode (this.contextMenu.CancelNode);
 
         bool build = true;
@@ -83,7 +85,9 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
         base.Deactivate ();
 
         if (GameFlags.building && this.building != null) {
-            this.gameController.IncreaseGold (this.building.Data.Cost);
+            BuildingData buildingData = this.building.Data;
+            this.gameController.IncreaseGold(buildingData.GoldCost);
+            this.gameController.IncreaseLumber(buildingData.LumberCost);
 
             this.building = null;
         }

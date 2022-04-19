@@ -94,7 +94,8 @@ public partial class Building : SpawnableSprite {
     private void CancelConstruction () {
         this.underConstruction = false;
         
-        this.GameController.IncreaseGold ((int) (this.Data.Cost * 0.25f));
+        this.GameController.IncreaseGold(this.Data.GoldCost / 4);
+        this.GameController.IncreaseLumber(this.Data.LumberCost / 4);
 
         if (this.buildEnumerator != null) {
             this.StopCoroutine (this.buildEnumerator);

@@ -24,7 +24,8 @@ public class BuildingTraitTrainer : BuildingTrait, IBuildingTraitTrainer {
         if (this.training) {
             this.Building.StopCoroutine (this.trainEnumerator);
 
-            this.gameController.IncreaseGold (this.unit.Data.Cost);
+            this.gameController.IncreaseGold(this.unit.Data.GoldCost);
+            this.gameController.IncreaseLumber(this.unit.Data.LumberCost);
 
             this.Building.StatusBackgroundIndex = 8;
             this.statusPane.SetBackgroundIndex (this.Building.StatusBackgroundIndex);
@@ -62,7 +63,8 @@ public class BuildingTraitTrainer : BuildingTrait, IBuildingTraitTrainer {
         this.unit.Collider.enabled = false;
         this.unit.Renderer.enabled = false;
 
-        this.gameController.DecreaseGold (this.unit.Data.Cost);
+        this.gameController.DecreaseGold(this.unit.Data.GoldCost);
+        this.gameController.DecreaseLumber(this.unit.Data.LumberCost);
 
         if (this.Building.Selected) {
             this.contextMenu.SetNode (this.contextMenu.CancelNode);
