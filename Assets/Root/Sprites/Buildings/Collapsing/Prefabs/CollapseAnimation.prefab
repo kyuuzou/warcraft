@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8d1d72a760f8242b24c7311871f0cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atlasSize: {x: 0, y: 0}
+  atlasSize: {x: 1, y: 17}
   animations:
   - {fileID: 11400000, guid: 27e4e2e8e4714de428a4c4268ad2a8aa, type: 2}
   - {fileID: 11400000, guid: b0dd63c071763014d9cb54d1ac3f3eb8, type: 2}
