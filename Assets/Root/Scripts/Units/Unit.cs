@@ -351,6 +351,10 @@ public partial class Unit : SpawnableSprite {
                     case AnimationType.Mending:
                         this.GetTrait<IUnitTraitMender>().MendAfterCooldown();
                         break;
+                    
+                    default:
+                        // do nothing
+                        break;
                 }
 
                 break;

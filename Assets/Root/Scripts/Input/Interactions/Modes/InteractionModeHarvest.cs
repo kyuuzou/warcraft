@@ -60,6 +60,10 @@ public class InteractionModeHarvest : InteractionMode {
             case "Ground":
                 this.ClickGround(collider);
                 break;
+            
+            default:
+                // do nothing
+                break;
         }
 
         return hit;
