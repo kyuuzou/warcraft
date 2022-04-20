@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InteractionModeBuilding : InteractionMode {
 
-    private Grid grid;
+    private MapGrid grid;
     private Map map;
     private Rect viewport;
 

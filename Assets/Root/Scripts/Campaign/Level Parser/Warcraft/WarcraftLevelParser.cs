@@ -9,7 +9,7 @@ public class WarcraftLevelParser : ILevelParser {
     //private string[] text;
 
     private GameController gameController;
-    private Grid grid;
+    private MapGrid grid;
     private Map map;
     private SpawnFactory spawnFactory;
 

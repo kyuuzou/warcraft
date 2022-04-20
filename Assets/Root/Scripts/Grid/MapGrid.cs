@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Grid : SceneObject {
+public class MapGrid : SceneObject {
 
     [SerializeField]
     private int columns = 15;

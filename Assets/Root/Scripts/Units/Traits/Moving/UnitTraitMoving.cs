@@ -10,7 +10,7 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
 
     private MainCamera mainCamera;
     private Map map;
-    private Grid grid;
+    private MapGrid grid;
 
     private Task movement = null;
 

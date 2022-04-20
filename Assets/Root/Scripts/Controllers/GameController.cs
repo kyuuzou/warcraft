@@ -37,7 +37,7 @@ public class GameController : SceneObject {
 
     private AudioManager audioManager;
     private ContextMenu contextMenu;
-    private Grid grid;
+    private MapGrid grid;
     private Map map;
     private Minimap minimap;
 

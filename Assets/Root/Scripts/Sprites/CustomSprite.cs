@@ -17,7 +17,7 @@ public class CustomSprite : SceneObject, IAnimationTriggerListener {
     protected AudioManager AudioManager { get; private set; }
     protected Map Map { get; private set; }
     protected GameController GameController { get; private set; }
-    protected Grid Grid { get; private set; }
+    protected MapGrid Grid { get; private set; }
 
     private Direction direction;
     public Direction Direction {

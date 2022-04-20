@@ -30,8 +30,8 @@ public class ServiceLocator : Singleton<ServiceLocator> {
     }
 
     [SerializeField]
-    private Grid grid;
-    public Grid Grid {
+    private MapGrid grid;
+    public MapGrid Grid {
         get { return this.grid; }
     }
 

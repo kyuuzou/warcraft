@@ -84,7 +84,7 @@ public class MapTile : ITarget {
     private Dictionary<int, MapTileLayer> layers;
 
     private GameController gameController;
-    private Grid grid;
+    private MapGrid grid;
     private Map map;
     private MapTypeData mapData;
     private Color targetColor;

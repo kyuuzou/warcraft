@@ -14,7 +14,7 @@ public class TreeTile : IInhabitant {
     public List<MapTile> Cluster { get; set; }
 
     private GameController gameController;
-    private Grid grid;
+    private MapGrid grid;
     private MapTypeData mapData;
     private MapTile tile;
 

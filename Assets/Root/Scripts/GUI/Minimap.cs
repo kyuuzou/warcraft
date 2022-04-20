@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Minimap : SceneObject {
 
-    private Grid grid;
+    private MapGrid grid;
     private Map map;
 
     [SerializeField]
