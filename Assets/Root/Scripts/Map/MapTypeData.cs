@@ -10,12 +10,6 @@ public class MapTypeData : CustomScriptableObject, IInspectorDictionaryEntry<Map
     }
 
     [SerializeField]
-    private Atlas atlas;
-    public Atlas Atlas {
-        get { return this.atlas; }
-    }
-
-    [SerializeField]
     private TextAsset layout;
     public TextAsset Layout {
         get { return this.layout; }

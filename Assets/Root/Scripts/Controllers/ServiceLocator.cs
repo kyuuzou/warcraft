@@ -90,12 +90,6 @@ public class ServiceLocator : Singleton<ServiceLocator> {
     }
 
     [SerializeField]
-    private ResourceManager resourceManager;
-    public ResourceManager ResourceManager {
-        get { return this.resourceManager; }
-    }
-
-    [SerializeField]
     private TextMesh scoreText;
     public TextMesh ScoreText {
         get { return this.scoreText; }
