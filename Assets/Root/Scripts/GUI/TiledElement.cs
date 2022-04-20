@@ -9,7 +9,7 @@ public class TiledElement : MonoBehaviour {
     private int rows = 1;
 
     [SerializeField]
-    public Vector2Int currentTile = new Vector2Int(0, 0);
+    private Vector2Int currentTile = Vector2Int.zero;
 
     [SerializeField]
     private bool inverted = false;

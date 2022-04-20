@@ -28,7 +28,7 @@ public class Minimap : SceneObject {
     private int lastColumn = -1;
     private int lastRow = -1;
     private bool isPressing;
-    private Vector2Int position = new Vector2Int(0, 0);
+    private Vector2Int position = Vector2Int.zero;
 
     private List<Unit> units;
     private List<Building> buildings;
@@ -181,7 +181,7 @@ public class Minimap : SceneObject {
         this.backLayerTexture.Apply();
         this.backLayerMaterial.mainTexture = this.backLayerTexture;
 
-        if (this.position != new Vector2Int(0, 0)) {
+        if (this.position != Vector2Int.zero) {
             this.UpdatePosition(this.position);
         } else {
             this.frontLayerTexture.Apply();

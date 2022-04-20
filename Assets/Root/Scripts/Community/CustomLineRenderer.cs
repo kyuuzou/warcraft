@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomLineVertex {
-    public Vector3 position = Vector3.zero;
     public Color color = Color.white;
     public float width = 1.0f;
+    public Vector3 Position { get; set; } = Vector3.zero;
 }
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
