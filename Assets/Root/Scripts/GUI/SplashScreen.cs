@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SplashScreen : MonoBehaviour {
 
@@ -28,7 +29,8 @@ public class SplashScreen : MonoBehaviour {
     private float characterWidth = 10.0f;
 
     [SerializeField]
-    private GUITexture logo;
+    private Image logo;
+
     private static readonly float logoAlpha = 1.0f;
 
     private void AlignCaret(int lineIndex) {
