@@ -91,36 +91,6 @@ public class Decoration : SpawnableSprite, IInhabitant {
         this.tileData = tile.Data;
     }
 
-    protected virtual void LateUpdate() {
-        /*
-        if (this.Tile != null) {
-            Vector3 position = this.Tile.RealPosition;
-            position.y = position.y - this.Grid.DefaultSlotSize.y * 0.5f + this.SpriteRenderer.bounds.size.y * 0.5f;
-            position.y -= 47.0f;
-
-            if (this.Tile.Visible) {
-                if (this.IsBehindEverything) {
-                    position.z = this.Tile.Slot.GetLayer (0).Transform.position.z;
-                } else {
-                    position.z = this.Tile.Slot.SceneObject.Transform.position.z;
-                }
-            }
-
-            position = position + this.offset;
-            */
-        /*
-        float rowOffset = this.Tile.Visible ? this.Tile.Slot.Row * 2.0f : 0.0f;
-        this.transform.SetZ (-1.0f - rowOffset);
-        */
-        /*
-        if (this.lastPosition != position) {
-            this.lastPosition = position;
-
-            this.transform.position = position;
-        }
-    }*/
-    }
-
     protected virtual void SetData(DecorationData data) {
         this.Data = data;
 

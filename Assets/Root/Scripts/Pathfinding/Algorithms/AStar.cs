@@ -156,15 +156,8 @@ public class AStar : PathfindingAlgorithm {
                     }
 
                     if (!this.map.IsAreaTraversable(neighbour.MapPosition, unit.TileSize, movementListener)) {
-                        //if (! movementListener.IsTileTraversable (neighbour)) {
                         continue;
                     }
-
-                    /*
-                    if (! neighbour.Data.TraversableByLand) {
-                        continue;
-                    }
-                    */
                 }
 
                 float cost = node.Cost + (diagonal ? 0.5f : 0.45f);

@@ -83,16 +83,6 @@ public class Grid : SceneObject {
 
     public void OnFinishedParsingLevel() {
         this.InitializeExternals();
-
-        /*
-        UnitGroup currentGroup = this.gameController.CurrentGroup;
-
-        if (currentGroup.Units.Count > 0) {
-            Vector2Int position = currentGroup.Units[0].Tile.MapPosition * 2;
-            this.SetPosition(position * 0.5f);
-        } else {
-            this.SetPosition(Vector2Int.zero);
-        }*/
     }
 
     public void Refresh() {

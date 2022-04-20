@@ -289,19 +289,6 @@ public partial class Building : SpawnableSprite {
         return this.GetTrait<IBuildingTraitMinable>().IsMinable();
     }
 
-    private void LateUpdate() {
-        /*
-        if (this.Tile.Slot != null) {
-            Vector3 tilePosition = this.Tile.Slot.Transform.position;
-
-            this.Transform.SetPosition (
-                this.Transform.position.x,
-                tilePosition.y + this.Offset.y,
-                tilePosition.z - 0.1f
-            );
-        }*/
-    }
-
     public override void ManualUpdate() {
         base.ManualUpdate();
 

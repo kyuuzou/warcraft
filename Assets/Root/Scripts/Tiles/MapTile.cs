@@ -35,13 +35,6 @@ public class MapTile : ITarget {
         get { return this.color; }
         private set {
             this.color = value;
-
-            //TODO: don't set tile, just update the colors, also: don't set the colors every single frame
-            /*
-            if (this.Slot != null) {
-                this.Slot.SetTile (this);
-            }
-            */
         }
     }
 
@@ -478,13 +471,6 @@ public class MapTile : ITarget {
     public void SetData(TileData data) {
         this.Data = data;
         this.Type = data.Type;
-
-        /*
-        //TODO:
-        //Should TreeTile be Decoration, like Wall? If only for consistency.
-        //Check for draw call issues beforehand though.
-        this.Tree = (this.Type == TileType.Tree) ? new TreeTile (this) : null;
-        */
 
         if (this.Data == null) {
             Debug.LogError(string.Format("No data found for {0}, variation {1}.", data.Type, data.Variation));

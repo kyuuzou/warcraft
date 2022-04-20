@@ -35,15 +35,6 @@ public static class TileTypeExtension {
 
     private static GameController gameController = null;
 
-    /*
-    public static Color GetColor (this TileType type) {
-        TileTypeExtension.Initialize ();
-
-        TileData data = TileTypeExtension.map.GetTileData (type);
-        return data == null ? Color.magenta : data.Color;
-    }
-    */
-
     public static TileData GetData(this TileType type, int variation = 0) {
         TileTypeExtension.Initialize();
 
@@ -62,13 +53,4 @@ public static class TileTypeExtension {
             TileTypeExtension.gameController = serviceLocator.GameController;
         }
     }
-
-    /*
-    public static bool IsTraversable (this TileType type) {
-        TileTypeExtension.Initialize ();
-
-        TileData data = TileTypeExtension.map.GetTileData (type);
-        return data == null ? true : data.Traversable;
-    }
-    */
 }

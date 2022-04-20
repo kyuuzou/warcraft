@@ -347,13 +347,6 @@ public class Map : SceneObject {
 #if CUSTOM_DEBUG
                 Debug.LogWarning ("Closest traversable tile is origin. Unit will not move.");
 #endif
-                /*
-                if (unit.Tile != origin) {
-                    unit.TargetTile = origin;
-                }
-                */
-
-                //unit.UpdateTargetTile ();
                 yield break;
             }
 

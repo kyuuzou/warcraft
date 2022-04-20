@@ -82,7 +82,7 @@ public class GameButton : SceneObject {
         this.Collider.enabled = visible;
         this.portrait.GetComponent<Renderer>().enabled = visible;
 
-        if (!visible/* && this.statusBar.text == this.statusText*/) {
+        if (!visible) {
             this.OnMouseExit();
         }
     }

@@ -122,12 +122,6 @@ public class UnitTraitMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
     }
 
     public void RecalculatePath() {
-        /*
-        if (this.Unit.CurrentAnimationType == AnimationType.Walking) {
-            this.Unit.Play (AnimationType.Idle);
-        }
-        */
-
         if (this.goingToMine) {
             this.Unit.Move(this.minable, this, true, true);
         } else {

@@ -23,11 +23,7 @@ public class InteractionModeHarvest : InteractionMode {
         TileSlot slot = collider.GetComponent<TileSlot>();
 
         if (slot.Tile.Type == TileType.Tree) {
-            /*
-            this.harvester.GetTrait<UnitTraitHarvester>(). (slot.Tile);
-            this.harvester.PressCancel ();
             
-            InteractionHandler.Instance.SetMode (InteractionModeType.Regular);*/
         }
     }
 

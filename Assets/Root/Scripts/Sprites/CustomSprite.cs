@@ -88,10 +88,6 @@ public class CustomSprite : SceneObject, IAnimationTriggerListener {
         this.Tile = tile;
 
         this.ClaimedTiles = new List<MapTile>();
-
-        /*Vector2 tilePosition = this.Tile.RealPosition;
-        this.Position = new Vector3 (tilePosition.x, tilePosition.y, this.Transform.position.z);
-        this.transform.position = this.Position;*/
     }
 
     public void ManualDestroy() {
@@ -119,13 +115,6 @@ public class CustomSprite : SceneObject, IAnimationTriggerListener {
     }
 
     public void SetAnimatorLayer(int layer) {
-        /*
-        for (int i = 0; i < this.Animator.layerCount; i ++) {
-            this.Animator.SetLayerWeight (i, 0.0f);
-		}
-
-        this.Animator.SetLayerWeight (layer, 1.0f);
-        */
     }
 
     public virtual void SetTile(MapTile tile) {

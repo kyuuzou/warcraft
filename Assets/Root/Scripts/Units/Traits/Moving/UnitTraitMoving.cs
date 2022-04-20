@@ -254,19 +254,7 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
     }
 
     public void RefreshPosition() {
-        /*    if (this.Unit.Tile == null) {
-                return;
-            }
-
-            Vector3 basePosition = this.Unit.Tile.RealPosition;
-            basePosition = basePosition.Add(this.Unit.Offset);
-            Debug.Log(this.Unit.Offset);
-
-            if (this.basePosition != basePosition) {
-                this.basePosition = basePosition;
-            }
-
-            this.transform.position = this.basePosition + this.RelativePosition;*/
+        
     }
 
     public void SetDestination(MapTile tile) {

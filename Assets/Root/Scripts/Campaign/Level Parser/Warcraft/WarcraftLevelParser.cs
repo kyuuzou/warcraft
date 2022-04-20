@@ -108,16 +108,6 @@ public class WarcraftLevelParser : ILevelParser {
                 if (tile.GetInhabitant<Decoration>() != null) {
                     continue;
                 }
-
-                /*
-                Decoration door = this.spawnFactory.SpawnDecoration (
-                    data.Type,
-                    this.gameController.GetFaction (FactionIdentifier.Neutral),
-                    tile.MapPosition
-                );
-
-                door.SetTileData (data);*/
-                //door.Play (AnimationType.Idle);
             } else if (data.Type == TileType.Tree) {
                 tile.AddInhabitant(new TreeTile(tile));
             }
@@ -125,21 +115,6 @@ public class WarcraftLevelParser : ILevelParser {
     }
 
     private void ParseMapType() {
-        /*
-         * The files don't have the right map types. Overriding this with a serialized MapType field on Level.cs, until
-         * the map level file extractor works properly.
-         * 
-        Match match = Regex.Match (this.text[index], "([a-z]+)\"}");
-        
-        if (match.Success) {
-            string text = match.Groups[1].Value;
-
-            MapType type = (MapType) Enum.Parse (typeof (MapType), char.ToUpper (text[0]) + text.Substring (1));
-            this.level.MapType = type;
-        } else {
-            Debug.Log ("Map type not found.");
-        }
-        */
     }
 
     private void ParseTileType(TileType tileType) {

@@ -135,19 +135,6 @@ public class Introduction : MonoBehaviour {
 
         yield return new WaitForSeconds(1.0f);
 
-        /*
-        yield return this.StartCoroutine (this.PlaySound (5.0f));
-        yield return this.StartCoroutine (this.PlaySound (8.0f));
-        yield return this.StartCoroutine (this.PlaySound (19.0f));
-        yield return this.StartCoroutine (this.PlaySound (33.0f));
-        yield return this.StartCoroutine (this.PlaySound (40.0f));
-        yield return this.StartCoroutine (this.PlaySound (47.0f));
-        yield return this.StartCoroutine (this.PlaySound (73.0f));
-        yield return this.StartCoroutine (this.PlaySound (86.0f));
-        yield return this.StartCoroutine (this.PlaySound (99.0f));
-        yield return this.StartCoroutine (this.PlaySound (118.0f));
-        yield return this.StartCoroutine (this.PlaySound (123.0f));
-        */
         yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
         this.menu.OnIntroductionFinished();
@@ -168,11 +155,6 @@ public class Introduction : MonoBehaviour {
 
         yield return new WaitForSeconds(8.0f);
 
-        /*
-        this.videoIndex = 2;
-        this.subtitleIndex = 5;
-        */
-
         yield return this.StartCoroutine(this.FadeIntoMovie());
         this.subtitles.text = this.subtitlesText[this.subtitleIndex++];
 
@@ -185,14 +167,6 @@ public class Introduction : MonoBehaviour {
         this.PlayMovie();
         yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
-        /*
-        this.videoIndex = 5;
-        this.subtitleIndex = 8;
-        Color color = this.fadeTexture.color;
-        color.a = 0.0f;
-        this.fadeTexture.color = color;
-        */
-
         this.PlayMovie();
         this.subtitles.text = this.subtitlesText[this.subtitleIndex++];
 
@@ -204,14 +178,6 @@ public class Introduction : MonoBehaviour {
         yield return new WaitForSeconds(3.0f);
         this.subtitles.text = string.Empty;
 
-        /*
-        this.videoIndex = 7;
-        this.subtitleIndex = 11;
-        Color color = this.fadeTexture.color;
-        color.a = 0.0f;
-        this.fadeTexture.color = color;
-        */
-
         this.PlayMovie();
         yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
@@ -220,7 +186,6 @@ public class Introduction : MonoBehaviour {
         yield return this.StartCoroutine(this.WaitForEndOfMovie());
 
         yield return new WaitForSeconds(3.0f);
-        //yield return this.StartCoroutine (this.Fade ());
 
         this.menu.OnIntroductionFinished();
     }

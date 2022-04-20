@@ -35,23 +35,6 @@ public class AIPlayer : Player {
             if (attacker.Group == null) {
                 continue;
             }
-
-            /*
-            Unit squadLeader = attacker.Group.Units[0];
-            MapTile targetTile = null;
-
-            for (int i = 0; i < 4; i ++) {
-                direction = (direction + 2).RoundClamp ();
-
-                if (squadLeader.Tile.GetNeighbour (direction).IsTraversable (MovementType.Land, squadLeader)) {
-                    targetTile = squadLeader.Tile.GetNeighbour (direction);
-                    break;
-                }
-            }
-
-            if (targetTile != null) {
-                squadLeader.Move (targetTile);
-            }*/
         }
     }
 }

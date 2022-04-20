@@ -56,12 +56,6 @@ public class Faction {
 
     public void AddUnit(Unit unit) {
         this.units.Add(unit);
-
-        /*
-        foreach (UnitTraitData trait in unit.Data.Traits) {
-            this.unitsByRole [trait.Type].Add (unit);
-        }
-        */
     }
 
     public void AddUpgrade(Upgrade upgrade, int rank) {
@@ -178,11 +172,5 @@ public class Faction {
 
     public void RemoveUnit(Unit unit) {
         this.units.Remove(unit);
-
-        /*
-        foreach (UnitTraitDataAttacker trait in unit.Data.Traits) {
-            this.unitsByRole [trait.Type].Remove (unit);
-        }
-        */
     }
 }

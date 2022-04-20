@@ -372,27 +372,8 @@ public partial class Unit : SpawnableSprite {
         this.GetTrait<IUnitTraitAttacker>().OnAttack();
     }
 
-    /*
-    protected void OnAttackingAnimationFinished (object sender, EventArgs args) {
-        this.GetTrait<IUnitTraitAttacker> ().AttackAfterCooldown ();
-    }
-    */
-
     private void OnDeathAnimationFinished(object sender, EventArgs args) {
-        //this.Play (SpriteAnimationType.Decomposing, 2.0f);
     }
-
-    /*
-    private void OnTriggerEnter2D (Collider2D other) {
-        Unit unit = other.GetComponent<Unit> ();
-        
-        if (unit != null && ! unit.Dead && ! this.Dead && unit.Faction.IsEnemy (this.Faction)) {
-            int hitPoints = this.CurrentHitPoints;
-            this.Damage (unit.CurrentHitPoints);
-            unit.Damage (hitPoints);
-        }
-    }
-    */
 
     public override bool OnManualMouseDown() {
         base.OnManualMouseDown();
@@ -419,12 +400,6 @@ public partial class Unit : SpawnableSprite {
     }
 
     protected void RegisterAnimationFinished(AnimationType type, EventHandler handler) {
-        /*
-        if (this.AnimationsByType.ContainsKey (type))
-            this.AnimationsByType[type].Finished += new AnimationFinishedHandler (handler);
-        else
-            Debug.LogError (this + " does not have an animation of type " + type);
-        */
     }
 
     protected void SetData(UnitData data) {
@@ -433,18 +408,6 @@ public partial class Unit : SpawnableSprite {
         this.SetTraits(data);
 
         this.RegisterAnimationFinished(AnimationType.Dying, this.OnDeathAnimationFinished);
-        //this.RegisterAnimationFinished (SpriteAnimationType.Decomposing, this.OnDecomposingAnimationFinished);
-
-        /*
-        if (this.HasTrait (UnitTraitType.Attacker)) {
-            this.RegisterAnimationFinished (AnimationType.Attacking, this.OnAttackingAnimationFinished);
-        } else if (this.HasTrait (UnitTraitType.Builder)) {
-            this.RegisterAnimationFinished (AnimationType.Harvesting, this.OnAttackingAnimationFinished);
-        }
-        */
-
-        //this.RegisterSpriteTrigger (SpriteTriggerType.Attack, this.OnAttackSpriteTrigger);
-
         this.SetRandomDirection();
     }
 

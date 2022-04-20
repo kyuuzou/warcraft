@@ -75,14 +75,6 @@ public class MeshAnimator : SceneObject {
 
         this.listeners = new List<IAnimationTriggerListener>();
         this.animationByType = new Dictionary<AnimationType, MeshAnimation>();
-
-        /*
-        CustomSprite sprite = this.GetComponent<CustomSprite> ();
-
-        if (sprite != null) {
-            this.RegisterTriggerListener (sprite);
-        }
-        */
     }
 
     public void OnAnimationTrigger(AnimationType animationType, AnimationTriggerType triggerType) {

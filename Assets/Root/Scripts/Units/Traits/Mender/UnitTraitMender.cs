@@ -39,14 +39,6 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
 
     private void Disengage() {
         this.engaging = false;
-
-        /*
-        if (this.Unit.CurrentAnimationType == AnimationType.Mending) {
-            //TODO: If the line below is uncommented, mending animations get interrupted when the target dies.
-            //Find some better way to prevent units from mending dead targets
-            //this.Unit.Play (AnimationType.Idle);
-        }
-        */
     }
 
     private void Engage() {
@@ -176,37 +168,16 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
         } else {
             this.RecalculatePath();
         }
-
-        //if (! this.engaging && ! this.target.IsDead ())
-        //    this.unit.MoveTowards (this.target);
     }
 
     public void RecalculatePath() {
         this.Disengage();
-
-        /*
-        if (this.Unit.CurrentAnimationType != AnimationType.Walking) {
-            this.Unit.Play (AnimationType.Idle);
-        }
-        */
-
         this.Unit.Move(this.target, this, false, true);//this.target.Tile == this.lastTargetTile);
         this.lastTargetTile = this.target.Tile;
 
-        //        this.Unit.Move (this.target, false, true);
-        //this.unit.StartCoroutine (this.map.FindPath (null, this.unit, this.unit.Tile, this.target.Tile, false));
     }
-
-    /*
-    public void SetDestination (Tile tile) {
-        this.destination = tile;
-    }
-    */
 
     private void SetTarget(SpawnableSprite target) {
-        //this.Unit.StopAllCoroutines ();
-        //this.engaging = false;
-
         this.target = target;
         this.target.AddDeathListener(this);
         this.lastTargetTile = this.target.Tile;
@@ -220,7 +191,7 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
     }
 
     public void TileChanged() {
-        if (this.target.IsDead()/* || this.destination == null*/) {
+        if (this.target.IsDead()) {
             return;
         }
 
@@ -230,32 +201,9 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
             this.Disengage();
 
             if (this.target.Tile == this.lastTargetTile) {
-                // base.UpdateTargetTile (ref targetTile, ref waypoints);
-                /*
-                if (waypoints.Count > 0) {
-                    Unit unit = waypoints[0].Unit;
-                    if (unit != null && unit != this.Unit) {
-                        this.RecalculatePath ();
-                        return;
-                    }
-                    
-                    this.Unit.TargetTile = waypoints[0];
-                    waypoints.RemoveAt (0);
-                    
-                    this.Unit.FindDirection (this.Unit.Tile, this.Unit.TargetTile);
-                    
-                    if (waypoints.Count == 0) {
-                        this.ApproachingTarget ();
-                    }
-                } else {
-                    this.Unit.TargetTile = null;
-                    
-                    this.ReachedTarget ();
-                }
-                */
+
             } else {
                 this.RecalculatePath();
-                //this.lastTargetTile = this.target.Tile;
             }
         }
     }
