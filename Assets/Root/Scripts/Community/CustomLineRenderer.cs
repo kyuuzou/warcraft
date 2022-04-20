@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomLineVertex {
-    public Color color = Color.white;
-    public float width = 1.0f;
     public Vector3 Position { get; set; } = Vector3.zero;
+    public Color Color { get; set; } = Color.white;
+    public float Width { get; set; } = 1.0f;
 }
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -36,21 +36,21 @@ public class CustomLineRenderer : MonoBehaviour {
         Color[] colors = this.m_Mesh.colors;
         Vector3 oldTangent = Vector3.zero;
         for (int i = 0; i < this.m_Points.Count - 1; i++) {
-            Vector3 faceNormal = (localViewPos - this.m_Points[i].position).normalized;
-            Vector3 dir = (this.m_Points[i + 1].position - this.m_Points[i].position);
+            Vector3 faceNormal = (localViewPos - this.m_Points[i].Position).normalized;
+            Vector3 dir = (this.m_Points[i + 1].Position - this.m_Points[i].Position);
             Vector3 tangent = Vector3.Cross(dir, faceNormal).normalized;
-            Vector3 offset = (oldTangent + tangent).normalized * this.m_Points[i].width / 2.0f;
+            Vector3 offset = (oldTangent + tangent).normalized * this.m_Points[i].Width / 2.0f;
 
-            vertices[i * 2] = this.m_Points[i].position - offset;
-            vertices[i * 2 + 1] = this.m_Points[i].position + offset;
+            vertices[i * 2] = this.m_Points[i].Position - offset;
+            vertices[i * 2 + 1] = this.m_Points[i].Position + offset;
             normals[i * 2] = normals[i * 2 + 1] = faceNormal;
-            colors[i * 2] = colors[i * 2 + 1] = this.m_Points[i].color;
+            colors[i * 2] = colors[i * 2 + 1] = this.m_Points[i].Color;
             if (i == this.m_Points.Count - 2) {
                 // last two points
-                vertices[i * 2 + 2] = this.m_Points[i + 1].position - tangent * this.m_Points[i + 1].width / 2.0f;
-                vertices[i * 2 + 3] = this.m_Points[i + 1].position + tangent * this.m_Points[i + 1].width / 2.0f;
+                vertices[i * 2 + 2] = this.m_Points[i + 1].Position - tangent * this.m_Points[i + 1].Width / 2.0f;
+                vertices[i * 2 + 3] = this.m_Points[i + 1].Position + tangent * this.m_Points[i + 1].Width / 2.0f;
                 normals[i * 2 + 2] = normals[i * 2 + 3] = faceNormal;
-                colors[i * 2 + 2] = colors[i * 2 + 3] = this.m_Points[i + 1].color;
+                colors[i * 2 + 2] = colors[i * 2 + 3] = this.m_Points[i + 1].Color;
             }
             oldTangent = tangent;
         }
@@ -90,7 +90,7 @@ public class CustomLineRenderer : MonoBehaviour {
             return;
         }
 
-        this.m_Points[aIndex].position = aPosition;
+        this.m_Points[aIndex].Position = aPosition;
     }
 
     public void SetWidth(int aIndex, float aWidth) {
@@ -98,7 +98,7 @@ public class CustomLineRenderer : MonoBehaviour {
             return;
         }
 
-        this.m_Points[aIndex].width = aWidth;
+        this.m_Points[aIndex].Width = aWidth;
     }
 
     public void SetColor(int aIndex, Color aColor) {
@@ -106,18 +106,18 @@ public class CustomLineRenderer : MonoBehaviour {
             return;
         }
 
-        this.m_Points[aIndex].color = aColor;
+        this.m_Points[aIndex].Color = aColor;
     }
 
     public void SetWidth(float aStartWidth, float aEndWidth) {
         for (int i = 0; i < this.m_Points.Count; i++) {
-            this.m_Points[i].width = Mathf.Lerp(aStartWidth, aEndWidth, (float)i / (this.m_Points.Count - 1));
+            this.m_Points[i].Width = Mathf.Lerp(aStartWidth, aEndWidth, (float)i / (this.m_Points.Count - 1));
         }
     }
 
     public void SetColor(Color aStart, Color aEnd) {
         for (int i = 0; i < this.m_Points.Count; i++) {
-            this.m_Points[i].color = Color.Lerp(aStart, aEnd, (float)i / (this.m_Points.Count - 1));
+            this.m_Points[i].Color = Color.Lerp(aStart, aEnd, (float)i / (this.m_Points.Count - 1));
         }
     }
 

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class CreateMesh : ScriptableWizard {
 
-    public float width = 1.0f;
-    public float height = 1.0f;
+    [SerializeField]
+    private float width = 1.0f;
+    
+    [SerializeField]
+    private float height = 1.0f;
+    
     private static Camera cam;
     private static Camera lastUsedCam;
 

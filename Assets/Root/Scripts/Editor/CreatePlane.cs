@@ -20,16 +20,36 @@ public class CreatePlane : ScriptableWizard {
         Center
     }
 
-    public string targetAssetPath = "Assets/Root/Meshes/";
-    public int widthSegments = 1;
-    public int lengthSegments = 1;
-    public float width = 1.0f;
-    public float length = 1.0f;
-    public Orientation orientation = Orientation.Horizontal;
-    public AnchorPoint anchor = AnchorPoint.Center;
-    public bool addCollider = false;
-    public bool createAtOrigin = true;
-    public string optionalName;
+    [SerializeField]
+    private string targetAssetPath = "Assets/Root/Meshes/";
+    
+    [SerializeField]
+    private int widthSegments = 1;
+    
+    [SerializeField]
+    private int lengthSegments = 1;
+    
+    [SerializeField]
+    private float width = 1.0f;
+    
+    [SerializeField]
+    private float length = 1.0f;
+    
+    [SerializeField]
+    private Orientation orientation = Orientation.Horizontal;
+    
+    [SerializeField]
+    private AnchorPoint anchor = AnchorPoint.Center;
+    
+    [SerializeField]
+    private bool addCollider = false;
+    
+    [SerializeField]
+    private bool createAtOrigin = true;
+    
+    [SerializeField]
+    private string optionalName;
+    
     private static Camera cam;
     private static Camera lastUsedCam;
 

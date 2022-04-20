@@ -1,8 +1,10 @@
 ﻿using UnityEditor;
+using UnityEngine;
 
 public class ScriptableObjectCreator : ScriptableWizard {
 
-    public string type;
+    [SerializeField]
+    private string type;
 
     [MenuItem("Assets/Create/Scriptable Object", false, (int)'S')]
     public static void CreateWizard() {

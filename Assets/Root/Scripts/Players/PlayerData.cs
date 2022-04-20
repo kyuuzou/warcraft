@@ -15,7 +15,7 @@ public class PlayerData : CustomScriptableObject {
     }
 
     [SerializeField]
-    public bool humanPlayer;
+    private bool humanPlayer;
     public bool HumanPlayer {
         get { return this.humanPlayer; }
     }
