@@ -21,7 +21,9 @@ A clone of Blizzard's classic Warcraft: Orcs and Humans from 1994, made in Unity
 
 ## Gameplay Video
 
-*[placeholder]*
+[![Gameplay Video](https://github.com/kyuuzou/warcraft/blob/master/thumbnail.png)](https://www.youtube.com/watch?v=JBtrjr9go2c "Gameplay Video")
+
+*Disclaimer: the art assets on the video are copyrighted to Blizzard Entertainment, and are not included on this repository.*
 
 ## Why it Exists
 
@@ -43,9 +45,11 @@ In 2022 I finally got my hands on an few backups of the project, and got to work
 
 ## Version History
 
-* *[placeholder]*
-    * *[placeholder]*
-
+* *0.0.1*
+    * Upgraded original project from Unity 4.0.12f1 to 2018.3.12f1
+    * Restored unit movement, active combat and death
+    * Units can once again build and mine
+    * Fixed unit training
 
 ## Contacting the Author
 
