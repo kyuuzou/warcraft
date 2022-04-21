@@ -3506,7 +3506,6 @@ MonoBehaviour:
   minimap: {fileID: 549195765}
   mission: {fileID: 704397832}
   missionStatistics: {fileID: 1774982039}
-  resourceManager: {fileID: 0}
   scoreText: {fileID: 0}
   spawnFactory: {fileID: 2058217584}
   statusBar: {fileID: 1040286591}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class Introduction : MonoBehaviour {
@@ -21,7 +22,7 @@ public class Introduction : MonoBehaviour {
     private Transform partialCanvas;
 
     [SerializeField]
-    private GUITexture fadeTexture;
+    private Image fadeImage;
 
     [SerializeField]
     private GUIText subtitles;
@@ -61,14 +62,14 @@ public class Introduction : MonoBehaviour {
     }
 
     private IEnumerator Fade(float start = 0.5f, float end = 0.0f) {
-        Color color = this.fadeTexture.color;
+        Color color = this.fadeImage.color;
 
         float elapsed = 0.0f;
         float length = 2.0f;
 
         while (elapsed < length) {
             color.a = Mathf.Lerp(start, end, elapsed / length);
-            this.fadeTexture.color = color;
+            this.fadeImage.color = color;
 
             elapsed += Time.deltaTime;
 
@@ -118,7 +119,7 @@ public class Introduction : MonoBehaviour {
     }
 
     private IEnumerator PlayPremadeVideo() {
-        this.fadeTexture.gameObject.SetActive(false);
+        this.fadeImage.gameObject.SetActive(false);
         this.partialCanvas.GetComponent<Renderer>().enabled = false;
 
         this.fullCanvas.GetComponent<Renderer>().enabled = true;
