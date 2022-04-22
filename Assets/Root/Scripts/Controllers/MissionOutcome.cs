@@ -1,61 +1,62 @@
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class MissionOutcome : MonoBehaviour {
 
     [SerializeField]
-    private GUIText scoreText;
+    private Text scoreText;
     private float visibleScore = 0.0f;
 
     [SerializeField]
-    private GUIText rankText;
+    private Text rankText;
 
     [SerializeField]
-    private GUIText unitsYouDestroyedText;
+    private Text unitsYouDestroyedText;
     private float visibleUnitsYouDestroyed = 0.0f;
 
     [SerializeField]
-    private GUIText unitsEnemyDestroyedText;
+    private Text unitsEnemyDestroyedText;
     private float visibleUnitsEnemyDestroyed = 0.0f;
 
     [SerializeField]
-    private GUIText structuresYouDestroyedText;
+    private Text structuresYouDestroyedText;
     private float visibleStructuresYouDestroyed = 0.0f;
 
     [SerializeField]
-    private GUIText structuresEnemyDestroyedText;
+    private Text structuresEnemyDestroyedText;
     private float visibleStructuresEnemyDestroyed = 0.0f;
 
     [SerializeField]
-    private GUIText goldYouMinedText;
+    private Text goldYouMinedText;
     private float visibleGoldYouMined = 0.0f;
 
     [SerializeField]
-    private GUIText goldEnemyMinedText;
+    private Text goldEnemyMinedText;
     private float visibleGoldEnemyMined = 0.0f;
 
     [SerializeField]
-    private GUIText unitsYouTrainedText;
+    private Text unitsYouTrainedText;
     private float visibleUnitsYouTrained = 0.0f;
 
     [SerializeField]
-    private GUIText unitsEnemyTrainedText;
+    private Text unitsEnemyTrainedText;
     private float visibleUnitsEnemyTrained = 0.0f;
 
     [SerializeField]
-    private GUIText structuresYouBuiltText;
+    private Text structuresYouBuiltText;
     private float visibleStructuresYouBuilt = 0.0f;
 
     [SerializeField]
-    private GUIText structuresEnemyBuiltText;
+    private Text structuresEnemyBuiltText;
     private float visibleStructuresEnemyBuilt = 0.0f;
 
     [SerializeField]
-    private GUIText lumberYouHarvestedText;
+    private Text lumberYouHarvestedText;
     private float visibleLumberYouHarvested = 0.0f;
 
     [SerializeField]
-    private GUIText lumberEnemyHarvestedText;
+    private Text lumberEnemyHarvestedText;
     private float visibleLumberEnemyHarvested = 0.0f;
 
     [SerializeField]

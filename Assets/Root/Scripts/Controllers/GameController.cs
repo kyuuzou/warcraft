@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : SceneObject {
 
     [Header("UI Elements")]
     [SerializeField]
-    private TextMesh goldText;
+    private Text goldText;
 
     [SerializeField]
-    private TextMesh lumberText;
+    private Text lumberText;
 
     public SpawnableSpriteGroup CurrentGroup { get; private set; }
     public bool Paused { get; private set; }

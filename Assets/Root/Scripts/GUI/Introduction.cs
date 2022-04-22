@@ -25,7 +25,7 @@ public class Introduction : MonoBehaviour {
     private Image fadeImage;
 
     [SerializeField]
-    private GUIText subtitles;
+    private Text subtitles;
 
     private string[] subtitlesText;
 

@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MenuButton : MonoBehaviour {
 
     [SerializeField]
@@ -13,7 +13,7 @@ public class MenuButton : MonoBehaviour {
     private string caption;
 
     [SerializeField]
-    private GUIText guiTextPrefab;
+    private Text guiTextPrefab;
 
     private Camera guiCamera;
 
@@ -24,7 +24,7 @@ public class MenuButton : MonoBehaviour {
     }
 
     private void InitializeCaption() {
-        GUIText guiText = GUIText.Instantiate(this.guiTextPrefab);
+        Text guiText = Text.Instantiate(this.guiTextPrefab);
         guiText.name = "Caption";
         guiText.text = this.caption;
         guiText.transform.parent = this.transform;

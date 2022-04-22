@@ -126,7 +126,9 @@ public class MapGrid : SceneObject {
         }
     }
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
+        
         this.map = ServiceLocator.Instance.Map;
 
         this.slots = new TileSlot[this.columns, this.rows];

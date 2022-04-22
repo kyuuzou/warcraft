@@ -162,7 +162,9 @@ public class Minimap : SceneObject {
         this.position = position;
     }
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
+        
         this.viewport = new Rect(this.x, this.y, this.width, this.height);
         this.invertedViewport = new Rect(this.x, Screen.height - this.y - this.height, this.width, this.height);
 

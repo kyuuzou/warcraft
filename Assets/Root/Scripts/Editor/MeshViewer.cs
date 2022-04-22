@@ -367,8 +367,10 @@ public class MeshViewer : EditorWindow {
             case MeshTopology.Triangles:
                 return 3;
             default:
-                throw new NotSupportedException($"Received unexpected value: {topo}");
+                // do nothing
+                break;
         }
+        
         return 1;
     }
 #endif

@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Utils : Singleton<Utils> {
 
     [SerializeField]
-    private GUIText debugText;
+    private Text debugText;
 
     [SerializeField]
     private Transform positionMarker;
@@ -136,7 +137,7 @@ public class Utils : Singleton<Utils> {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public static void ScrollResourceNumber(ref float visibleNumber, int actualNumber, TextMesh textMesh) {
+    public static void ScrollResourceNumber(ref float visibleNumber, int actualNumber, Text textMesh) {
         if (visibleNumber != actualNumber) {
             if (Mathf.Abs(actualNumber - visibleNumber) < 1) {
                 visibleNumber = actualNumber;
@@ -146,10 +147,6 @@ public class Utils : Singleton<Utils> {
 
             textMesh.text = ((int)visibleNumber).ToString("#,##0");
         }
-    }
-
-    public static void ScrollResourceNumber(ref float visibleNumber, int actualNumber, GUIText text) {
-
     }
 
     public static void SetLayerRecursively(GameObject gameObject, int layerIndex) {
