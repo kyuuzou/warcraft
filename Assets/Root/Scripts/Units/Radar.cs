@@ -19,7 +19,7 @@ public class Radar : SceneObject {
         }
     }
 
-    private void OnDetect(Collider collider) {
+    private void OnDetect(Collider2D collider) {
         //if (this.unit.HasTrait (UnitTraitType.Attacker)) {
         Transform parent = collider.transform.parent;
 
@@ -60,13 +60,7 @@ public class Radar : SceneObject {
         }
     }
 
-    private void OnTriggerEnter(Collider collider) {
-        if (this.Searching) {
-            this.OnDetect(collider);
-        }
-    }
-
-    private void OnTriggerStay(Collider collider) {
+    private void OnTriggerStay2D(Collider2D collider) {
         if (this.Searching) {
             this.OnDetect(collider);
         }
