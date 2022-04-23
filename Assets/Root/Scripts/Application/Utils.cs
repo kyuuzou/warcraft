@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -137,7 +138,7 @@ public class Utils : Singleton<Utils> {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public static void ScrollResourceNumber(ref float visibleNumber, int actualNumber, Text textMesh) {
+    public static void ScrollResourceNumber(ref float visibleNumber, int actualNumber, TMP_Text textMesh) {
         if (visibleNumber != actualNumber) {
             if (Mathf.Abs(actualNumber - visibleNumber) < 1) {
                 visibleNumber = actualNumber;

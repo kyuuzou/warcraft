@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
@@ -5,58 +6,58 @@ using UnityEngine.UI;
 public class MissionOutcome : MonoBehaviour {
 
     [SerializeField]
-    private Text scoreText;
+    private TMP_Text scoreText;
     private float visibleScore = 0.0f;
 
     [SerializeField]
-    private Text rankText;
+    private TMP_Text rankText;
 
     [SerializeField]
-    private Text unitsYouDestroyedText;
+    private TMP_Text unitsYouDestroyedText;
     private float visibleUnitsYouDestroyed = 0.0f;
 
     [SerializeField]
-    private Text unitsEnemyDestroyedText;
+    private TMP_Text unitsEnemyDestroyedText;
     private float visibleUnitsEnemyDestroyed = 0.0f;
 
     [SerializeField]
-    private Text structuresYouDestroyedText;
+    private TMP_Text structuresYouDestroyedText;
     private float visibleStructuresYouDestroyed = 0.0f;
 
     [SerializeField]
-    private Text structuresEnemyDestroyedText;
+    private TMP_Text structuresEnemyDestroyedText;
     private float visibleStructuresEnemyDestroyed = 0.0f;
 
     [SerializeField]
-    private Text goldYouMinedText;
+    private TMP_Text goldYouMinedText;
     private float visibleGoldYouMined = 0.0f;
 
     [SerializeField]
-    private Text goldEnemyMinedText;
+    private TMP_Text goldEnemyMinedText;
     private float visibleGoldEnemyMined = 0.0f;
 
     [SerializeField]
-    private Text unitsYouTrainedText;
+    private TMP_Text unitsYouTrainedText;
     private float visibleUnitsYouTrained = 0.0f;
 
     [SerializeField]
-    private Text unitsEnemyTrainedText;
+    private TMP_Text unitsEnemyTrainedText;
     private float visibleUnitsEnemyTrained = 0.0f;
 
     [SerializeField]
-    private Text structuresYouBuiltText;
+    private TMP_Text structuresYouBuiltText;
     private float visibleStructuresYouBuilt = 0.0f;
 
     [SerializeField]
-    private Text structuresEnemyBuiltText;
+    private TMP_Text structuresEnemyBuiltText;
     private float visibleStructuresEnemyBuilt = 0.0f;
 
     [SerializeField]
-    private Text lumberYouHarvestedText;
+    private TMP_Text lumberYouHarvestedText;
     private float visibleLumberYouHarvested = 0.0f;
 
     [SerializeField]
-    private Text lumberEnemyHarvestedText;
+    private TMP_Text lumberEnemyHarvestedText;
     private float visibleLumberEnemyHarvested = 0.0f;
 
     [SerializeField]

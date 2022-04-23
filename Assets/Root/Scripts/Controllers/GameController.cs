@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameController : SceneObject {
 
     [Header("UI Elements")]
     [SerializeField]
-    private Text goldText;
+    private TMP_Text goldText;
 
     [SerializeField]
-    private Text lumberText;
+    private TMP_Text lumberText;
 
     public SpawnableSpriteGroup CurrentGroup { get; private set; }
     public bool Paused { get; private set; }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TileSlot : CustomSprite {
     private int column;
@@ -11,7 +10,7 @@ public class TileSlot : CustomSprite {
     private Vector2[] originalUV;
 
     [SerializeField]
-    private Text valueText;
+    private TextMesh valueText;
 
     private Vector2Int atlasCoordinates = new Vector2Int(-1, -1);
 
