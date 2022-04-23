@@ -67,7 +67,7 @@ public class TextureGameObjectBuilder : Editor {
                 sb.Append(folders[i] + "/");
                 string dir = Application.dataPath + Path.GetDirectoryName(sb.ToString()).TrimStart("Assets".ToCharArray());
                 if (!Directory.Exists(dir)) {
-                    Debug.Log("Creating folder " + sb.ToString());
+                    Debug.Log($"Creating folder {sb}");
                     AssetDatabase.CreateFolder(sb.ToString().Replace("/" + folders[i] + "/", string.Empty), folders[i]);
                 }
             }

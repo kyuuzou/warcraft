@@ -24,7 +24,7 @@ public static class ColorExtension {
         for (int i = 0; i < 4; i++) {
             float difference = targetColor[i] - color[i];
 
-            if (difference == 0.0f) {
+            if (Mathf.Approximately(difference, 0.0f)) {
                 continue;
             }
 

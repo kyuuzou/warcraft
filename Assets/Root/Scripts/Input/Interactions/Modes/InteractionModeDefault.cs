@@ -5,10 +5,6 @@ public class InteractionModeDefault : InteractionMode {
 
     private SpawnableSprite selectedSprite = null;
 
-    public InteractionModeDefault() : base() {
-
-    }
-
     private void ClickBuilding(Collider2D collider) {
         SpawnableSprite selected = this.selectedSprite;
 

@@ -15,17 +15,17 @@ public class InteractionModeBuilding : InteractionMode {
 
     private SpriteSelection selection;
 
-    public InteractionModeBuilding() : base() {
+    public InteractionModeBuilding() {
         this.grid = ServiceLocator.Instance.Grid;
         this.map = ServiceLocator.Instance.Map;
     }
 
     public override void DisableMode() {
-        GameFlags.building = false;
+        GameFlags.Building = false;
     }
 
     public override void EnableMode(InteractionModeArgs args = null) {
-        GameFlags.building = true;
+        GameFlags.Building = true;
 
         if (args == null) {
             return;

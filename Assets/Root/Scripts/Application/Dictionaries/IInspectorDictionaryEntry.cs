@@ -1,4 +1,4 @@
-﻿public interface IInspectorDictionaryEntry<TKey> {
+﻿public interface IInspectorDictionaryEntry<out TKey> {
 
     TKey Key { get; }
 

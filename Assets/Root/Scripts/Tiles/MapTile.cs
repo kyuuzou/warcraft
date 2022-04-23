@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class MapTile : ITarget {
@@ -81,7 +82,6 @@ public class MapTile : ITarget {
     private Dictionary<IInhabitant, Color> colorByInhabitant;
 
     private Dictionary<Type, List<IInhabitant>> inhabitants;
-    private Dictionary<int, MapTileLayer> layers;
 
     private GameController gameController;
     private MapGrid grid;
@@ -97,7 +97,6 @@ public class MapTile : ITarget {
         this.map = serviceLocator.Map;
 
         this.InitializeInhabitants();
-        this.InitializeLayers();
 
         this.MapPosition = new Vector2Int(column, row);
         this.mapData = this.gameController.CurrentLevel.MapType.GetData();
@@ -220,10 +219,6 @@ public class MapTile : ITarget {
         return default(T);
     }
 
-    public MapTileLayer GetLayer(int layerIndex) {
-        return this.layers[layerIndex];
-    }
-
     public MapTile GetNeighbour(Direction direction) {
         return this.Neighbours[(int)direction - 1];
     }
@@ -231,13 +226,13 @@ public class MapTile : ITarget {
     public string GetNeighbourPattern(bool includeDiagonals, bool valueIfNull, params TileType[] types) {
         bool[] matches = this.GetNeighbourTypes(includeDiagonals, valueIfNull, this.Type);
 
-        string pattern = string.Empty;
+        StringBuilder pattern = new StringBuilder();
 
         foreach (bool match in matches) {
-            pattern += match ? 1 : 0;
+            pattern.Append(match ? 1 : 0);
         }
 
-        return pattern;
+        return pattern.ToString();
     }
 
     public MapTile[] GetNeighbours(bool includeDiagonals = true) {
@@ -333,14 +328,6 @@ public class MapTile : ITarget {
         this.colorByInhabitant = new Dictionary<IInhabitant, Color>();
     }
 
-    private void InitializeLayers() {
-        this.layers = new Dictionary<int, MapTileLayer>();
-
-        for (int i = 0; i < 4; i++) {
-            this.layers[i] = new MapTileLayer();
-        }
-    }
-
     public bool IsAdjacent(IMovementDestination destination) {
         return this.Overlaps(destination, 1);
     }
@@ -402,13 +389,12 @@ public class MapTile : ITarget {
     }
 
     public void PrintNeighbours() {
-        string neighbours = "";
         Direction[] directions = (Direction[])Enum.GetValues(typeof(Direction));
-
+        StringBuilder neighbours = new StringBuilder();
+        
         for (int i = 0; i < directions.Length - 1; i++) {
             Direction direction = directions[i];
-
-            neighbours += " " + direction.ToString() + ": " + this.Neighbours[(int)direction];
+            neighbours.Append($" {direction}: {this.Neighbours[(int)direction]}");
         }
 
         Debug.Log(neighbours);
@@ -444,7 +430,7 @@ public class MapTile : ITarget {
         this.targetColor = this.Discovered ? Color.white : MapTile.UndiscoveredColor;
 
         if (this.targetColor == this.Color) {
-            return;
+            // do nothing
         }
     }
 

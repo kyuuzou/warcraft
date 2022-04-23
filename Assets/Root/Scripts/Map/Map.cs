@@ -105,16 +105,6 @@ public class Map : SceneObject {
         }
     }
 
-    public void AssignNoise() {
-        foreach (MapTile tile in this.tiles) {
-            if (tile == null || tile.Type == TileType.None || tile.Type == TileType.Water) {
-                continue;
-            }
-
-            //tile.Offset = Random.Range (0.0f, 20.0f);
-        }
-    }
-
     protected override void Awake() {
         base.Awake();
 
@@ -272,8 +262,8 @@ public class Map : SceneObject {
         int maximumTries = 100;
         int minimumDistance = int.MaxValue;
 
-        List<MapTile> open = new List<MapTile>() { untraversable };
-        List<MapTile> closed = new List<MapTile>() { untraversable };
+        List<MapTile> open = new List<MapTile> { untraversable };
+        List<MapTile> closed = new List<MapTile> { untraversable };
 
         int depth = 0;
         MapTile traversable = null;

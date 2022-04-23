@@ -23,8 +23,6 @@ public class AIPlayer : Player {
             yield break;
         }
 
-        Direction direction = Direction.South;
-
         foreach (Unit attacker in attackers) {
             if (movingGroups.Contains(attacker.Group)) {
                 continue;
@@ -33,7 +31,7 @@ public class AIPlayer : Player {
             movingGroups.Add(attacker.Group);
 
             if (attacker.Group == null) {
-                continue;
+                // do nothing
             }
         }
     }

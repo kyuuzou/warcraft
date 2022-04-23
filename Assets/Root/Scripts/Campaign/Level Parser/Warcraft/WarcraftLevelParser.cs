@@ -105,9 +105,7 @@ public class WarcraftLevelParser : ILevelParser {
             this.map.AddTile(tile);
 
             if (data.Type == TileType.Door) {
-                if (tile.GetInhabitant<Decoration>() != null) {
-                    continue;
-                }
+                // do nothing
             } else if (data.Type == TileType.Tree) {
                 tile.AddInhabitant(new TreeTile(tile));
             }

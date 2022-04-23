@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class TreeTile : IInhabitant {
@@ -132,12 +133,14 @@ public class TreeTile : IInhabitant {
 
         bool[] types = tile.GetNeighbourTypes(true, true, TileType.Tree);
 
-        string key = string.Empty;
+        StringBuilder keyBuilder = new StringBuilder();
 
         foreach (bool type in types) {
-            key += type ? 1 : 0;
+            keyBuilder.Append(type ? 1 : 0);
         }
 
+        string key = keyBuilder.ToString();
+        
         if (treePatterns.ContainsKey(key)) {
             tile.AtlasIndex = treePatterns[key];
 

@@ -4,10 +4,6 @@ public class InteractionModeHarvest : InteractionMode {
 
     private Unit harvester;
 
-    public InteractionModeHarvest() : base() {
-
-    }
-
     private void ClickBuilding(Collider2D collider) {
         Building building = collider.GetComponent<Building>();
 
@@ -23,7 +19,7 @@ public class InteractionModeHarvest : InteractionMode {
         TileSlot slot = collider.GetComponent<TileSlot>();
 
         if (slot.Tile.Type == TileType.Tree) {
-            
+            // do nothing
         }
     }
 

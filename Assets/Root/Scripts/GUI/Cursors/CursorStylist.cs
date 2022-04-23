@@ -22,8 +22,6 @@ public class CursorStylist : SceneObject {
         Cursor.visible = this.visibleCursor;
 #endif
 
-        ServiceLocator serviceLocator = ServiceLocator.Instance;
-
         this.InitializeCursors();
         this.SetCursor(CursorType.Default);
     }

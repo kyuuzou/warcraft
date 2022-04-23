@@ -1,5 +1,5 @@
 
 public static class GameFlags {
 
-    public static bool building = false;
+    public static bool Building { get; set; } = false;
 }

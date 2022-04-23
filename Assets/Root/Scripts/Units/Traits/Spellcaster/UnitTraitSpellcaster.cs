@@ -16,7 +16,7 @@ public class UnitTraitSpellcaster : UnitTrait, IUnitTraitSpellcaster, IMovementL
     private static Dictionary<GameButtonType, UpgradeIdentifier> identifierByButtonType;
 
     static UnitTraitSpellcaster() {
-        UnitTraitSpellcaster.identifierByButtonType = new Dictionary<GameButtonType, UpgradeIdentifier>() {
+        UnitTraitSpellcaster.identifierByButtonType = new (){
             { GameButtonType.CloudOfPoison,     UpgradeIdentifier.CloudOfPoison },
             { GameButtonType.Daemon,            UpgradeIdentifier.OrcMajorSummoning },
             { GameButtonType.DarkVision,        UpgradeIdentifier.DarkVision },
@@ -177,7 +177,7 @@ public class UnitTraitSpellcaster : UnitTrait, IUnitTraitSpellcaster, IMovementL
             this.Cast(this.currentSpell, this.currentTarget, this.currentTargetTile);
         } else {
             if (this.currentTarget.Pivot == this.lastTargetTile) {
-
+                // do nothing
             } else {
                 this.RecalculatePath();
                 this.lastTargetTile = this.currentTarget.Pivot;

@@ -86,7 +86,7 @@ public class ContextMenu : SceneObject {
 
             foreach (GameButtonType button in node.GetButtons()) {
                 if (buttons[i] == GameButtonType.Invalid || buttons[i] == button) {
-
+                    // do nothing
                 } else if (buttons[i] == GameButtonType.None) {
                     buttons[i] = button;
                 } else {

@@ -39,8 +39,6 @@ public static class ShadowAndOutline {
         Color shadowColor,
         Vector2 direction
     ) {
-        GUIStyle backupStyle = style;
-
         style.normal.textColor = shadowColor;
         rect.x += direction.x;
         rect.y += direction.y;
@@ -50,8 +48,6 @@ public static class ShadowAndOutline {
         rect.x -= direction.x;
         rect.y -= direction.y;
         GUI.Label(rect, content, style);
-
-        style = backupStyle;
     }
 
     public static void DrawLayoutShadow(

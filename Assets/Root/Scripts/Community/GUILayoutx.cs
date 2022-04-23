@@ -17,20 +17,24 @@ public class GUILayoutx {
     }
 
     public static int SelectionList(int selected, GUIContent[] list, GUIStyle elementStyle, DoubleClickCallback callback) {
+        int newSelected = selected;
+        
         for (int i = 0; i < list.Length; ++i) {
             Rect elementRect = GUILayoutUtility.GetRect(list[i], elementStyle);
             bool hover = elementRect.Contains(Event.current.mousePosition);
+            
             if (hover && Event.current.type == EventType.MouseDown) {
-                selected = i;
+                newSelected = i;
                 Event.current.Use();
             } else if (hover && callback != null && Event.current.type == EventType.MouseUp && Event.current.clickCount == 2) {
                 callback(i);
                 Event.current.Use();
             } else if (Event.current.type == EventType.Repaint) {
-                elementStyle.Draw(elementRect, list[i], hover, false, i == selected, false);
+                elementStyle.Draw(elementRect, list[i], hover, false, i == newSelected, false);
             }
         }
-        return selected;
+        
+        return newSelected;
     }
 
     public static int SelectionList(int selected, string[] list) {

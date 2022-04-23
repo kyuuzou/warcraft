@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 public class RepeatableSortedList<T> {
 
@@ -87,12 +88,13 @@ public class RepeatableSortedList<T> {
     }
 
     public override string ToString() {
-        string output = "";
+        StringBuilder output = new StringBuilder();
 
         foreach (KeyValuePair<float, T> pair in this.contents) {
-            output += pair.Key.ToString() + pair.Value.ToString();
+            output.Append(pair.Key);
+            output.Append(pair.Value);
         }
 
-        return output;
+        return output.ToString();
     }
 }

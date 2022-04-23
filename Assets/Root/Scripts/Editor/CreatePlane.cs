@@ -131,7 +131,6 @@ public class CreatePlane : ScriptableWizard {
                 anchorOffset = new Vector2(-this.width / 2.0f, 0.0f);
                 anchorId = "LH";
                 break;
-            case AnchorPoint.Center:
             default:
                 anchorOffset = Vector2.zero;
                 anchorId = "C";

@@ -9,7 +9,7 @@ public enum PathfindingAlgorithmType {
 
 public static class PathfindingAlgorithmExtension {
 
-    private static Dictionary<PathfindingAlgorithmType, Type> classByType = new Dictionary<PathfindingAlgorithmType, Type>() {
+    private static Dictionary<PathfindingAlgorithmType, Type> classByType = new (){
         { PathfindingAlgorithmType.None, null },
         { PathfindingAlgorithmType.AStar, typeof (AStar) }
     };

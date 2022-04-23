@@ -201,7 +201,7 @@ public class UnitTraitMender : UnitTrait, IDeathListener, IMovementListener, IUn
             this.Disengage();
 
             if (this.target.Tile == this.lastTargetTile) {
-
+                // do nothing
             } else {
                 this.RecalculatePath();
             }

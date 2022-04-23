@@ -5,10 +5,6 @@ public class InteractionModeAttacking : InteractionMode {
 
     private Unit unit;
 
-    public InteractionModeAttacking() : base() {
-
-    }
-
     private void ClickBuilding(Collider2D collider) {
         Building building = collider.GetComponent<Building>();
 

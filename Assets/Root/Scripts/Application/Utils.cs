@@ -50,8 +50,7 @@ public class Utils : Singleton<Utils> {
             System.Reflection.FieldInfo[] fi = type.GetFields();
             if (fi.Length > 0) {
                 foreach (FieldInfo f in fi) {
-                    sb.Append("\r\n " + f.ToString() + " = " +
-                           f.GetValue(o));
+                    sb.Append($"\r\n {f} = {f.GetValue(o)}");
                 }
             } else {
                 sb.Append("\r\n None");
@@ -62,8 +61,7 @@ public class Utils : Singleton<Utils> {
             System.Reflection.PropertyInfo[] pi = type.GetProperties();
             if (pi.Length > 0) {
                 foreach (PropertyInfo p in pi) {
-                    sb.Append("\r\n " + p.ToString() + " = " +
-                           p.GetValue(o, null));
+                    sb.Append("\r\n {p} = {p.GetValue(o, null)}");
                 }
             } else {
                 sb.Append("\r\n None");
@@ -87,8 +85,8 @@ public class Utils : Singleton<Utils> {
     /// </param>
     /// <returns>Returns true if at least one bounding box was calculated.</returns>
     public static bool GetBoundWithChildren(Transform transform, ref Bounds pBound, ref bool encapsulate) {
-        var bound = new Bounds();
-        var didOne = false;
+        Bounds bound;
+        bool didOne = false;
 
         // get 'this' bound
         if (transform.gameObject.GetComponent<Renderer>() != null) {
@@ -139,7 +137,7 @@ public class Utils : Singleton<Utils> {
     }
 
     public static void ScrollResourceNumber(ref float visibleNumber, int actualNumber, TMP_Text textMesh) {
-        if (visibleNumber != actualNumber) {
+        if (! Mathf.Approximately(visibleNumber, actualNumber)) {
             if (Mathf.Abs(actualNumber - visibleNumber) < 1) {
                 visibleNumber = actualNumber;
             } else {

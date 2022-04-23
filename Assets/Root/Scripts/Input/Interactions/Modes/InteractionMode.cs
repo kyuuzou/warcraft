@@ -6,7 +6,7 @@ public abstract class InteractionMode {
     protected Camera camera;
     protected ContextMenu contextMenu;
 
-    public InteractionMode() {
+    protected InteractionMode() {
         this.interactionHandler = ServiceLocator.Instance.InteractionHandler;
         this.camera = ServiceLocator.Instance.GUICamera;
         this.contextMenu = ServiceLocator.Instance.ContextMenu;

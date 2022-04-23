@@ -119,12 +119,7 @@ public class UnitTraitMoving : UnitTrait, IUnitTraitMoving {
             return;
         }
 
-        Vector3 basePosition = this.Unit.Tile.RealPosition;
-        //basePosition = basePosition.Add(this.Unit.Offset);
-
-        if (this.basePosition != basePosition) {
-            this.basePosition = basePosition;
-        }
+        this.basePosition = this.Unit.Tile.RealPosition;
 
         if (this.Unit.TargetTile != null && !this.Unit.IsDead()) {
             Vector3 origin = this.basePosition + this.RelativePosition;

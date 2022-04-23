@@ -15,7 +15,7 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
     private static Dictionary<GameButtonType, BuildingType> buildingByButtonType;
 
     static UnitTraitBuilder() {
-        UnitTraitBuilder.buildingByButtonType = new Dictionary<GameButtonType, BuildingType>() {
+        UnitTraitBuilder.buildingByButtonType = new Dictionary<GameButtonType, BuildingType> {
             { GameButtonType.HumanTownHall, BuildingType.HumanTownHall },
             { GameButtonType.OrcTownHall,   BuildingType.OrcTownHall }
         };
@@ -83,7 +83,7 @@ public class UnitTraitBuilder : UnitTrait, IDeathListener, IMovementListener, IU
     public override void Deactivate() {
         base.Deactivate();
 
-        if (GameFlags.building && this.building != null) {
+        if (GameFlags.Building && this.building != null) {
             BuildingData buildingData = this.building.Data;
             this.gameController.IncreaseGold(buildingData.GoldCost);
             this.gameController.IncreaseLumber(buildingData.LumberCost);

@@ -75,7 +75,6 @@ public class MouseInputController {
 
             if (this.mouseOverObjects.Contains(sceneObject)) {
                 mouseExitObjects.Remove(sceneObject);
-                continue;
             } else {
                 this.mouseOverObjects.Add(sceneObject);
                 mouseOverObjects.Add(sceneObject);

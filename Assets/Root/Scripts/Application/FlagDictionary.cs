@@ -3,14 +3,6 @@ using UnityEngine;
 
 public class FlagDictionary : Dictionary<string, int> {
 
-    public FlagDictionary() : base() {
-
-    }
-
-    public FlagDictionary(int capacity) : base(capacity) {
-
-    }
-
     public void AddPattern(string pattern, int index) {
         List<string> keys = new List<string>();
         List<string> additions = new List<string>();
@@ -51,40 +43,6 @@ public class FlagDictionary : Dictionary<string, int> {
                 Debug.Log(error);
             } else {
                 this.Add(key, index);
-            }
-        }
-    }
-
-    public void PrintMissingKeys() {
-        for (int i = 0; i < 11111111; i++) {
-            string key = i.ToString("D8");
-
-            for (int j = 7; j >= 0; j--) {
-                char c = key[j];
-
-                if (c != '0' && c != '1') {
-                    int aux = int.Parse(key);
-                    aux += (int)(10 - char.GetNumericValue(c)) * ((int)Mathf.Pow(10, 7 - j));
-                    key = aux.ToString("D8");
-                }
-            }
-
-            i = int.Parse(key);
-
-            if (key[0] == '0' && key[4] == '0') {
-                continue;
-            }
-
-            if (key[1] == '0' && key[2] == '1' && key[3] == '0') {
-                continue;
-            }
-
-            if (key[5] == '0' && key[6] == '1' && key[7] == '0') {
-                continue;
-            }
-
-            if (!this.ContainsKey(key)) {
-                Debug.Log("Missing key: " + key);
             }
         }
     }
