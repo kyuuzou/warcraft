@@ -39,7 +39,7 @@ public class GameButton : SceneObject {
         this.statusBar.SetText(this.statusText);
     }
 
-    private void OnMouseUpAsButton() {
+    public void OnMouseUpAsButton() {
         if (this.action != GameButtonType.None) {
             IList<SpawnableSprite> sprites = this.gameController.CurrentGroup.Sprites;
 
