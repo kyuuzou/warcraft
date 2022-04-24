@@ -45,6 +45,11 @@ In 2022 I finally got my hands on an few backups of the project, and got to work
 
 ## Version History
 
+* *0.0.2*
+    * Upgraded project from Unity 2018.3.12f1 to 2021.3.0f1
+    * All units may now spawn
+    * All instances of obsolete GUITexture and GUIText are now phased out
+
 * *0.0.1*
     * Upgraded original project from Unity 4.0.12f1 to 2018.3.12f1
     * Restored unit movement, active combat and death
