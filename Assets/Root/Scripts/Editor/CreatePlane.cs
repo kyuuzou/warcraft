@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -196,7 +197,7 @@ public class CreatePlane : ScriptableWizard {
             }
 
             string tempString = this.targetAssetPath.TrimEnd("/".ToCharArray());
-            int stringIndex = tempString.LastIndexOf("/");
+            int stringIndex = tempString.LastIndexOf("/", StringComparison.Ordinal);
             string folderName = tempString.Substring(stringIndex + 1);
             string basePath = tempString.Substring(0, stringIndex);
 

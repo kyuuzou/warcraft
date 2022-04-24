@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -11,11 +12,11 @@ public class StatusBar : SceneObject {
     private IEnumerator expireTextEnumerator = null;
 
     private IEnumerator ExpireTextCoroutine(string text, float time) {
-        this.textMesh.text = text.ToUpper();
+        this.textMesh.text = text.ToUpper(CultureInfo.CurrentCulture);
 
         yield return new WaitForSeconds(time);
 
-        this.textMesh.text = this.nonTimedText.ToUpper();
+        this.textMesh.text = this.nonTimedText.ToUpper(CultureInfo.CurrentCulture);
         this.expireTextEnumerator = null;
     }
 

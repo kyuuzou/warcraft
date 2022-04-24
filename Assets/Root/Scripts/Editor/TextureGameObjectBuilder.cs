@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -41,7 +42,8 @@ public class TextureGameObjectBuilder : Editor {
         material.mainTexture = texture;
 
         string textureFullPath = AssetDatabase.GetAssetPath(texture);
-        string textureFolder = textureFullPath.Substring(0, textureFullPath.LastIndexOf("/") + 1);
+        int lastSlashIndex = textureFullPath.LastIndexOf("/", StringComparison.Ordinal);
+        string textureFolder = textureFullPath.Substring(0, lastSlashIndex + 1);
 
         StringBuilder stringBuilder = new StringBuilder(textureFolder);
         stringBuilder.Replace("Textures", "Materials")
@@ -60,7 +62,8 @@ public class TextureGameObjectBuilder : Editor {
             Debug.Log("A material with that name already exists, skipping asset creation.");
         } else {
             Debug.Log("Creating " + materialFullPath);
-            string[] folders = materialFullPath.Substring(0, materialFullPath.LastIndexOf("/")).Split("/".ToCharArray());
+            lastSlashIndex = materialFullPath.LastIndexOf("/", StringComparison.Ordinal);
+            string[] folders = materialFullPath.Substring(0, lastSlashIndex).Split("/".ToCharArray());
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < folders.Length; i++) {
@@ -144,7 +147,8 @@ public class TextureGameObjectBuilder : Editor {
             Debug.Log("A mesh with those dimensions already exists, skipping asset creation.");
         } else {
             Debug.Log("Creating " + meshFullPath);
-            string[] folders = meshFullPath.Substring(0, meshFullPath.LastIndexOf("/")).Split("/".ToCharArray());
+            int lastSlashIndex = meshFullPath.LastIndexOf("/", StringComparison.Ordinal);
+            string[] folders = meshFullPath.Substring(0, lastSlashIndex).Split("/".ToCharArray());
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < folders.Length; i++) {
