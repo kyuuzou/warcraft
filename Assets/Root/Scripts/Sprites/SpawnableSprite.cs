@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarget {
+public abstract class SpawnableSprite : CustomSprite, IInhabitant, ITarget {
 
     protected abstract SpawnableSpriteData BasicData { get; }
 
@@ -401,6 +401,11 @@ public abstract partial class SpawnableSprite : CustomSprite, IInhabitant, ITarg
             this.lastSelection = Time.time;
         }
 #endif
+    }
+    
+    public virtual void PressCancel() {
+        this.ContextMenu.ManualUpdate();
+        //this.ContextMenu.SetButtons (this.Data.Buttons);
     }
 
     public virtual void RefreshPosition() {
