@@ -3,8 +3,8 @@ using System.Text;
 
 public class RepeatableSortedList<T> {
 
-    private List<KeyValuePair<float, T>> contents;
-    private List<T> values;
+    private readonly List<KeyValuePair<float, T>> contents;
+    private readonly List<T> values;
 
     public int Count {
         get {

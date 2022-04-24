@@ -14,9 +14,9 @@ public class Faction {
     private Dictionary<BuildingType, Vector2Int> rootedPositionsByType;
     private Dictionary<UnitTraitType, List<Unit>> unitsByRole;
 
-    private Dictionary<GameButtonType, Upgrade> upgradeByButtonType;
-    private Dictionary<UpgradeIdentifier, Upgrade> upgradeByIdentifier;
-    private Dictionary<UpgradeType, List<Upgrade>> upgradeByUpgradeType;
+    private readonly Dictionary<GameButtonType, Upgrade> upgradeByButtonType;
+    private readonly Dictionary<UpgradeIdentifier, Upgrade> upgradeByIdentifier;
+    private readonly Dictionary<UpgradeType, List<Upgrade>> upgradeByUpgradeType;
 
     public Faction(FactionData data) {
         this.Data = data;

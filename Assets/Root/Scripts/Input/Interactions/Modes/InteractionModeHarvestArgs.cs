@@ -1,6 +1,6 @@
 public class InteractionModeHarvestArgs : InteractionModeArgs {
 
-    private Unit harvester;
+    private readonly Unit harvester;
 
     public InteractionModeHarvestArgs(Unit harvester) {
         this.harvester = harvester;

@@ -12,7 +12,7 @@ public class UnitTraitMiner : UnitTrait, IUnitTraitMiner, IMovementListener {
     private Map map;
     private MissionStatistics missionStatistics;
 
-    private int carryingGoldLayer = 1;
+    private readonly int carryingGoldLayer = 1;
     private bool goingToMine;
 
     private int gold = 0;

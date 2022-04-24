@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AudioSourceWrapper {
 
-    private AudioManager audioManager;
-    private AudioSource audioSource;
+    private readonly AudioManager audioManager;
+    private readonly AudioSource audioSource;
 
     private AudioSample audioSample;
     private AudioSample AudioSample {

@@ -9,7 +9,7 @@ public class TransformData {
     public Vector3 EulerAngles { get; set; }
     public Vector3 Position { get; set; }
 
-    private Transform transform;
+    private readonly Transform transform;
 
     public TransformData(Transform transform) {
         this.transform = transform;

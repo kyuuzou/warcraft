@@ -1,6 +1,6 @@
 public class InteractionModeAttackingArgs : InteractionModeArgs {
 
-    private Unit unit;
+    private readonly Unit unit;
 
     public InteractionModeAttackingArgs(Unit unit) {
         this.unit = unit;

@@ -23,7 +23,6 @@ public class WarcraftAssetImporter : EditorWindow {
     private EditorCoroutine importingCoroutine = null;
 
     private string dataWarPath = string.Empty;
-    private string lastOutputMessage = string.Empty;
 
     [MenuItem("Window/Warcraft Asset Importer _w", false, (int)'W')]
     private static void Init() {

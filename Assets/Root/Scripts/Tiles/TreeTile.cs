@@ -14,10 +14,10 @@ public class TreeTile : IInhabitant {
 
     public List<MapTile> Cluster { get; set; }
 
-    private GameController gameController;
-    private MapGrid grid;
-    private MapTypeData mapData;
-    private MapTile tile;
+    private readonly GameController gameController;
+    private readonly MapGrid grid;
+    private readonly MapTypeData mapData;
+    private readonly MapTile tile;
 
     // Appropriate atlas index depending on neighbours
     private static FlagDictionary treePatterns;

@@ -83,10 +83,11 @@ public class MapTile : ITarget {
 
     private Dictionary<Type, List<IInhabitant>> inhabitants;
 
-    private GameController gameController;
-    private MapGrid grid;
-    private Map map;
-    private MapTypeData mapData;
+    private readonly GameController gameController;
+    private readonly MapGrid grid;
+    private readonly Map map;
+    private readonly MapTypeData mapData;
+    
     private Color targetColor;
     private IEnumerator refreshColorEnumerator;
 

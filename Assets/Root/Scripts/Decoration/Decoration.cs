@@ -27,11 +27,6 @@ public class Decoration : SpawnableSprite, IInhabitant {
         }
     }
 
-    public bool IsBehindEverything { get; set; }
-
-    private Vector3 lastPosition = Vector3.zero;
-    private Vector3 offset = Vector3.zero;
-
     public override void Damage(int damage) {
         if (this.Data.HitPoints == 0) {
             return;
@@ -117,10 +112,6 @@ public class Decoration : SpawnableSprite, IInhabitant {
             this.SetTileData(this.tileData);
         }
 
-    }
-
-    public void SetOffset(Vector3 offset) {
-        this.offset = offset;
     }
 
     public void SetTileData(TileData data) {

@@ -20,13 +20,13 @@ public class TaskManager : MonoBehaviour {
 }
 
 public class Task {
-    private List<Task> children;
+    private readonly List<Task> children;
 
     public bool Paused { get; private set; }
     public bool Running { get; private set; }
     public bool Aborted { get; private set; }
 
-    private IEnumerator coroutine;
+    private readonly IEnumerator coroutine;
 
     public delegate void FinishedHandler();
     public event FinishedHandler Finished;

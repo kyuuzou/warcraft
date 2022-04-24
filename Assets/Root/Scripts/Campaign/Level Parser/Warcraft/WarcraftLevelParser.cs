@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class WarcraftLevelParser : ILevelParser {
 
-    private Level level;
-    //private string[] text;
-
-    private GameController gameController;
-    private MapGrid grid;
-    private Map map;
-    private SpawnFactory spawnFactory;
+    private readonly GameController gameController;
+    private readonly Level level;
+    private readonly Map map;
+    private readonly MapGrid grid;
+    private readonly SpawnFactory spawnFactory;
 
     public WarcraftLevelParser(Level level) {
         this.level = level;

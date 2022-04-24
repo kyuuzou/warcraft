@@ -1,7 +1,7 @@
 public class InteractionModeBuildingArgs : InteractionModeArgs {
 
-    private Building building;
-    private Unit builder;
+    private readonly Building building;
+    private readonly Unit builder;
 
     public InteractionModeBuildingArgs(Building building, Unit builder) {
         this.building = building;

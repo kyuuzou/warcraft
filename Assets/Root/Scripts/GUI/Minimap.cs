@@ -14,16 +14,16 @@ public class Minimap : SceneObject {
     private Material frontLayerMaterial;
     private Texture2D frontLayerTexture;
 
-    private int x = 6;
-    private int y = 12;
-    private int width = 128;
-    private int height = 128;
+    private readonly int x = 6;
+    private readonly int y = 12;
+    private readonly int width = 128;
+    private readonly int height = 128;
 
     private Rect viewport;
     private Rect invertedViewport;
 
-    private int horizontalRadius = 15;
-    private int verticalRadius = 11;
+    private readonly int horizontalRadius = 15;
+    private readonly int verticalRadius = 11;
 
     private int lastColumn = -1;
     private int lastRow = -1;

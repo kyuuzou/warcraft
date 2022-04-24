@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class InteractionModeBuilding : InteractionMode {
 
-    private MapGrid grid;
-    private Map map;
+    private readonly MapGrid grid;
+    private readonly Map map;
     private Rect viewport;
 
     private Building building;

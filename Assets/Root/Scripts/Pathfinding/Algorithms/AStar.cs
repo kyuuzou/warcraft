@@ -17,7 +17,7 @@ public class AStar : PathfindingAlgorithm {
     //All units with an outstanding pathfinding request
     private List<Unit> units;
 
-    private int cutoff = 30;
+    private readonly int cutoff = 30;
 
     private void AddToOpenList(MapTile tile, PathfindingNode node) {
         if (this.open.Contains(tile)) {
